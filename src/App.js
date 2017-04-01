@@ -9,7 +9,7 @@ injectTapEventPlugin()
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar';
 
-import Statement from './statement.js'
+import Statement from './components/statement.js'
 
 class App extends Component {
 

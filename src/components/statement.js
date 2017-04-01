@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import faker from 'faker'
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
 import Slider from 'material-ui/Slider'
+import Snippet from './statement-snippet.js'
 
 export default class Statement extends Component {
 
@@ -37,14 +38,8 @@ export default class Statement extends Component {
       rows.push(
         <TableRow key={i}>
           <TableHeaderColumn colSpan={1}/>
-          <TableRowColumn colSpan={5} style={{textAlign: 'right'}}>
-            { pros[i] }
-            <Slider defaultValue={(num_arguments - i) / num_arguments} axis="x-reverse" />
-          </TableRowColumn>
-          <TableRowColumn colSpan={5}>
-            { cons[i] }
-            <Slider defaultValue={(num_arguments - i) / num_arguments}/>
-          </TableRowColumn>
+          <Snippet pro={ true } title={ pros[i] } confidence={(num_arguments - i) / num_arguments} />
+          <Snippet pro={ false } title={ cons[i] } confidence={(num_arguments - i) / num_arguments} />
           <TableHeaderColumn colSpan={1}/>
         </TableRow>
       )
@@ -64,6 +59,7 @@ export default class Statement extends Component {
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
+              <TableHeaderColumn colSpan={1}/>
               <TableHeaderColumn colSpan={5} style={{textAlign: 'right'}}>Pros</TableHeaderColumn>
               <TableHeaderColumn colSpan={5}>Cons</TableHeaderColumn>
               <TableHeaderColumn colSpan={1}/>
