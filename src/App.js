@@ -1,46 +1,28 @@
 import React, { Component } from 'react';
-import './App.css';
-import faker from 'faker'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin()
+
+// Material UI
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import AppBar from 'material-ui/AppBar';
+
+import Statement from './statement.js'
 
 class App extends Component {
 
-  getStatements() {
-    var statements = []
-    for(var i = 0 ; i < 3; i ++) {
-      statements.push(
-        <tr>
-          <td>
-            { faker.hacker.phrase() }
-          </td>
-          <td>
-            { faker.hacker.phrase() }
-          </td>
-        </tr>
-      )
-    }
-
-    return statements
-  }
-
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Treedoff</h2>
+      <MuiThemeProvider>
+        <div>
+          <AppBar title="Treedoff" />
+          <Statement text="Overall Argument" confidence={50} description={ "This is what you want to support" }/>
         </div>
-        <table className="App-intro">
-          <thead>
-            <tr>
-              <td>Pro</td><td>Con</td>
-            </tr>
-          </thead>
-          <tbody>
-            { this.getStatements() }
-          </tbody>
-        </table>
-      </div>
-    );
+      </MuiThemeProvider>
+    )
   }
 }
 
-export default App;
+export default App
