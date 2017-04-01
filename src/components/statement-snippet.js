@@ -13,7 +13,7 @@ export default class Snippet extends Component {
         <p onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index) } >
           { this.props.title }
         </p>
-        <Slider defaultValue={this.props.confidence} axis={ axis } />
+        <Slider value={this.props.confidence} axis={ axis } />
       </span>
     ) : ""
   }
