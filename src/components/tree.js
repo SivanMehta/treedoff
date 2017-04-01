@@ -6,7 +6,7 @@ import Statement from './statement'
 function generate_fake_argument() {
   return {
     title: faker.company.catchPhrase(),
-    text: faker.hacker.phrase(),
+    description: faker.hacker.phrase(),
     confidence: Math.random(),
     source: faker.internet.url(),
     pros: [],
@@ -40,7 +40,6 @@ export default class Tree extends Component {
     defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
 
     // would be parsed from the path given by the router
-
     this.state = {
       tree: defaultArgument,
       // list of types (pro/con, index)
@@ -48,9 +47,12 @@ export default class Tree extends Component {
     }
   }
 
+  componentDidMount() {
+
+  }
+
   render() {
     // parse path and traverse tree accordingly
-    console.log(parsePath(this.props.path))
 
     var currentStatement = this.state.tree
     for(var i = 0; i < this.state.path.length; i++) {
@@ -66,7 +68,8 @@ export default class Tree extends Component {
                  source={ currentStatement.source }
                  confidence={ currentStatement.confidence }
                  pros={ currentStatement.pros }
-                 cons={ currentStatement.cons }/>
+                 cons={ currentStatement.cons }
+                 path={ typeof this.props.path === "undefined" ? "" : this.props.path }/>
 
     )
   }

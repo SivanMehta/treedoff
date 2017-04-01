@@ -8,8 +8,11 @@ import Slider from 'material-ui/Slider'
 import Snippet from './statement-snippet.js'
 
 function generateLink (curPath, pro, i) {
-  return (curPath.length === 0 ? "" : curPath) +
-         (pro ? "pro" : "con") + i
+  if(curPath.length === 0){
+    return (pro ? "pros" : "cons") + i
+  } else {
+    return curPath + "|" + (pro ? "pros" : "cons") + i
+  }
 }
 
 export default class Statement extends Component {

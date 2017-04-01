@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {TableRowColumn} from 'material-ui/Table'
 import Slider from 'material-ui/Slider'
+import { Link } from 'react-router-dom'
+
 
 export default class Snippet extends Component {
 
@@ -18,11 +20,10 @@ export default class Snippet extends Component {
   render() {
     const alignment = this.props.pro ? "right" : "left"
     return(
-      <TableRowColumn colSpan={5} style={{textAlign: alignment}}>
-        <span>
-          { this.props.title }
+      <TableRowColumn colSpan={5} style={{textAlign: alignment}} >
+        <Link to={ this.props.path }>
           { this.renderInnerContent() }
-        </span>
+        </Link>
       </TableRowColumn>
     )
   }
