@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import faker from 'faker'
 
 // Material UI
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
@@ -12,47 +11,15 @@ import Snippet from './statement-snippet.js'
 
 export default class Statement extends Component {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      title: this.props.title || faker.company.catchPhrase(),
-      description: this.props.description || faker.hacker.phrase(),
-      confidence: this.props.confidence || Math.random(),
-      pros: [],
-      cons: []
-    }
-  }
-
-  componentDidMount() {
-    this.setState({
-      pros: this.getPros(),
-      cons: this.getCons()
-    })
-  }
-
-  getCons() {
-    var statements = []
-    for(var i = 0; i < 3; i++) {
-      statements.push(faker.company.catchPhrase())
-    }
-
-    return statements
-  }
-
-  getPros() {
-    return this.getCons()
-  }
-
-  getArguments() {
+  renderTableBody() {
     var rows = []
-    const num_arguments = Math.max(this.state.pros.length, this.state.cons.length)
+    const num_arguments = Math.max(this.props.pros.length, this.props.cons.length)
     for(var i = 0; i < num_arguments; i++) {
       rows.push(
         <TableRow key={i}>
           <TableHeaderColumn colSpan={1}/>
-          <Snippet pro={ true } title={ this.state.pros[i] ? this.state.pros[i] : "" } confidence={ 0.5 } />
-          <Snippet pro={ false } title={ this.state.cons[i] ? this.state.cons[i] : ""  } confidence={ 0.5 } />
+          <Snippet pro={ true } title={ this.props.pros[i] ? this.props.pros[i].title : "" } confidence={ 0.5 } />
+          <Snippet pro={ false } title={ this.props.cons[i] ? this.props.cons[i].title : ""  } confidence={ 0.5 } />
           <TableHeaderColumn colSpan={1}/>
         </TableRow>
       )
@@ -63,13 +30,13 @@ export default class Statement extends Component {
 
   addPro() {
     this.setState({
-      pros: this.state.pros.concat(this.refs.addPro.input.value)
+      pros: this.props.pros.concat(this.refs.addPro.input.value)
     })
   }
 
   addCon() {
     this.setState({
-      cons: this.state.cons.concat(this.refs.addCon.input.value)
+      cons: this.props.cons.concat(this.refs.addCon.input.value)
     })
   }
 
@@ -77,9 +44,9 @@ export default class Statement extends Component {
     return (
       <div>
         <div className="App-header">
-          <h1>{ this.state.name }</h1>
-          <i>{ this.state.description }</i>
-          <Slider defaultValue={ this.state.confidence }/>
+          <h1>{ this.props.title }</h1>
+          <i>{ this.props.description }</i>
+          <Slider defaultValue={ this.props.confidence }/>
         </div>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
@@ -90,22 +57,8 @@ export default class Statement extends Component {
               <TableHeaderColumn colSpan={1}/>
             </TableRow>
           </TableHeader>
-          <TableBody  displayRowCheckbox={false}>
-            { this.getArguments() }
-            <TableRow>
-              <TableHeaderColumn colSpan={1}/>
-              <TableHeaderColumn colSpan={5}>
-                <AddCircle hoverColor="green" onClick={ this.addPro.bind(this) }/>
-                <TextField hintText="Add a Pro"
-                           style={{textAlign: 'right'}}
-                           ref="addPro"/>
-              </TableHeaderColumn>
-              <TableHeaderColumn colSpan={5}>
-                <TextField hintText="Add a Con" ref="addCon" />
-                <AddCircle hoverColor="green" onClick={ this.addCon.bind(this) }/>
-              </TableHeaderColumn>
-              <TableHeaderColumn colSpan={1}/>
-            </TableRow>
+          <TableBody displayRowCheckbox={false}>
+            { this.renderTableBody() }
           </TableBody>
         </Table>
       </div>
@@ -116,6 +69,7 @@ export default class Statement extends Component {
 Statement.propTypes = {
   title: React.PropTypes.string,
   description: React.PropTypes.string,
+  source: React.PropTypes.string,
   confidence: React.PropTypes.number,
   pros: React.PropTypes.array,
   cons: React.PropTypes.array
