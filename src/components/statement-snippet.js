@@ -19,8 +19,10 @@ export default class Snippet extends Component {
     const alignment = this.props.pro ? "right" : "left"
     return(
       <TableRowColumn colSpan={5} style={{textAlign: alignment}}>
-        { this.props.title }
-        { this.renderInnerContent() }
+        <span>
+          { this.props.title }
+          { this.renderInnerContent() }
+        </span>
       </TableRowColumn>
     )
   }
