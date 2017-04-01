@@ -7,14 +7,6 @@ import Slider from 'material-ui/Slider'
 // custom components
 import Snippet from './statement-snippet.js'
 
-function generateLink (curPath, pro, i) {
-  if(curPath.length === 0){
-    return (pro ? "pros" : "cons") + i
-  } else {
-    return curPath + "|" + (pro ? "pros" : "cons") + i
-  }
-}
-
 export default class Statement extends Component {
 
   renderTableBody() {
@@ -27,11 +19,13 @@ export default class Statement extends Component {
           <Snippet pro={ true }
                    title={ this.props.pros[i] ? this.props.pros[i].title : "" }
                    confidence={ this.props.pros[i] ? this.props.pros[i].confidence : 0 }
-                   path={ generateLink(this.props.path, true, i) } />
+                   modifyPath={ this.props.modifyPath }
+                   index={ i }/>
           <Snippet pro={ false }
                    title={ this.props.cons[i] ? this.props.cons[i].title : ""  }
                    confidence={ this.props.cons[i] ? this.props.cons[i].confidence : 0 }
-                   path={ generateLink(this.props.path, false, i) } />
+                   modifyPath={ this.props.modifyPath }
+                   index={ i } />
           <TableHeaderColumn colSpan={1}/>
         </TableRow>
       )
@@ -72,7 +66,7 @@ Statement.propTypes = {
   description: React.PropTypes.string,
   source: React.PropTypes.string,
   confidence: React.PropTypes.number,
-  path: React.PropTypes.string,
+  modifyPath: React.PropTypes.func,
   pros: React.PropTypes.array,
   cons: React.PropTypes.array,
 }

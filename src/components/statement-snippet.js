@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {TableRowColumn} from 'material-ui/Table'
 import Slider from 'material-ui/Slider'
-import { Link } from 'react-router-dom'
 
 
 export default class Snippet extends Component {
@@ -11,7 +10,9 @@ export default class Snippet extends Component {
 
     return this.props.title ? (
       <span>
-        { this.props.title }
+        <p onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index) } >
+          { this.props.title }
+        </p>
         <Slider defaultValue={this.props.confidence} axis={ axis } />
       </span>
     ) : ""
@@ -20,10 +21,9 @@ export default class Snippet extends Component {
   render() {
     const alignment = this.props.pro ? "right" : "left"
     return(
-      <TableRowColumn colSpan={5} style={{textAlign: alignment}} >
-        <Link to={ this.props.path }>
-          { this.renderInnerContent() }
-        </Link>
+      <TableRowColumn colSpan={5}
+                      style={{textAlign: alignment}}>
+        { this.renderInnerContent() }
       </TableRowColumn>
     )
   }
