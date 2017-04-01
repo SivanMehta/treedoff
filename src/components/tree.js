@@ -43,12 +43,19 @@ export default class Tree extends Component {
       path: []
     }
 
-    this.modifyPath = this.modifyPath.bind(this)
+    this.advancePath = this.advancePath.bind(this)
+    this.regressPath = this.regressPath.bind(this)
   }
 
-  modifyPath(pro, index) {
+  advancePath(pro, index) {
     this.setState({
       path: this.state.path.concat((pro ? "pros" : "cons") + index)
+    })
+  }
+
+  regressPath(amt) {
+    this.setState({
+      path: this.state.path.slice(0, this.state.length - amt)
     })
   }
 
@@ -65,14 +72,14 @@ export default class Tree extends Component {
 
     return (
       <div>
-        <AppBar title="Treedoff" iconElementLeft={ <History data={ this.state }/> } />
+        <AppBar title="Treedoff" iconElementLeft={ <History data={ this.state } regress={ this.regressPath }/> } />
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
           source={ currentStatement.source }
           confidence={ currentStatement.confidence }
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
-          modifyPath={ this.modifyPath }/>
+          modifyPath={ this.advancePath }/>
       </div>
 
     )

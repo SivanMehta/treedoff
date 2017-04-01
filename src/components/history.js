@@ -17,11 +17,16 @@ export default class History extends Component {
 
     this.close = this.close.bind(this)
     this.open = this.open.bind(this)
+    this.regress = this.regress.bind(this)
     this.generateHistory = this.generateHistory.bind(this)
   }
 
   close() { this.setState({open: false}) }
   open() { this.setState({open: true}) }
+  regress(amt) {
+    this.close()
+    this.props.regress(amt)
+  }
 
   generateHistory() {
     var events = []
@@ -29,7 +34,7 @@ export default class History extends Component {
     for(var i = 0; i < this.props.data.path.length; i++) {
       events.push(
         <ListItem primaryText={ currentStatement.title }
-                  onTouchTap={ this.close }
+                  onTouchTap={ (e) => this.regress(i) }
                   key={"history-" + i}/>
       )
 
