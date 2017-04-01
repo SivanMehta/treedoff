@@ -9,7 +9,7 @@ export default class Tree extends Component {
 
   render() {
     return (
-      <Statement confidence = { 0.5 } />
+      <Statement confidence={ 0.5 } />
     )
   }
 }

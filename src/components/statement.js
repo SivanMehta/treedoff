@@ -16,7 +16,7 @@ export default class Statement extends Component {
     super(props)
 
     this.state = {
-      text: this.props.text || faker.company.catchPhrase(),
+      title: this.props.title || faker.company.catchPhrase(),
       description: this.props.description || faker.hacker.phrase(),
       confidence: this.props.confidence || Math.random(),
       pros: [],
@@ -77,7 +77,7 @@ export default class Statement extends Component {
     return (
       <div>
         <div className="App-header">
-          <h1>{ this.state.text }</h1>
+          <h1>{ this.state.name }</h1>
           <i>{ this.state.description }</i>
           <Slider defaultValue={ this.state.confidence }/>
         </div>
@@ -111,4 +111,12 @@ export default class Statement extends Component {
       </div>
     )
   }
+}
+
+Statement.propTypes = {
+  title: React.PropTypes.string,
+  description: React.PropTypes.string,
+  confidence: React.PropTypes.number,
+  pros: React.PropTypes.array,
+  cons: React.PropTypes.array
 }
