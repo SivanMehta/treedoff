@@ -7,6 +7,11 @@ import Slider from 'material-ui/Slider'
 // custom components
 import Snippet from './statement-snippet.js'
 
+function generateLink (curPath, pro, i) {
+  return (curPath.length === 0 ? "" : curPath) +
+         (pro ? "pro" : "con") + i
+}
+
 export default class Statement extends Component {
 
   renderTableBody() {
@@ -16,8 +21,14 @@ export default class Statement extends Component {
       rows.push(
         <TableRow key={i}>
           <TableHeaderColumn colSpan={1}/>
-          <Snippet pro={ true } title={ this.props.pros[i] ? this.props.pros[i].title : "" } confidence={ 0.5 } />
-          <Snippet pro={ false } title={ this.props.cons[i] ? this.props.cons[i].title : ""  } confidence={ 0.5 } />
+          <Snippet pro={ true }
+                   title={ this.props.pros[i] ? this.props.pros[i].title : "" }
+                   confidence={ this.props.pros[i] ? this.props.pros[i].confidence : 0 }
+                   path={ generateLink(this.props.path, true, i) } />
+          <Snippet pro={ false }
+                   title={ this.props.cons[i] ? this.props.cons[i].title : ""  }
+                   confidence={ this.props.cons[i] ? this.props.cons[i].confidence : 0 }
+                   path={ generateLink(this.props.path, false, i) } />
           <TableHeaderColumn colSpan={1}/>
         </TableRow>
       )
@@ -27,6 +38,7 @@ export default class Statement extends Component {
   }
 
   render() {
+
     return (
       <div>
         <div className="App-header">
@@ -57,6 +69,7 @@ Statement.propTypes = {
   description: React.PropTypes.string,
   source: React.PropTypes.string,
   confidence: React.PropTypes.number,
+  path: React.PropTypes.string,
   pros: React.PropTypes.array,
-  cons: React.PropTypes.array
+  cons: React.PropTypes.array,
 }
