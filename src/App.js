@@ -9,7 +9,7 @@ injectTapEventPlugin()
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar';
 
-import Statement from './statement.js'
+import Statement from './components/statement.js'
 
 class App extends Component {
 
@@ -18,7 +18,7 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
           <AppBar title="Treedoff" />
-          <Statement text="Overall Argument" confidence={50} description={ "This is what you want to support" }/>
+          <Statement confidence={0.5}/>
         </div>
       </MuiThemeProvider>
     )
