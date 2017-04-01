@@ -9,8 +9,10 @@ export default class Snippet extends Component {
     const axis = this.props.pro ? "x-reverse" : "x"
 
     return this.props.title ? (
-      <span onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index)  }>
-        { this.props.title }
+      <span>
+        <p onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index) } >
+          { this.props.title }
+        </p>
         <Slider defaultValue={this.props.confidence} axis={ axis } />
       </span>
     ) : ""
