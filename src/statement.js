@@ -9,16 +9,16 @@ export default class Statement extends Component {
     super(props)
 
     this.state = {
-      stripedRows: false,
-      showRowHover: false,
-      deselectOnClickaway: true
+      text: this.props.text || faker.company.catchPhrase(),
+      description: this.props.description || faker.hacker.phrase(),
+      confidence: this.props.confidence || Math.random()
     }
   }
 
   getCons() {
     var statements = []
-    for(var i = 0; i < 3; i++) {
-      statements.push(faker.hacker.phrase())
+    for(var i = 0; i < 7; i++) {
+      statements.push(faker.company.catchPhrase())
     }
 
     return statements
@@ -57,8 +57,9 @@ export default class Statement extends Component {
     return (
       <div>
         <div className="App-header">
-          <h1>{ this.props.text }</h1>
-          <i>{ this.props.description }</i>
+          <h1>{ this.state.text }</h1>
+          <i>{ this.state.description }</i>
+          <Slider defaultValue={this.state.confidence}/>
         </div>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
