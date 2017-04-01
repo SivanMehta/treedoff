@@ -55,7 +55,7 @@ export default class Tree extends Component {
 
   regressPath(amt) {
     this.setState({
-      path: this.state.path.slice(0, this.state.length - amt)
+      path: this.state.path.slice(0, amt)
     })
   }
 

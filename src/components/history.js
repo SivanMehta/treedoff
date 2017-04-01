@@ -32,9 +32,10 @@ export default class History extends Component {
     var events = []
     var currentStatement = this.props.data.tree
     for(var i = 0; i < this.props.data.path.length; i++) {
+      const k = i
       events.push(
         <ListItem primaryText={ currentStatement.title }
-                  onTouchTap={ (e) => this.regress(i) }
+                  onTouchTap={ (e) => this.regress(k) }
                   key={"history-" + i}/>
       )
 
