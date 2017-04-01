@@ -36,14 +36,16 @@ export default class Statement extends Component {
     for(var i = 0; i < num_arguments; i++) {
       rows.push(
         <TableRow key={i}>
-          <TableRowColumn style={{textAlign: 'right'}}>
+          <TableHeaderColumn colSpan={1}/>
+          <TableRowColumn colSpan={5} style={{textAlign: 'right'}}>
             { pros[i] }
             <Slider defaultValue={(num_arguments - i) / num_arguments} axis="x-reverse" />
           </TableRowColumn>
-          <TableRowColumn>
+          <TableRowColumn colSpan={5}>
             { cons[i] }
             <Slider defaultValue={(num_arguments - i) / num_arguments}/>
           </TableRowColumn>
+          <TableHeaderColumn colSpan={1}/>
         </TableRow>
       )
     }
@@ -61,7 +63,6 @@ export default class Statement extends Component {
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
-              <TableHeaderColumn colSpan={1}/>
               <TableHeaderColumn colSpan={5} style={{textAlign: 'right'}}>Pros</TableHeaderColumn>
               <TableHeaderColumn colSpan={5}>Cons</TableHeaderColumn>
               <TableHeaderColumn colSpan={1}/>
