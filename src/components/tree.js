@@ -44,6 +44,7 @@ export default class Tree extends Component {
 
   render() {
     // parse path and traverse tree accordingly
+    console.log(this.props.path);
 
     var currentStatement = this.state.tree
     for(var i = 0; i < this.state.path.length; i++) {
