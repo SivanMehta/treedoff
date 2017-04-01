@@ -6,19 +6,8 @@ injectTapEventPlugin()
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar';
 
-// react-router
-
-import {
-    BrowserRouter as Router,
-    Route
-} from 'react-router-dom'
-
 // custom components
 import Tree from './components/tree.js'
-
-const treePath = ({ match }) => (
-    <Tree path={match.params.path} />
-)
 
 class App extends Component {
 
@@ -27,12 +16,7 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
           <AppBar title="Treedoff" />
-          <Router>
-            <div>
-              <Route path="/:path" component={ treePath } />
-              <Route path="/" exact={ true } component={ treePath } />
-            </div>
-          </Router>
+          <Tree />
         </div>
       </MuiThemeProvider>
     )

@@ -14,14 +14,6 @@ function generate_fake_argument() {
   }
 }
 
-function parsePath(path) {
-  if(typeof path === "undefined") return []
-
-  var result = path.split("|")
-  result = result.map(dir => [dir.substr(0,4), dir.substr(4)])
-  return result
-}
-
 export default class Tree extends Component {
   constructor(props) {
     super(props)
@@ -43,22 +35,27 @@ export default class Tree extends Component {
     this.state = {
       tree: defaultArgument,
       // list of types (pro/con, index)
-      path: parsePath(this.props.path)
+      path: []
     }
+
+    this.modifyPath = this.modifyPath.bind(this)
   }
 
-  componentDidMount() {
-
+  modifyPath(pro, index) {
+    this.setState({
+      path: this.state.path.concat((pro ? "pros" : "cons") + index)
+    })
   }
 
   render() {
     // parse path and traverse tree accordingly
+    console.log(this.state.path)
 
     var currentStatement = this.state.tree
     for(var i = 0; i < this.state.path.length; i++) {
 
-      const prop = this.state.path[i][0]
-      const index = this.state.path[i][1]
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 
@@ -69,7 +66,7 @@ export default class Tree extends Component {
                  confidence={ currentStatement.confidence }
                  pros={ currentStatement.pros }
                  cons={ currentStatement.cons }
-                 path={ typeof this.props.path === "undefined" ? "" : this.props.path }/>
+                 modifyPath={ this.modifyPath }/>
 
     )
   }
