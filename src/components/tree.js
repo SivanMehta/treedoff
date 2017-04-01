@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
+import faker from 'faker';
 
 import Statement from './statement'
-
-import faker from 'faker';
 
 function generate_fake_argument() {
   return {
@@ -13,6 +12,14 @@ function generate_fake_argument() {
     pros: [],
     cons: []
   }
+}
+
+function parsePath(path) {
+  if(typeof path === "undefined") return []
+
+  var result = path.split("|")
+  result = result.map(dir => [dir.substr(0,4), dir.substr(4)])
+  return result
 }
 
 export default class Tree extends Component {
@@ -33,17 +40,17 @@ export default class Tree extends Component {
     defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
 
     // would be parsed from the path given by the router
-    const defaultPath = [["pros", 1]]
 
     this.state = {
       tree: defaultArgument,
       // list of types (pro/con, index)
-      path: defaultPath
+      path: parsePath(this.props.path)
     }
   }
 
   render() {
     // parse path and traverse tree accordingly
+    console.log(parsePath(this.props.path))
 
     var currentStatement = this.state.tree
     for(var i = 0; i < this.state.path.length; i++) {

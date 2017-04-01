@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin()
-
 // Material UI
+injectTapEventPlugin()
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar';
 
+// react-router
+
+import {
+    BrowserRouter as Router,
+    Route
+} from 'react-router-dom'
+
+// custom components
 import Tree from './components/tree.js'
+
+const treePath = ({ match }) => (
+    <Tree path={match.params.path} />
+)
 
 class App extends Component {
 
@@ -18,7 +27,12 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
           <AppBar title="Treedoff" />
-          <Tree />
+          <Router>
+            <div>
+              <Route path="/:path" component={ treePath } />
+              <Route path="/" exact={ true } component={ treePath } />
+            </div>
+          </Router>
         </div>
       </MuiThemeProvider>
     )

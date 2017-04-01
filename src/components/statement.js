@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 // Material UI
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
 import Slider from 'material-ui/Slider'
-import TextField from 'material-ui/TextField'
-import AddCircle from 'material-ui/svg-icons/content/add-circle';
 
 // custom components
 import Snippet from './statement-snippet.js'
@@ -26,18 +24,6 @@ export default class Statement extends Component {
     }
 
     return rows
-  }
-
-  addPro() {
-    this.setState({
-      pros: this.props.pros.concat(this.refs.addPro.input.value)
-    })
-  }
-
-  addCon() {
-    this.setState({
-      cons: this.props.cons.concat(this.refs.addCon.input.value)
-    })
   }
 
   render() {
