@@ -10,7 +10,6 @@ import AppBar from 'material-ui/AppBar';
 
 import {
     BrowserRouter as Router,
-    IndexRoute,
     Route
 } from 'react-router-dom'
 
