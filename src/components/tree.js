@@ -29,8 +29,11 @@ export default class Tree extends Component {
       cons: [1, 2].map(_ =>  generate_fake_argument())
     }
 
+    defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument())
+    defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
+
     // would be parsed from the path given by the router
-    const defaultPath = []
+    const defaultPath = [["pros", 1]]
 
     this.state = {
       tree: defaultArgument,
