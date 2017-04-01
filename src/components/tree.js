@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
-import faker from 'faker';
+import faker from 'faker'
 
+// Material UI
+import AppBar from 'material-ui/AppBar'
+
+// custom components
 import Statement from './statement'
+import History from './history'
 
 function generate_fake_argument() {
   return {
@@ -49,7 +54,6 @@ export default class Tree extends Component {
 
   render() {
     // parse path and traverse tree accordingly
-    console.log(this.state.path)
 
     var currentStatement = this.state.tree
     for(var i = 0; i < this.state.path.length; i++) {
@@ -60,13 +64,16 @@ export default class Tree extends Component {
     }
 
     return (
-      <Statement title={ currentStatement.title }
-                 description={ currentStatement.description }
-                 source={ currentStatement.source }
-                 confidence={ currentStatement.confidence }
-                 pros={ currentStatement.pros }
-                 cons={ currentStatement.cons }
-                 modifyPath={ this.modifyPath }/>
+      <div>
+        <AppBar title="Treedoff" iconElementLeft={ <History data={ this.state }/> } />
+        <Statement title={ currentStatement.title }
+          description={ currentStatement.description }
+          source={ currentStatement.source }
+          confidence={ currentStatement.confidence }
+          pros={ currentStatement.pros }
+          cons={ currentStatement.cons }
+          modifyPath={ this.modifyPath }/>
+      </div>
 
     )
   }
