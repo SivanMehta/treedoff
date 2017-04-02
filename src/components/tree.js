@@ -3,8 +3,7 @@ import faker from 'faker'
 
 // Material UI
 import AppBar from 'material-ui/AppBar'
-import IconButton from 'material-ui/IconButton'
-import SaveIcon from 'material-ui/svg-icons/content/save.js'
+import FlatButton from 'material-ui/FlatButton'
 
 // custom components
 import Statement from './statement'
@@ -163,11 +162,11 @@ export default class Tree extends Component {
         <AppBar title="Treedoff"
                 showMenuIconButton={ false }
                 iconElementRight={
-                  <IconButton
+                  <FlatButton
+                    label="Save"
                     onTouchTap={ this.saveTree }
                     style={{margin: 12}}>
-                    <SaveIcon />
-                  </IconButton>
+                  </FlatButton>
             }/>
         <History data={ this.state } regress={ this.regressPath }/>
         <Statement title={ currentStatement.title }
