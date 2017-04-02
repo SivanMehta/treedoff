@@ -13,35 +13,37 @@
         .node circle {
             fill: #fff;
             stroke: steelblue;
-            stroke-width: 3px;
         }
 
         .one {
-            stroke-width: 1px;
-        }
-        .two {
             stroke-width: 2px;
         }
-        .three {
-            stroke-width: 3px;
-        }
-        .four {
+        .two {
             stroke-width: 4px;
         }
-        .five {
-            stroke-width: 5px;
-        }
-        .six {
+        .three {
             stroke-width: 6px;
         }
-        .seven {
-            stroke-width: 7px;
-        }
-        .eight {
+        .four {
             stroke-width: 8px;
         }
+        .five {
+            stroke-width: 10px;
+        }
+        .six {
+            stroke-width: 12px;
+        }
+        .seven {
+            stroke-width: 14px;
+        }
+        .eight {
+            stroke-width: 16px;
+        }
         .nine {
-            stroke-width: 9px;
+            stroke-width: 18px;
+        }
+        .ten {
+            stroke-width: 20px;
         }
 
         .node text { font: 12px sans-serif; }
@@ -53,13 +55,14 @@
         }
 
     </style>
-
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
 
 <!-- load the d3.js library -->
-<script src="http://d3js.org/d3.v3.min.js"></script>
+
 
 <script>
 
@@ -170,8 +173,10 @@
 //        return "translate(" + d.y + "," + d.x + ")"; });
 
 
+
+
     var nodeEnter = node.enter().append("g")
-      .attr("class", "node test")
+      .attr("class", "node")
       .attr("transform", function(d) {
         return "translate(" + d.y + "," + d.x + ")"; });
 
@@ -198,6 +203,45 @@
       .attr("d", diagonal);
 
   }
+
+
+  $(document).ready(function(){
+    $(".node").each(function(index) {
+      confidence = confidenceCounter[$( this ).text()];
+      if(confidence < .1){
+        $(this).addClass('one');
+      }
+      else if(confidence < .2){
+        $(this).addClass('two');
+      }
+      else if(confidence < .3){
+        $(this).addClass('three');
+      }
+      else if(confidence < .4){
+        $(this).addClass('four');
+      }
+      else if(confidence < .5){
+        $(this).addClass('five');
+      }
+      else if(confidence < .6){
+        $(this).addClass('six');
+      }
+      else if(confidence < .7){
+        $(this).addClass('seven');
+      }
+      else if(confidence < .8){
+        $(this).addClass('eight');
+      }
+      else if(confidence < .9){
+        $(this).addClass('nine');
+      }
+      else{
+        $(this).addClass('ten');
+      }
+
+
+    })
+  });
 
 </script>
 
