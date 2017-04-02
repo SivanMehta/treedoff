@@ -3,6 +3,8 @@ import faker from 'faker'
 
 // Material UI
 import AppBar from 'material-ui/AppBar'
+import RaisedButton from 'material-ui/RaisedButton'
+import FontIcon from 'material-ui/FontIcon'
 
 // custom components
 import Statement from './statement'
@@ -49,6 +51,18 @@ export default class Tree extends Component {
       .then(res => res.json())
       .then(data => this.setState({tree: data}))
       .catch(() => console.log("Could not fetch data =("));
+  }
+
+  // https://www.youtube.com/watch?v=1LI81cWh3Fs
+  saveTree = () => {
+    fetch('/api/tree', {
+      credentials: 'same-origin',
+      body: JSON.stringify(this.state.tree),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => console.log(res.status))
   }
 
   advancePath = (pro, index) => {
@@ -147,7 +161,17 @@ export default class Tree extends Component {
 
     return (
       <div>
-        <AppBar title="Treedoff" iconElementLeft={ <History data={ this.state } regress={ this.regressPath }/> } />
+        <AppBar title="Treedoff"
+                iconElementLeft={ <History data={ this.state } regress={ this.regressPath }/> }
+                iconElementRight={
+                  <RaisedButton
+                    label="Save"
+                    onTouchTap={ this.saveTree }
+                    secondary={true}
+                    style={{margin: 12}}
+                    icon={<FontIcon className="muidocs-icon-custom-github" />}
+                  />
+            }/>
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
           source={ currentStatement.source }
