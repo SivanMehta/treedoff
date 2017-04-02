@@ -20,14 +20,16 @@ var database = {
   cons: "a".repeat(5).split('a').map(_ =>  generate_fake_argument())
 }
 
-database.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument());
-database.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument());
+database.pros[0].pros = [1, 2, 3].map(_ =>  generate_fake_argument())
+database.pros[0].cons = [1, 2].map(_ =>  generate_fake_argument())
+database.pros[0].pros[0] = [1, 2, 3].map(_ =>  generate_fake_argument())
 
 function persist(req, res) {
   // literally just replace it for know
   database = Object.assign({}, req.body)
   res.sendStatus(200)
-  console.log(database)
+
+  // console.log(JSON.stringify(database))
 }
 
 function getTree(req, res) {

@@ -7,7 +7,6 @@ import {
 import App from './App';
 import './index.css';
 import AddArg from './components/add-arg.js';
-import TreeVis from './components/tree-vis.js'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -41,7 +40,6 @@ ReactDOM.render(
         <Route exact path='/' component={AddArg}/>
         <Route exact path='/trav/:arg_name' component={App}/>
         <Route exact path='/trav'component={App}/>
-        <Route path='/tree' component={TreeVis}/>
       </div>
     </MuiThemeProvider>
   </Router>,
