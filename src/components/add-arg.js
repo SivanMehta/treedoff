@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Label from '../front-logo-leaf.svg'
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+// Material UI
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
-import '../App.css'
+// grid
+import { Grid, Row, Col } from 'react-flexbox-grid'
 
-import {
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const styles = {
   underlineStyle: {
@@ -28,22 +28,35 @@ class AddArg extends Component {
 
   render() {
     return (
-      <div>
-        <img src={Label} className="App-logo center" alt="logo" />
-        <br/>
-        <div className="center">
-          <TextField
-            onChange={ (e, v) => this.setState({arg: v}) }
-            hintText="Search"
-            underlineFocusStyle={styles.underlineStyle}
-          />
-        </div>
-        <div>
-          <Link to={'/trav/' + this.state.arg}>
-            <RaisedButton>Go to Arguement</RaisedButton>
-          </Link>
-        </div>
-      </div>
+      <Grid>
+        <Row style={{"margin-top": "35px"}}>
+          <Col sm={4}/>
+          <Col sm={4} xs={12}>
+            <img src={Label} className="App-logo center" alt="logo" />
+          </Col>
+          <Col sm={4} />
+        </Row>
+        <Row style={{"text-align": "center"}}>
+          <Col sm={5} xs={0}/>
+          <Col sm={2} xs={12}>
+            <TextField
+              onChange={ (e, v) => this.setState({arg: v}) }
+              hintText="Search for Arguments"
+              underlineFocusStyle={styles.underlineStyle}
+              />
+          </Col>
+          <Col sm={5} />
+        </Row>
+        <Row style={{"text-align": "center"}}>
+          <Col sm={5} xs={0}/>
+          <Col sm={2} xs={12}>
+            <Link to={'/trav/' + this.state.arg}>
+              <RaisedButton>Treedoff</RaisedButton>
+            </Link>
+          </Col>
+          <Col sm={5} />
+        </Row>
+      </Grid>
     )
   }
 }
