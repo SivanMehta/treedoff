@@ -29,8 +29,8 @@ export default class Tree extends Component {
       description: faker.lorem.paragraphs(3),
       confidence: .923,
       source: "lol.not",
-      pros: ("a".repeat(5).split("a")).map(_ =>  generate_fake_argument()),
-      cons: ("a".repeat(4).split("a")).map(_ =>  generate_fake_argument())
+      pros: "a".repeat(5).split("a").map(_ =>  generate_fake_argument()),
+      cons: "a".repeat(4).split("a").map(_ =>  generate_fake_argument())
     }
 
     defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument())

@@ -66,14 +66,14 @@ export default class Statement extends Component {
         <div className="App-header" style={{"padding" : "0px 15px"}}>
           <h1>{ this.props.title }</h1>
           <i>{ this.props.description }</i>
+          { this.renderProgress() }
           <Toggle
-            label="Editing Confidence"
+            label = "Edit Confidence"
             labelPosition="right"
             onToggle={ (e, v) => this.setState({editing: v}) }
             defaultToggled={ this.state.editing }
-            style={{"text-align" : "center"}}
+            style={{"margin-left" : "auto", "margin-right" : "auto", width: "20%"}}
           />
-          { this.renderProgress() }
         </div>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
