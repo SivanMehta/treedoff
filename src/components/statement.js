@@ -3,11 +3,26 @@ import React, { Component } from 'react'
 // Material UI
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
 import Slider from 'material-ui/Slider'
+import LinearProgress from 'material-ui/LinearProgress'
+import Toggle from 'material-ui/Toggle'
 
 // custom components
 import Snippet from './statement-snippet.js'
 
 export default class Statement extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      confidence: this.props.confidence,
+      editing: false
+    }
+  }
+
+  setConfidence = (event, value) => {
+    this.props.setConfidence(value)
+  }
 
   renderTableBody() {
     var rows = []
@@ -37,22 +52,34 @@ export default class Statement extends Component {
     return rows
   }
 
-  render() {
+  renderProgress = () => {
+    return this.state.editing ? (
+      <Slider value={ 0.5 } onChange={this.setConfidence}/>
+    ) : (
+      <LinearProgress mode="determinate" value={ this.props.confidence * 100 }/>
+    )
+  }
 
+  render() {
     return (
       <div>
-        <div className="App-header">
+        <div className="App-header" style={{"padding" : "0px 15px"}}>
           <h1>{ this.props.title }</h1>
           <i>{ this.props.description }</i>
-          <Slider defaultValue={ this.props.confidence }/>
+          { this.renderProgress() }
+          <Toggle
+            label = "Edit Confidence"
+            labelPosition="right"
+            onToggle={ (e, v) => this.setState({editing: v}) }
+            defaultToggled={ this.state.editing }
+            style={{"margin-left" : "auto", "margin-right" : "auto", width: "20%"}}
+          />
         </div>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
-              <TableHeaderColumn colSpan={1}/>
-              <TableHeaderColumn colSpan={5} style={{textAlign: 'right'}}>Pros</TableHeaderColumn>
-              <TableHeaderColumn colSpan={5}>Cons</TableHeaderColumn>
-              <TableHeaderColumn colSpan={1}/>
+              <TableHeaderColumn colSpan={6}>Pros</TableHeaderColumn>
+              <TableHeaderColumn colSpan={6}>Cons</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
