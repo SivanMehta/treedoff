@@ -43,6 +43,7 @@ export default class Statement extends Component {
       )
     }
     this.refs[(pro ? "addPro" : "addCon")].input.value = ""
+    return false
   }
 
   renderPros = () => {
@@ -125,7 +126,6 @@ export default class Statement extends Component {
         </Row>
         <Row>
           <Col xs={12}>
-            { this.renderProgress() }
             <Toggle
               label="Edit Confidence"
               labelPosition="right"
@@ -133,14 +133,21 @@ export default class Statement extends Component {
               defaultToggled={ this.state.editing }
               style={{marginLeft : "auto", marginRight : "auto", width: "20%"}}
               />
+            { this.renderProgress() }
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12} sm={6}>
             <List>
               <ListItem primaryText="Pros" disabled={true} />
               <Divider />
               { this.renderPros() }
+              <ListItem disabled={true}
+                leftIcon={
+                  <AddCircle onTouchTap={ () => this.addStatement(true) }
+                             hoverColor="green"/>}>
+                <TextField ref="addPro" floatingLabelText="Add a Pro"/>
+              </ListItem>
             </List>
           </Col>
           <Col xs={12} sm={6}>
@@ -148,6 +155,11 @@ export default class Statement extends Component {
               <ListItem primaryText="Cons" disabled={true} />
               <Divider />
               { this.renderCons() }
+              <ListItem disabled={true}
+                leftIcon={<RemoveCircle onTouchTap={ () => this.addStatement(false) }
+                                        hoverColor="red"/>}>
+                <TextField ref="addCon" floatingLabelText="Add a Con"/>
+              </ListItem>
             </List>
           </Col>
         </Row>

@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import {TableRowColumn} from 'material-ui/Table'
 import LinearProgress from 'material-ui/LinearProgress'
 
 export default class Snippet extends Component {
 
   render() {
-    const alignment = this.props.pro ? "right" : "left"
     const color = "rgb(" +
     (this.props.pro ? 0 : parseInt(this.props.confidence * 255, 10)) + ",0," +
     (this.props.pro ? parseInt(this.props.confidence * 255, 10) : 0) + ")"
