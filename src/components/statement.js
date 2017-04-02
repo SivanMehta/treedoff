@@ -49,10 +49,8 @@ export default class Statement extends Component {
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
-              <TableHeaderColumn colSpan={1}/>
-              <TableHeaderColumn colSpan={5} style={{textAlign: 'right'}}>Pros</TableHeaderColumn>
-              <TableHeaderColumn colSpan={5}>Cons</TableHeaderColumn>
-              <TableHeaderColumn colSpan={1}/>
+              <TableHeaderColumn colSpan={6}>Pros</TableHeaderColumn>
+              <TableHeaderColumn colSpan={6}>Cons</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
