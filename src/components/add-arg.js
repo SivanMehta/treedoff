@@ -19,21 +19,19 @@ class AddArg extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
-        <div>
-          <img src={Label} className="App-logo center" alt="logo" />
-          <br/>
-          <div className="center">
-            <TextField
-              hintText="Custom Underline Focus Color"
-              underlineFocusStyle={styles.underlineStyle}
-            />
-          </div>
-          <div className="centerButton">
-            <RaisedButton label="Input" />
-          </div>
+      <div>
+        <img src={Label} className="App-logo center" alt="logo" />
+        <br/>
+        <div className="center">
+          <TextField
+            hintText="Custom Underline Focus Color"
+            underlineFocusStyle={styles.underlineStyle}
+          />
         </div>
-      </MuiThemeProvider>
+        <div className="centerButton">
+          <RaisedButton label="Input" />
+        </div>
+      </div>
     )
   }
 }

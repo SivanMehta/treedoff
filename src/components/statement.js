@@ -22,7 +22,7 @@ export default class Statement extends Component {
 
     this.state = {
       confidence: this.props.confidence,
-      editing: false
+      editing: true
     }
   }
 
@@ -72,7 +72,7 @@ export default class Statement extends Component {
     return this.state.editing ? (
       <Slider value={ 0.5 } onChange={this.setConfidence}/>
     ) : (
-      <LinearProgress mode="determinate" value={ this.props.confidence * 100 }/>
+      <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color='#00c04A'/>
     )
   }
 

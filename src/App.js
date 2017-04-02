@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
 
 
 // custom components
@@ -9,9 +9,7 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
-        <Tree />
-      </MuiThemeProvider>
+      <Tree />
     )
   }
 }
