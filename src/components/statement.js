@@ -116,13 +116,13 @@ export default class Statement extends Component {
             />
         </Row>
         <Row>
-          Source: <InlineEdit
-                    paramName="source"
-                    className="input-source"
-                    activeClassName="input-source"
-                    text={ " " + this.props.source }
-                    change={ this.props.setSource }
-                    />
+          <InlineEdit
+            paramName="source"
+            className="input-source"
+            activeClassName="input-source"
+            text={ this.props.source ? this.props.source : "Please enter a source" }
+            change={ this.props.setSource }
+            />
         </Row>
         <Row>
           <Col xs={12}>

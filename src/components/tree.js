@@ -15,7 +15,7 @@ function generate_fake_argument(title, amt) {
     title: title ? title : faker.company.catchPhrase() ,
     description: faker.hacker.phrase(),
     confidence: amt ? amt : Math.random(),
-    source: faker.internet.url(),
+    source: "",
     pros: [],
     cons: []
   }
