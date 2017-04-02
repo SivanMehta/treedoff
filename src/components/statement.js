@@ -52,8 +52,11 @@ export default class Statement extends Component {
     const pros = this.props.pros.sort(byConfidence)
     const num_arguments = pros.length
     for(var i = 0; i < num_arguments; i++) {
+      const k = i
       rows.push(
-        <ListItem key={i} leftIcon={<AddCircle />}>
+        <ListItem key={i} leftIcon={
+            <RemoveCircle onTouchTap={ () => this.props.removeStatement(true, k) }/>
+          }>
           <Snippet pro={ true }
                    title={ pros[i] ? pros[i].title : "" }
                    confidence={ pros[i] ? pros[i].confidence : 0 }
@@ -72,8 +75,11 @@ export default class Statement extends Component {
     const cons = this.props.cons.sort(byConfidence)
     const num_arguments = cons.length
     for(var i = 0; i < num_arguments; i++) {
+      const k = i
       rows.push(
-        <ListItem key={i} leftIcon={<RemoveCircle />}>
+        <ListItem key={i} leftIcon={
+            <RemoveCircle onTouchTap={ () => this.props.removeStatement(false, k) }/>
+          }>
           <Snippet pro={ false }
                    title={ cons[i] ? cons[i].title : "" }
                    confidence={ cons[i] ? cons[i].confidence : 0 }
@@ -161,7 +167,7 @@ export default class Statement extends Component {
               <Divider />
               { this.renderCons() }
               <ListItem disabled={true}
-                leftIcon={<RemoveCircle onTouchTap={ () => this.addStatement(false) }
+                leftIcon={<AddCircle onTouchTap={ () => this.addStatement(false) }
                                         hoverColor="red"/>}>
                 <TextField ref="addCon" floatingLabelText="Add a Con"/>
               </ListItem>

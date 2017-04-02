@@ -147,6 +147,24 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
+  removeStatement = (pro, index) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+
+    const cat = pro ? "pros" : "cons"
+
+    currentStatement[cat] = currentStatement[cat].slice(0, index)
+      .concat(currentStatement[cat].slice(index + 1, currentStatement[cat].length))
+    this.setState({tree: copiedTree})
+  }
+
   render() {
     // parse path and traverse tree accordingly
     var currentStatement = this.state.tree
@@ -180,7 +198,8 @@ export default class Tree extends Component {
           addStatement={ this.addStatement }
           setDescription={ this.setDescription }
           setSource={ this.setSource }
-          setTitle={ this.setTitle }/>
+          setTitle={ this.setTitle }
+          removeStatement={ this.removeStatement }/>
       </div>
 
     )
