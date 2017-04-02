@@ -25,16 +25,16 @@ export default class Tree extends Component {
 
     // would be fetched from the api
     const defaultArgument = {
-      title: "Apples are better than oranges",
-      description: faker.lorem.paragraphs(3),
-      confidence: .923,
+      title: "Waiting for server response...",
+      description: "Patience, young padawan",
+      confidence: .999,
       source: "lol.not",
-      pros: "a".repeat(5).split("a").map(_ =>  generate_fake_argument()),
-      cons: "a".repeat(4).split("a").map(_ =>  generate_fake_argument())
+      pros: [],
+      cons: []
     }
 
-    defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument())
-    defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
+    // defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument())
+    // defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
 
     // would be parsed from the path given by the router
     this.state = {
@@ -42,6 +42,13 @@ export default class Tree extends Component {
       // list of types (pro/con, index)
       path: []
     }
+  }
+
+  componentDidMount() {
+    fetch("/api")
+      .then(res => res.json())
+      .then(data => this.setState({tree: data}))
+      .catch(() => console.log("Could not fetch data =("));
   }
 
   advancePath = (pro, index) => {
@@ -70,6 +77,49 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
+  setDescription = (data) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+    currentStatement.description = data.description
+    this.setState({tree: copiedTree})
+  }
+
+  setSource = (data) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+    currentStatement.source = data.source
+    this.setState({tree: copiedTree})
+  }
+
+  setTitle = (data) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+
+    currentStatement.title = data.title
+    this.setState({tree: copiedTree})
+  }
+
   addStatement = (pro, statement) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
@@ -87,7 +137,6 @@ export default class Tree extends Component {
 
   render() {
     // parse path and traverse tree accordingly
-
     var currentStatement = this.state.tree
     for(var i = 0; i < this.state.path.length; i++) {
 
@@ -107,7 +156,10 @@ export default class Tree extends Component {
           cons={ currentStatement.cons }
           modifyPath={ this.advancePath }
           setConfidence={ this.setConfidence }
-          addStatement={ this.addStatement }/>
+          addStatement={ this.addStatement }
+          setDescription={ this.setDescription }
+          setSource={ this.setSource }
+          setTitle={ this.setTitle }/>
       </div>
 
     )
