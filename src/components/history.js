@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 // Material UI
 import RaisedButton from 'material-ui/RaisedButton';
-import HistoryIcon from 'material-ui/svg-icons/action/history.js'
+import UndoIcon from 'material-ui/svg-icons/content/undo.js'
 
 export default class History extends Component {
 
@@ -18,9 +18,9 @@ export default class History extends Component {
       events.push(
           <RaisedButton
             label={currentStatement.title}
-            labelPosition="after"
+            labelPosition="before"
             primary={true}
-            icon={<HistoryIcon />}
+            icon={<UndoIcon />}
             onTouchTap={ (e) => this.regress(k) }
             key={"history-" + i}
       />
