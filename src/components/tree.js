@@ -25,16 +25,16 @@ export default class Tree extends Component {
 
     // would be fetched from the api
     const defaultArgument = {
-      title: "Apples are better than oranges",
-      description: faker.lorem.paragraphs(3),
-      confidence: .923,
+      title: "Waiting for server response...",
+      description: "Patience, young padawan",
+      confidence: .999,
       source: "lol.not",
-      pros: "a".repeat(5).split("a").map(_ =>  generate_fake_argument()),
-      cons: "a".repeat(4).split("a").map(_ =>  generate_fake_argument())
+      pros: [],
+      cons: []
     }
 
-    defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument())
-    defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
+    // defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument())
+    // defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
 
     // would be parsed from the path given by the router
     this.state = {
@@ -42,6 +42,12 @@ export default class Tree extends Component {
       // list of types (pro/con, index)
       path: []
     }
+  }
+
+  componentDidMount() {
+    fetch("/api")
+      .then(res => res.json())
+      .then(data => this.setState({tree: data}))
   }
 
   advancePath = (pro, index) => {
