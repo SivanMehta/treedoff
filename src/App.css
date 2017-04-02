@@ -1,3 +1,22 @@
 .container {
   width: 70%
 }
+
+.center{
+  display:block;
+  margin:auto;
+  width:13%;
+}
+
+.centerButton{
+  display:block;
+  margin:auto;
+  width:4%;
+}
+
+.App-logo{
+  width: 20%;
+  height: 25%;
+  display:block;
+  margin:auto;
+}
