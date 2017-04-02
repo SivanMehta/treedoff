@@ -9,6 +9,19 @@ import Snippet from './statement-snippet.js'
 
 export default class Statement extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      confidence: this.props.confidence
+    }
+  }
+
+  setConfidence = (event, value) => {
+    this.setState({confidence: value})
+  };
+
+
   renderTableBody() {
     var rows = []
     var byConfidence = (b, a) => (a.confidence - b.confidence)
@@ -44,7 +57,7 @@ export default class Statement extends Component {
         <div className="App-header">
           <h1>{ this.props.title }</h1>
           <i>{ this.props.description }</i>
-          <Slider defaultValue={ this.props.confidence }/>
+          <Slider value={ this.state.confidence } onChange={this.setConfidence}/>
         </div>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
