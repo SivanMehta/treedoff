@@ -7,16 +7,15 @@ export default class Snippet extends Component {
   renderInnerContent() {
 
     const color = "rgb(" +
-      (this.props.pro ? 0 : parseInt(this.props.confidence * 255)) + ",0," +
-      (this.props.pro ? parseInt(this.props.confidence * 255) : 0) + ")"
+      (this.props.pro ? 0 : parseInt(this.props.confidence * 255, 10)) + ",0," +
+      (this.props.pro ? parseInt(this.props.confidence * 255, 10) : 0) + ")"
 
-    const axis = this.props.pro ? "x-reverse" : "x"
     return this.props.title ? (
       <span>
         <p onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index) } >
           { this.props.title }
         </p>
-        <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color= { color }/>
+        <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color={ color }/>
       </span>
     ) : ""
 
@@ -25,8 +24,7 @@ export default class Snippet extends Component {
   render() {
     const alignment = this.props.pro ? "right" : "left"
     return(
-      <TableRowColumn colSpan={5}
-                      style={{textAlign: alignment}}>
+      <TableRowColumn colSpan={5} style={{textAlign: alignment}}>
         { this.renderInnerContent() }
       </TableRowColumn>
     )

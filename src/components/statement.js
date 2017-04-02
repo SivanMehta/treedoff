@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 // Material UI
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
 import Slider from 'material-ui/Slider'
+import LinearProgress from 'material-ui/LinearProgress'
+import Toggle from 'material-ui/Toggle'
 
 // custom components
 import Snippet from './statement-snippet.js'
@@ -13,7 +15,8 @@ export default class Statement extends Component {
     super(props)
 
     this.state = {
-      confidence: this.props.confidence
+      confidence: this.props.confidence,
+      editing: false
     }
   }
 
@@ -49,14 +52,27 @@ export default class Statement extends Component {
     return rows
   }
 
-  render() {
+  renderProgress = () => {
+    return this.state.editing ? (
+      <Slider value={ 0.5 } onChange={this.setConfidence}/>
+    ) : (
+      <LinearProgress mode="determinate" value={ this.props.confidence * 100 }/>
+    )
+  }
 
+  render() {
     return (
       <div>
         <div className="App-header">
           <h1>{ this.props.title }</h1>
           <i>{ this.props.description }</i>
-          <Slider value={ this.state.confidence } onChange={this.setConfidence}/>
+          <Toggle
+            label="Editing Confidence"
+            labelPosition="right"
+            onToggle={ (e, v) => this.setState({editing: v}) }
+            defaultToggled={ this.state.editing }
+          />
+          { this.renderProgress() }
         </div>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
