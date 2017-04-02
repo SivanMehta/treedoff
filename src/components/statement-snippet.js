@@ -1,32 +1,20 @@
 import React, { Component } from 'react'
-import {TableRowColumn} from 'material-ui/Table'
 import LinearProgress from 'material-ui/LinearProgress'
 
 export default class Snippet extends Component {
 
-  renderInnerContent() {
-
+  render() {
     const color = "rgb(" +
-      (this.props.pro ? 0 : parseInt(this.props.confidence * 255, 10)) + ",0," +
-      (this.props.pro ? parseInt(this.props.confidence * 255, 10) : 0) + ")"
+    (this.props.pro ? 0 : parseInt(this.props.confidence * 255, 10)) + ",0," +
+    (this.props.pro ? parseInt(this.props.confidence * 255, 10) : 0) + ")"
 
-    return this.props.title ? (
+    return(
       <span>
-        <p onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index) } >
+        <span onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index) } >
           { this.props.title }
-        </p>
+        </span>
         <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color={ color }/>
       </span>
-    ) : ""
-
-  }
-
-  render() {
-    const alignment = this.props.pro ? "right" : "left"
-    return(
-      <TableRowColumn colSpan={5} style={{textAlign: alignment}}>
-        { this.renderInnerContent() }
-      </TableRowColumn>
     )
   }
 }
