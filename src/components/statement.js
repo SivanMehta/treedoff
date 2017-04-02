@@ -6,7 +6,11 @@ import Slider from 'material-ui/Slider'
 import LinearProgress from 'material-ui/LinearProgress'
 import Toggle from 'material-ui/Toggle'
 import TextField from 'material-ui/TextField'
-import AddCircle from 'material-ui/svg-icons/content/add-circle';
+import AddCircle from 'material-ui/svg-icons/content/add-circle'
+
+// Inline Editing
+import InlineEdit from 'react-edit-inline'
+import './statement.css'
 
 // custom components
 import Snippet from './statement-snippet.js'
@@ -77,7 +81,12 @@ export default class Statement extends Component {
       <div>
         <div className="App-header" style={{"padding" : "0px 15px"}}>
           <h1>{ this.props.title }</h1>
-          <i>{ this.props.description }</i>
+          <InlineEdit
+              paramName="description"
+              activeClassName="input-text"
+              text={ this.props.description }
+              change={ this.props.setDescription }
+            />
           { this.renderProgress() }
           <Toggle
             label="Edit Confidence"
@@ -124,7 +133,8 @@ Statement.propTypes = {
   confidence: React.PropTypes.number,
   modifyPath: React.PropTypes.func,
   setConfidence: React.PropTypes.func,
+  setDescription: React.PropTypes.func,
   addStatement: React.PropTypes.func,
   pros: React.PropTypes.array,
-  cons: React.PropTypes.array,
+  cons: React.PropTypes.array
 }

@@ -10,6 +10,7 @@
     "morgan": "^1.8.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-edit-inline": "^1.0.8",
     "react-router-dom": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1"
   },

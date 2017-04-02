@@ -48,6 +48,7 @@ export default class Tree extends Component {
     fetch("/api")
       .then(res => res.json())
       .then(data => this.setState({tree: data}))
+      .catch(() => console.log("Could not fetch data =("));
   }
 
   advancePath = (pro, index) => {
@@ -76,6 +77,20 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
+  setDescription = (data) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+    currentStatement.description = data.description
+    this.setState({tree: copiedTree})
+  }
+
   addStatement = (pro, statement) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
@@ -93,7 +108,6 @@ export default class Tree extends Component {
 
   render() {
     // parse path and traverse tree accordingly
-
     var currentStatement = this.state.tree
     for(var i = 0; i < this.state.path.length; i++) {
 
@@ -113,7 +127,8 @@ export default class Tree extends Component {
           cons={ currentStatement.cons }
           modifyPath={ this.advancePath }
           setConfidence={ this.setConfidence }
-          addStatement={ this.addStatement }/>
+          addStatement={ this.addStatement }
+          setDescription={ this.setDescription }/>
       </div>
 
     )
