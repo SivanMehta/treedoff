@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 
 // Material UI
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table'
 import Slider from 'material-ui/Slider'
+import {List, ListItem} from 'material-ui/List';
 import LinearProgress from 'material-ui/LinearProgress'
 import Toggle from 'material-ui/Toggle'
 import TextField from 'material-ui/TextField'
 import AddCircle from 'material-ui/svg-icons/content/add-circle'
+import RemoveCircle from 'material-ui/svg-icons/content/remove-circle'
+import Divider from 'material-ui/Divider'
+
+// grid
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 // Inline Editing
 import InlineEdit from 'react-edit-inline'
@@ -40,28 +45,40 @@ export default class Statement extends Component {
     this.refs[(pro ? "addPro" : "addCon")].input.value = ""
   }
 
-  renderTableBody() {
+  renderPros = () => {
     var rows = []
     var byConfidence = (b, a) => (a.confidence - b.confidence)
     const pros = this.props.pros.sort(byConfidence)
-    const cons = this.props.cons.sort(byConfidence)
-    const num_arguments = Math.max(pros.length, cons.length)
+    const num_arguments = pros.length
     for(var i = 0; i < num_arguments; i++) {
       rows.push(
-        <TableRow key={i}>
-          <TableHeaderColumn colSpan={1}/>
+        <ListItem key={i} leftIcon={<AddCircle />}>
           <Snippet pro={ true }
                    title={ pros[i] ? pros[i].title : "" }
                    confidence={ pros[i] ? pros[i].confidence : 0 }
                    modifyPath={ this.props.modifyPath }
                    index={ i }/>
+        </ListItem>
+      )
+    }
+
+    return rows
+  }
+
+  renderCons = () => {
+    var rows = []
+    var byConfidence = (b, a) => (a.confidence - b.confidence)
+    const cons = this.props.cons.sort(byConfidence)
+    const num_arguments = cons.length
+    for(var i = 0; i < num_arguments; i++) {
+      rows.push(
+        <ListItem key={i} leftIcon={<RemoveCircle />}>
           <Snippet pro={ false }
-                   title={ cons[i] ? cons[i].title : ""  }
+                   title={ cons[i] ? cons[i].title : "" }
                    confidence={ cons[i] ? cons[i].confidence : 0 }
                    modifyPath={ this.props.modifyPath }
-                   index={ i } />
-          <TableHeaderColumn colSpan={1}/>
-        </TableRow>
+                   index={ i }/>
+        </ListItem>
       )
     }
 
@@ -78,70 +95,63 @@ export default class Statement extends Component {
 
   render() {
     return (
-      <div>
-        <div className="App-header" style={{"padding" : "0px 15px"}}>
-          <h1>
-            <InlineEdit
+      <Grid>
+        <Row>
+          <h1><InlineEdit
               paramName="title"
               className="input-title"
               activeClassName="input-title"
               text={ this.props.title }
-              change={ this.props.setTitle }
+              change={ this.props.setTitle } />
+          </h1>
+        </Row>
+        <Row>
+          <InlineEdit
+            paramName="description"
+            className="input-description"
+            activeClassName="input-description"
+            text={ this.props.description }
+            change={ this.props.setDescription }
             />
-            </h1>
-            <p>
-              <InlineEdit
-                paramName="description"
-                className="input-description"
-                activeClassName="input-description"
-                text={ this.props.description }
-                change={ this.props.setDescription }
-                />
-            </p>
-            <p>Source:
-              <InlineEdit
-                paramName="source"
-                className="input-source"
-                activeClassName="input-source"
-                text={ " " + this.props.source }
-                change={ this.props.setSource }
-                />
-            </p>
-          { this.renderProgress() }
-          <Toggle
-            label="Edit Confidence"
-            labelPosition="right"
-            onToggle={ (e, v) => this.setState({editing: v}) }
-            defaultToggled={ this.state.editing }
-            style={{marginLeft : "auto", marginRight : "auto", width: "20%"}}
-          />
-        </div>
-        <Table selectable={false}>
-          <TableHeader displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn colSpan={6}>Pros</TableHeaderColumn>
-              <TableHeaderColumn colSpan={6}>Cons</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            { this.renderTableBody() }
-            <TableRow>
-              <TableHeaderColumn colSpan={1}/>
-              <TableHeaderColumn colSpan={5}>
-                <AddCircle hoverColor="green" onClick={ () => this.addStatement(true) }/>
-                <TextField hintText="Add a Pro"
-  	                           style={{textAlign: 'right'}}
-  	                           ref="addPro"/>
-              </TableHeaderColumn>
-              <TableHeaderColumn colSpan={5}>
-                <TextField hintText="Add a Con" ref="addCon" />
-                <AddCircle hoverColor="red" onClick={ () => this.addStatement(false) }/>
-              </TableHeaderColumn>
-              <TableHeaderColumn colSpan={1}/>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+        </Row>
+        <Row>
+          Source: <InlineEdit
+                    paramName="source"
+                    className="input-source"
+                    activeClassName="input-source"
+                    text={ " " + this.props.source }
+                    change={ this.props.setSource }
+                    />
+        </Row>
+        <Row>
+          <Col xs={12}>
+            { this.renderProgress() }
+            <Toggle
+              label="Edit Confidence"
+              labelPosition="right"
+              onToggle={ (e, v) => this.setState({editing: v}) }
+              defaultToggled={ this.state.editing }
+              style={{marginLeft : "auto", marginRight : "auto", width: "20%"}}
+              />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <List>
+              <ListItem primaryText="Pros" disabled={true} />
+              <Divider />
+              { this.renderPros() }
+            </List>
+          </Col>
+          <Col xs={12} sm={6}>
+            <List>
+              <ListItem primaryText="Cons" disabled={true} />
+              <Divider />
+              { this.renderCons() }
+            </List>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }
