@@ -8,15 +8,18 @@ const path = require('path')
 // Setup logger
 app.use(morgan('dev'));
 
+// parsing
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 
-// api definition
+// api definitions
 const api = require('./api')
-
-app.get('/api', function (req, res) {
-    res.send(api.defaultArgument)
-});
+app.get('/api', api.getTree)
+app.post('/api/tree', api.persist)
 
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Label from '../front-logo-leaf.svg'
 
 import TextField from 'material-ui/TextField';
@@ -34,7 +33,7 @@ class AddArg extends Component {
         <br/>
         <div className="center">
           <TextField
-            onChange = { (e, v) => this.setState({arg: v}) }
+            onChange={ (e, v) => this.setState({arg: v}) }
             hintText="Search"
             underlineFocusStyle={styles.underlineStyle}
           />
