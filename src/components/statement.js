@@ -5,6 +5,8 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'materi
 import Slider from 'material-ui/Slider'
 import LinearProgress from 'material-ui/LinearProgress'
 import Toggle from 'material-ui/Toggle'
+import TextField from 'material-ui/TextField'
+import AddCircle from 'material-ui/svg-icons/content/add-circle';
 
 // custom components
 import Snippet from './statement-snippet.js'
@@ -22,6 +24,16 @@ export default class Statement extends Component {
 
   setConfidence = (event, value) => {
     this.props.setConfidence(value)
+  }
+
+  addStatement = (pro) => {
+    if(this.refs[(pro ? "addPro" : "addCon")].input.value.length !== 0) {
+      this.props.addStatement(
+        pro,
+        this.refs[(pro ? "addPro" : "addCon")].input.value
+      )
+    }
+    this.refs[(pro ? "addPro" : "addCon")].input.value = ""
   }
 
   renderTableBody() {
@@ -68,11 +80,11 @@ export default class Statement extends Component {
           <i>{ this.props.description }</i>
           { this.renderProgress() }
           <Toggle
-            label = "Edit Confidence"
+            label="Edit Confidence"
             labelPosition="right"
             onToggle={ (e, v) => this.setState({editing: v}) }
             defaultToggled={ this.state.editing }
-            style={{"margin-left" : "auto", "margin-right" : "auto", width: "20%"}}
+            style={{marginLeft : "auto", marginRight : "auto", width: "20%"}}
           />
         </div>
         <Table selectable={false}>
@@ -84,6 +96,20 @@ export default class Statement extends Component {
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             { this.renderTableBody() }
+            <TableRow>
+              <TableHeaderColumn colSpan={1}/>
+              <TableHeaderColumn colSpan={5}>
+                <AddCircle hoverColor="green" onClick={ () => this.addStatement(true) }/>
+                <TextField hintText="Add a Pro"
+  	                           style={{textAlign: 'right'}}
+  	                           ref="addPro"/>
+              </TableHeaderColumn>
+              <TableHeaderColumn colSpan={5}>
+                <TextField hintText="Add a Con" ref="addCon" />
+                <AddCircle hoverColor="red" onClick={ () => this.addStatement(false) }/>
+              </TableHeaderColumn>
+              <TableHeaderColumn colSpan={1}/>
+            </TableRow>
           </TableBody>
         </Table>
       </div>
@@ -97,6 +123,8 @@ Statement.propTypes = {
   source: React.PropTypes.string,
   confidence: React.PropTypes.number,
   modifyPath: React.PropTypes.func,
+  setConfidence: React.PropTypes.func,
+  addStatement: React.PropTypes.func,
   pros: React.PropTypes.array,
   cons: React.PropTypes.array,
 }

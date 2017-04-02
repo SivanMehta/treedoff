@@ -8,11 +8,11 @@ import AppBar from 'material-ui/AppBar'
 import Statement from './statement'
 import History from './history'
 
-function generate_fake_argument() {
+function generate_fake_argument(title, amt) {
   return {
-    title: faker.company.catchPhrase(),
+    title: title ? title : faker.company.catchPhrase() ,
     description: faker.hacker.phrase(),
-    confidence: Math.random(),
+    confidence: amt ? amt : Math.random(),
     source: faker.internet.url(),
     pros: [],
     cons: []
@@ -70,6 +70,21 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
+  addStatement = (pro, statement) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+    currentStatement[pro ? "pros" : "cons"] = currentStatement[pro ? "pros" : "cons"]
+      .concat(generate_fake_argument(statement, .01))
+    this.setState({tree: copiedTree})
+  }
+
   render() {
     // parse path and traverse tree accordingly
 
@@ -91,7 +106,8 @@ export default class Tree extends Component {
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
           modifyPath={ this.advancePath }
-          setConfidence={ this.setConfidence }/>
+          setConfidence={ this.setConfidence }
+          addStatement={ this.addStatement }/>
       </div>
 
     )
