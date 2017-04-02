@@ -1,12 +1,4 @@
-// server/app.js
-const express = require('express');
-const morgan = require('morgan');
-const path = require('path');
-
-const app = express();
-
-const faker = require('faker');
-
+const faker = require('faker')
 function generate_fake_argument() {
   return {
     title: faker.company.catchPhrase(),
@@ -30,19 +22,6 @@ const defaultArgument = {
 defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument());
 defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument());
 
-// Setup logger
-app.use(morgan('dev'));
-
-// Serve static assets
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
-
-app.get('/api', function (req, res) {
-    res.send(defaultArgument)
-});
-
-// Always return the main index.html, so react-router render the route in the client
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-});
-
-module.exports = app;
+module.exports = {
+  defaultArgument
+}
