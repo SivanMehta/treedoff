@@ -80,10 +80,17 @@ export default class Statement extends Component {
     return (
       <div>
         <div className="App-header" style={{"padding" : "0px 15px"}}>
-          <h1>{ this.props.title }</h1>
+          <h1>
+            <InlineEdit
+              paramName="title"
+              activeClassName="input-title"
+              text={ this.props.title }
+              change={ this.props.setTitle }
+            />
+            </h1>
           <InlineEdit
               paramName="description"
-              activeClassName="input-text"
+              activeClassName="input-description"
               text={ this.props.description }
               change={ this.props.setDescription }
             />
@@ -134,6 +141,7 @@ Statement.propTypes = {
   modifyPath: React.PropTypes.func,
   setConfidence: React.PropTypes.func,
   setDescription: React.PropTypes.func,
+  setTitle: React.PropTypes.func,
   addStatement: React.PropTypes.func,
   pros: React.PropTypes.array,
   cons: React.PropTypes.array
