@@ -7,6 +7,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import '../App.css'
 
+import {
+  Link
+} from 'react-router-dom'
+
 const styles = {
   underlineStyle: {
     borderColor: '#00c04A',
@@ -29,7 +33,9 @@ class AddArg extends Component {
           />
         </div>
         <div className="centerButton">
-          <RaisedButton label="Input" />
+          <Link to={'/trav'}>
+            <RaisedButton label="Input" />
+          </Link>
         </div>
       </div>
     )

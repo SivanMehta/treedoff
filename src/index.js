@@ -39,7 +39,8 @@ ReactDOM.render(
     <MuiThemeProvider muiTheme={muiTheme}>
       <div>
         <Route exact path='/' component={AddArg}/>
-        <Route exact path='/trav' component={App}/>
+        <Route exact path='/trav/:arg_name' component={App}/>
+        <Route exact path='/trav'component={App}/>
         <Route path='/tree' component={TreeVis}/>
       </div>
     </MuiThemeProvider>
