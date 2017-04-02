@@ -68,11 +68,11 @@ export default class Statement extends Component {
           <i>{ this.props.description }</i>
           { this.renderProgress() }
           <Toggle
-            label = "Edit Confidence"
+            label="Edit Confidence"
             labelPosition="right"
             onToggle={ (e, v) => this.setState({editing: v}) }
             defaultToggled={ this.state.editing }
-            style={{"margin-left" : "auto", "margin-right" : "auto", width: "20%"}}
+            style={{marginLeft : "auto", marginRight : "auto", width: "20%"}}
           />
         </div>
         <Table selectable={false}>
