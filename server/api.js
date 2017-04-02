@@ -11,8 +11,8 @@ function generate_fake_argument() {
 }
 
 const defaultArgument = {
-  title: faker.company.catchPhrase(),
-  description: faker.hacker.phrase(),
+  title: "Apples > Oranges",
+  description: "We aim to tackle this age-old question through the use of Treedoff",
   confidence: Math.random(),
   source: faker.internet.url(),
   pros: "a".repeat(3).split('a').map(_ =>  generate_fake_argument()),

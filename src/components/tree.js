@@ -91,6 +91,20 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
+  setSource = (data) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+    currentStatement.source = data.source
+    this.setState({tree: copiedTree})
+  }
+
   setTitle = (data) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
@@ -144,6 +158,7 @@ export default class Tree extends Component {
           setConfidence={ this.setConfidence }
           addStatement={ this.addStatement }
           setDescription={ this.setDescription }
+          setSource={ this.setSource }
           setTitle={ this.setTitle }/>
       </div>
 

@@ -83,17 +83,30 @@ export default class Statement extends Component {
           <h1>
             <InlineEdit
               paramName="title"
+              className="input-title"
               activeClassName="input-title"
               text={ this.props.title }
               change={ this.props.setTitle }
             />
             </h1>
-          <InlineEdit
-              paramName="description"
-              activeClassName="input-description"
-              text={ this.props.description }
-              change={ this.props.setDescription }
-            />
+            <p>
+              <InlineEdit
+                paramName="description"
+                className="input-description"
+                activeClassName="input-description"
+                text={ this.props.description }
+                change={ this.props.setDescription }
+                />
+            </p>
+            <p>Source:
+              <InlineEdit
+                paramName="source"
+                className="input-source"
+                activeClassName="input-source"
+                text={ " " + this.props.source }
+                change={ this.props.setSource }
+                />
+            </p>
           { this.renderProgress() }
           <Toggle
             label="Edit Confidence"
@@ -141,6 +154,7 @@ Statement.propTypes = {
   modifyPath: React.PropTypes.func,
   setConfidence: React.PropTypes.func,
   setDescription: React.PropTypes.func,
+  setSource: React.PropTypes.func,
   setTitle: React.PropTypes.func,
   addStatement: React.PropTypes.func,
   pros: React.PropTypes.array,
