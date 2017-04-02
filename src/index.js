@@ -8,6 +8,11 @@ import App from './App';
 import './index.css';
 import AddArg from './components/add-arg.js';
 import TreeVis from './components/tree-vis.js'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
+// Material UI
+injectTapEventPlugin()
+
 
 ReactDOM.render(
   <Router>
