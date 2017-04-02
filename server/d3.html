@@ -50,7 +50,6 @@
 
         .link {
             fill: none;
-            stroke: #ccc;
             stroke-width: 2px;
         }
 
@@ -255,11 +254,8 @@
 
     });
     $(".link").each(function(index) {
-      [$( this ).text()];
-      if(confidence < .1){
-        $(this).addClass('one');
-      }
-
+//      pros.indexOf($( this ).text()) >= 0 ? $(this).addClass('pro') : $(this).addClass('con');
+      console.log(pros.indexOf($( this ).text()) >= 0);
     });
   })
 
