@@ -161,15 +161,15 @@ export default class Tree extends Component {
     return (
       <div>
         <AppBar title="Treedoff"
-                iconElementLeft={ <History data={ this.state } regress={ this.regressPath }/> }
+                showMenuIconButton={ false }
                 iconElementRight={
                   <IconButton
                     onTouchTap={ this.saveTree }
-                    secondary={true}
                     style={{margin: 12}}>
                     <SaveIcon />
                   </IconButton>
             }/>
+        <History data={ this.state } regress={ this.regressPath }/>
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
           source={ currentStatement.source }
