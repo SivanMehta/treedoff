@@ -26,7 +26,7 @@ export default class Tree extends Component {
     // would be fetched from the api
     const defaultArgument = {
       title: "Apples are better than oranges",
-      description: "alsjdflaskjhfljahflkjhalskjhflkasjhflkjashf",
+      description: faker.lorem.paragraphs(3),
       confidence: .923,
       source: "lol.not",
       pros: ("a".repeat(5).split("a")).map(_ =>  generate_fake_argument()),
@@ -42,21 +42,32 @@ export default class Tree extends Component {
       // list of types (pro/con, index)
       path: []
     }
-
-    this.advancePath = this.advancePath.bind(this)
-    this.regressPath = this.regressPath.bind(this)
   }
 
-  advancePath(pro, index) {
+  advancePath = (pro, index) => {
     this.setState({
       path: this.state.path.concat((pro ? "pros" : "cons") + index)
     })
   }
 
-  regressPath(amt) {
+  regressPath = (amt) => {
     this.setState({
       path: this.state.path.slice(0, amt)
     })
+  }
+
+  setConfidence = (confidence) => {
+    let copiedTree = Object.assign({}, this.state.tree)
+
+    var currentStatement = copiedTree
+    for(var i = 0; i < this.state.path.length; i++) {
+
+      const prop = this.state.path[i].substr(0, 4)
+      const index = this.state.path[i].substr(4)
+      currentStatement = currentStatement[prop][index]
+    }
+    currentStatement.confidence = confidence
+    this.setState({tree: copiedTree})
   }
 
   render() {
@@ -79,7 +90,8 @@ export default class Tree extends Component {
           confidence={ currentStatement.confidence }
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
-          modifyPath={ this.advancePath }/>
+          modifyPath={ this.advancePath }
+          setConfidence={ this.setConfidence }/>
       </div>
 
     )

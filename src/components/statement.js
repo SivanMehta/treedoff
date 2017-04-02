@@ -18,9 +18,8 @@ export default class Statement extends Component {
   }
 
   setConfidence = (event, value) => {
-    this.setState({confidence: value})
-  };
-
+    this.props.setConfidence(value)
+  }
 
   renderTableBody() {
     var rows = []
