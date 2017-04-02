@@ -1,0 +1,266 @@
+<!-- use fetch -->
+<!--http://www.d3noob.org/2014/01/tree-diagrams-in-d3js_11.html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Collapsible Tree Example</title>
+
+    <style>
+
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+        }
+
+        .one {
+            stroke-width: 2px;
+        }
+        .two {
+            stroke-width: 4px;
+        }
+        .three {
+            stroke-width: 6px;
+        }
+        .four {
+            stroke-width: 8px;
+        }
+        .five {
+            stroke-width: 10px;
+        }
+        .six {
+            stroke-width: 12px;
+        }
+        .seven {
+            stroke-width: 14px;
+        }
+        .eight {
+            stroke-width: 16px;
+        }
+        .nine {
+            stroke-width: 18px;
+        }
+        .ten {
+            stroke-width: 20px;
+        }
+
+        .node text { font: 12px sans-serif; }
+
+        .link {
+            fill: none;
+            stroke-width: 2px;
+            stroke: blue;
+        }
+
+        .pro{
+            stroke: blue;
+        }
+        .con{
+            stroke: red;
+        }
+
+    </style>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<!-- load the d3.js library -->
+
+
+<script>
+
+
+
+
+
+  var treeData = [
+    {
+      "name": "Top Level",
+      "parent": "null",
+      "children": [
+        {
+          "name": "Level 2: A",
+          "parent": "Top Level",
+          "children": [
+            {
+              "name": "Son of A",
+              "parent": "Level 2: A"
+            },
+            {
+              "name": "Daughter of A",
+              "parent": "Level 2: A"
+            }
+          ]
+        },
+        {
+          "name": "Level 2: B",
+          "parent": "Top Level"
+        }
+      ]
+    }
+  ];
+
+  var myData = {"title":"Apples > Oranges","description":"We aim to tackle this age-old question through the use of Treedoff","confidence":0.9136041639480812,"source":"https://jo.info","pros":[{"title":"Synergized system-worthy hardware","description":"You can't copy the driver without calculating the digital SAS card!","confidence":0.20621307505218067,"source":"https://cloyd.name","pros":[],"cons":[]},{"title":"Compatible tertiary definition","description":"The SDD capacitor is down, synthesize the virtual driver so we can generate the RAM array!","confidence":0.022984716109601067,"source":"https://aaliyah.net","pros":[{"title":"Realigned upward-trending knowledge user","description":"navigating the microchip won't do anything, we need to synthesize the solid state RSS array!","confidence":0.4400330495883491,"source":"https://adriel.com","pros":[],"cons":[]},{"title":"Organic modular implementation","description":"Try to index the SSL pixel, maybe it will bypass the mobile array!","confidence":0.8514406418522769,"source":"https://dino.info","pros":[],"cons":[]},{"title":"Optional logistical Graphic Interface","description":"If we synthesize the matrix, we can get to the SSL capacitor through the online PCI feed!","confidence":0.22646622769152103,"source":"http://sedrick.name","pros":[],"cons":[]}],"cons":[{"title":"Robust needs-based process improvement","description":"compressing the sensor won't do anything, we need to synthesize the online IB firewall!","confidence":0.9984104507784501,"source":"http://weston.name","pros":[],"cons":[]},{"title":"Diverse contextually-based Graphical User Interface","description":"I'll compress the redundant TCP pixel, that should panel the COM transmitter!","confidence":0.3876735431149607,"source":"https://monroe.name","pros":[],"cons":[]}]},{"title":"Cloned needs-based flexibility","description":"You can't override the program without backing up the open-source JSON port!","confidence":0.07317546666942176,"source":"https://ada.com","pros":[],"cons":[]},{"title":"Programmable bifurcated local area network","description":"If we back up the program, we can get to the USB array through the optical IB hard drive!","confidence":0.37926976165312554,"source":"http://germaine.info","pros":[],"cons":[]}],"cons":[{"title":"Cross-group attitude-oriented standardization","description":"Try to copy the GB microchip, maybe it will navigate the virtual bandwidth!","confidence":0.5503006897526079,"source":"https://reva.name","pros":[],"cons":[]},{"title":"Decentralized 24/7 algorithm","description":"I'll parse the auxiliary SQL sensor, that should card the SSL sensor!","confidence":0.16336691498770062,"source":"https://dolores.com","pros":[],"cons":[]},{"title":"Ameliorated systemic solution","description":"If we quantify the feed, we can get to the XML pixel through the digital SDD sensor!","confidence":0.8685241523507929,"source":"http://lori.org","pros":[],"cons":[]}]}
+
+  var pros = [];
+  var cons = [];
+  var confidenceCounter = {};
+  // ************** Map state to data  *****************
+  function treeToData(tree, parent) {
+    //watch out for circular ref
+      if(tree.pros.concat(tree.cons).length === 0){
+//        console.log(confidenceCounter)
+        confidenceCounter[tree.title] = tree.confidence;
+        return {name: tree.title, parent: parent}
+
+      }
+      else{
+        console.log(tree.pros.map((statement) => statement.title));
+        pros = pros.concat(tree.pros.map((statement) => statement.title ));
+        cons = cons.concat(tree.cons.map((statement) => statement.title ));
+//        console.log(confidenceCounter)
+        confidenceCounter[tree.title] = tree.confidence;
+        return {
+          name: tree.title,
+          parent: parent,
+          children: tree.pros.concat(tree.cons).map((statement) => {
+            return treeToData(statement, tree.title) ;
+          })
+        }
+      }
+  }
+
+
+  myData = treeToData(myData, "null");
+  console.log(pros.length);
+  console.log(cons.length);
+
+  // ************** Generate the tree diagram  *****************
+  var margin = {top: 20, right: 120, bottom: 20, left: 120},
+    width = 960 - margin.right - margin.left,
+    height = 500 - margin.top - margin.bottom;
+
+  var i = 0;
+
+  var tree = d3.layout.tree()
+    .size([height, width]);
+
+  var diagonal = d3.svg.diagonal()
+    .projection(function(d) { return [d.y, d.x]; });
+
+  var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//  root = treeData[0];
+  root = myData
+
+  update(root);
+
+  function update(source) {
+
+    // Compute the new tree layout.
+    var nodes = tree.nodes(root).reverse(),
+      links = tree.links(nodes);
+
+    // Normalize for fixed-depth.
+    nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+    // Declare the nodesâ€¦
+    var node = svg.selectAll("g.node")
+      .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+    // Enter the nodes.
+
+//  check to see here if the node has a confidence of whatever and switch on the confidence to assign class
+
+//    var nodeEnter = node.enter().append("g")
+//  .attr("class", "node one")
+//      .attr("transform", function(d) {
+//        return "translate(" + d.y + "," + d.x + ")"; });
+
+
+
+
+    var nodeEnter = node.enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) {
+        return "translate(" + d.y + "," + d.x + ")"; });
+
+    nodeEnter.append("circle")
+      .attr("r", 10)
+      .style("fill", "#fff");
+
+    nodeEnter.append("text")
+      .attr("x", function(d) {
+        return d.children || d._children ? -13 : 13; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", function(d) {
+        return d.children || d._children ? "end" : "start"; })
+      .text(function(d) { return d.name; })
+      .style("fill-opacity", 1);
+
+    // Declare the linksâ€¦
+    var link = svg.selectAll("path.link")
+      .data(links, function(d) { return d.target.id; });
+
+    // Enter the links.
+    link.enter().insert("path", "g")
+      .attr("class", "link")
+      .attr("d", diagonal);
+
+  }
+
+
+  $(document).ready(function(){
+    $(".node").each(function(index) {
+      confidence = confidenceCounter[$( this ).text()];
+      if(confidence < .1){
+        $(this).addClass('one');
+      }
+      else if(confidence < .2){
+        $(this).addClass('two');
+      }
+      else if(confidence < .3){
+        $(this).addClass('three');
+      }
+      else if(confidence < .4){
+        $(this).addClass('four');
+      }
+      else if(confidence < .5){
+        $(this).addClass('five');
+      }
+      else if(confidence < .6){
+        $(this).addClass('six');
+      }
+      else if(confidence < .7){
+        $(this).addClass('seven');
+      }
+      else if(confidence < .8){
+        $(this).addClass('eight');
+      }
+      else if(confidence < .9){
+        $(this).addClass('nine');
+      }
+      else{
+        $(this).addClass('ten');
+      }
+
+
+    });
+//    $(".link").each(function(index) {
+////      pros.indexOf($( this ).text()) >= 0 ? $(this).addClass('pro') : $(this).addClass('con');
+//      console.log(pros.indexOf($( this ).text()) >= 0);
+//    });
+  })
+
+</script>
+
+</body>
+</html>

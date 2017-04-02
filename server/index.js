@@ -17,9 +17,12 @@ app.use(bodyParser.json())
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 
 // api definitions
-const api = require('./api')
-app.get('/api', api.getTree)
-app.post('/api/tree', api.persist)
+const api = require('./api');
+app.get('/api', api.getTree);
+app.post('/api/tree', api.persist);
+app.get('/d3', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'd3.html'));
+});
 
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {
