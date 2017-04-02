@@ -22,7 +22,11 @@ export default class History extends Component {
   }
 
   close() { this.setState({open: false}) }
-  open() { this.setState({open: true}) }
+  open() {
+    if(this.props.data.path.length > 0) {
+      this.setState({open: true})
+    }
+  }
   regress(amt) {
     this.close()
     this.props.regress(amt)
