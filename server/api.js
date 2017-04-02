@@ -16,8 +16,8 @@ var database = {
   description: "We aim to tackle this age-old question through the use of Treedoff",
   confidence: Math.random(),
   source: faker.internet.url(),
-  pros: "a".repeat(3).split('a').map(_ =>  generate_fake_argument()),
-  cons: "a".repeat(2).split('a').map(_ =>  generate_fake_argument())
+  pros: "a".repeat(5).split('a').map(_ =>  generate_fake_argument()),
+  cons: "a".repeat(5).split('a').map(_ =>  generate_fake_argument())
 }
 
 database.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument());
@@ -27,7 +27,7 @@ function persist(req, res) {
   // literally just replace it for know
   database = Object.assign({}, req.body)
   res.sendStatus(200)
-  console.log(database.title)
+  console.log(database)
 }
 
 function getTree(req, res) {

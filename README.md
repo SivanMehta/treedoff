@@ -1,14 +1,14 @@
 # Inspiration
 
-The problem that we are looking to solve is that arguments are too often poorly presented and interpreted, despite their inherent nuances. **Treedoff** (a portmanteau of tree and tradeoff), utilizes a basic tree data structure to provide a clearly scaffolded interpretation an argument.
+The problem that we are looking to solve is that arguments are too often poorly presented and interpreted, despite their inherent nuances. **Treedoff** (a portmanteau of tree and tradeoff), utilizes a tree data structure to provide a clearly scaffolded interpretation an argument.
 
 # What it does
 
-Treedoff's fundamental piece is a **statement**, each statement has a title, a basic summary, and a level of confidence. If a statement can be support or refuted by other statements, it will appear in the `pros` and `cons` fields.
+Treedoff's fundamental piece is a **statement**, each statement has a title, a basic summary, and a level of confidence. If a statement can be support or refuted by other statements, it will appear in the `pros` or `cons` fields of those statements.
 
 # How we built it
 
-We built a React.js application on the frontend to represent traversing through a statement tree. This allows us to explore arguments across browsers with a single code base. By using Material UI, a design framework for React, we circumvented the need for excessive styling and formatting, and were able to focus most of our time on optimizing fluid user interactions.
+We built a React.js application on the frontend to represent traversing through a statement tree. This allows us to explore complex arguments across browsers with a single code base. By using Material UI, a design framework for React, we circumvented the need for excessive styling and formatting, and were able to focus most of our time on optimizing fluid user interactions.
 
 # Challenges we ran into
 
