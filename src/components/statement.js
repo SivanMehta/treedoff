@@ -125,14 +125,19 @@ export default class Statement extends Component {
             />
         </Row>
         <Row>
-          <Col xs={12}>
+          <Col xs={4} />
+          <Col xs={4}>
             <Toggle
               label="Edit Confidence"
               labelPosition="right"
               onToggle={ (e, v) => this.setState({editing: v}) }
               defaultToggled={ this.state.editing }
-              style={{marginLeft : "auto", marginRight : "auto", width: "20%"}}
               />
+          </Col>
+          <Col xs={4} />
+        </Row>
+        <Row>
+          <Col xs={12}>
             { this.renderProgress() }
           </Col>
         </Row>
