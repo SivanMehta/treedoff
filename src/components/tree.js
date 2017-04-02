@@ -3,8 +3,8 @@ import faker from 'faker'
 
 // Material UI
 import AppBar from 'material-ui/AppBar'
-import RaisedButton from 'material-ui/RaisedButton'
-import FontIcon from 'material-ui/FontIcon'
+import IconButton from 'material-ui/IconButton'
+import SaveIcon from 'material-ui/svg-icons/content/save.js'
 
 // custom components
 import Statement from './statement'
@@ -35,14 +35,13 @@ export default class Tree extends Component {
       cons: []
     }
 
-    // defaultArgument.pros[1].pros = [1, 2, 3].map(_ =>  generate_fake_argument())
-    // defaultArgument.pros[1].cons = [1, 2].map(_ =>  generate_fake_argument())
-
-    // would be parsed from the path given by the router
     this.state = {
+      // the argument that we're representing
       tree: defaultArgument,
       // list of types (pro/con, index)
-      path: []
+      path: [],
+      // loading icon indication
+      loading: false
     }
   }
 
@@ -164,13 +163,12 @@ export default class Tree extends Component {
         <AppBar title="Treedoff"
                 iconElementLeft={ <History data={ this.state } regress={ this.regressPath }/> }
                 iconElementRight={
-                  <RaisedButton
-                    label="Save"
+                  <IconButton
                     onTouchTap={ this.saveTree }
                     secondary={true}
-                    style={{margin: 12}}
-                    icon={<FontIcon className="muidocs-icon-custom-github" />}
-                  />
+                    style={{margin: 12}}>
+                    <SaveIcon />
+                  </IconButton>
             }/>
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
