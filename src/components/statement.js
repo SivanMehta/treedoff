@@ -22,7 +22,7 @@ export default class Statement extends Component {
 
     this.state = {
       confidence: this.props.confidence,
-      editing: true
+      editing: false
     }
   }
 

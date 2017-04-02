@@ -11,7 +11,8 @@
 .centerButton{
   display:block;
   margin:auto;
-  width:4%;
+  padding: 5px;
+  width:40%;
 }
 
 .App-logo{

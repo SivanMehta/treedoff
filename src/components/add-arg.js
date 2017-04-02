@@ -15,11 +15,17 @@ const styles = {
   underlineStyle: {
     borderColor: '#00c04A',
   }
-};
-
-
+}
 
 class AddArg extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      arg: ""
+    }
+  }
 
   render() {
     return (
@@ -28,13 +34,14 @@ class AddArg extends Component {
         <br/>
         <div className="center">
           <TextField
-            hintText="Custom Underline Focus Color"
+            onChange = { (e, v) => this.setState({arg: v}) }
+            hintText="Search"
             underlineFocusStyle={styles.underlineStyle}
           />
         </div>
-        <div className="centerButton">
-          <Link to={'/trav'}>
-            <RaisedButton label="Input" />
+        <div>
+          <Link to={'/trav/' + this.state.arg}>
+            <RaisedButton>Go to Arguement</RaisedButton>
           </Link>
         </div>
       </div>
