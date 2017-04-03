@@ -42,26 +42,17 @@ export default class Tree extends Component {
       // loading icon indication
       loading: false
     }
-
-    this.saveTree = this.saveTree.bind(this)
-    this.advancePath = this.advancePath.bind(this)
-    this.regressPath = this.regressPath.bind(this)
-    this.setConfidence = this.setConfidence.bind(this)
-    this.setDescription = this.setDescription.bind(this)
-    this.setSource = this.setSource.bind(this)
-    this.setTitle = this.setTitle.bind(this)
-    this.addStatement = this.addStatement.bind(this)
-    this.removeStatement = this.removeStatement.bind(this)
   }
 
   componentDidMount() {
     fetch("/api")
       .then(res => res.json())
       .then(data => this.setState({tree: data}))
-      .catch(() => console.log("Could not fetch data =("))
+      .catch(() => console.log("Could not fetch data =("));
   }
 
-  saveTree() {
+  // https://www.youtube.com/watch?v=1LI81cWh3Fs
+  saveTree = () => {
     fetch('/api/tree', {
       credentials: 'same-origin',
       body: JSON.stringify(this.state.tree),
@@ -72,19 +63,19 @@ export default class Tree extends Component {
     }).then(res => console.log(res.status))
   }
 
-  advancePath(pro, index) {
+  advancePath = (pro, index) => {
     this.setState({
       path: this.state.path.concat((pro ? "pros" : "cons") + index)
     })
   }
 
-  regressPath(amt) {
+  regressPath = (amt) => {
     this.setState({
       path: this.state.path.slice(0, amt)
     })
   }
 
-  setConfidence(confidence) {
+  setConfidence = (confidence) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
@@ -98,7 +89,7 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
-  setDescription(data) {
+  setDescription = (data) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
@@ -112,7 +103,7 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
-  setSource(data) {
+  setSource = (data) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
@@ -126,7 +117,7 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
-  setTitle(data) {
+  setTitle = (data) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
@@ -141,7 +132,7 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
-  addStatement(pro, statement) {
+  addStatement = (pro, statement) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
@@ -156,7 +147,7 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
-  removeStatement(pro, index) {
+  removeStatement = (pro, index) => {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
