@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Label from '../front-logo-leaf.svg'
+import Logo from '../front-logo-leaf.svg'
 
 // Material UI
 import TextField from 'material-ui/TextField'
@@ -32,7 +32,7 @@ class AddArg extends Component {
         <Row style={{marginTop: "35px"}}>
           <Col sm={4}/>
           <Col sm={4} xs={12}>
-            <img src={Label} className="App-logo center" alt="logo" />
+            <Logo/>
           </Col>
           <Col sm={4} />
         </Row>
