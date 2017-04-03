@@ -14,7 +14,16 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // Serve static assets
-app.use(express.static(path.resolve(__dirname, '..', 'build')))
+app.use(express.static(path.resolve(__dirname, '..', 'public')))
+
+// check for react files
+const fs = require('fs')
+fs.access(path.resolve(__dirname, '..', 'public', 'build'), fs.constants.F_OK | fs.constants.R_OK, (err) => {
+  if(err) {
+    const suggestion = " --> The React.js application was probably not built"
+    throw err + suggestion
+  }
+});
 
 // api definitions
 const api = require('./api');
@@ -26,7 +35,7 @@ app.get('/d3', (req, res) => {
 
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
 });
 
 module.exports = app;
