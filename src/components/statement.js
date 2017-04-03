@@ -31,11 +31,11 @@ export default class Statement extends Component {
     }
   }
 
-  setConfidence = (event, value) => {
+  setConfidence(event, value) {
     this.props.setConfidence(value)
   }
 
-  addStatement = (pro) => {
+  addStatement(pro) {
     if(this.refs[(pro ? "addPro" : "addCon")].input.value.length !== 0) {
       this.props.addStatement(
         pro,
@@ -46,7 +46,7 @@ export default class Statement extends Component {
     return false
   }
 
-  renderPros = () => {
+  renderPros() {
     var rows = []
     var byConfidence = (b, a) => (a.confidence - b.confidence)
     const pros = this.props.pros.sort(byConfidence)
@@ -69,9 +69,9 @@ export default class Statement extends Component {
     return rows
   }
 
-  renderCons = () => {
+  renderCons() {
     var rows = []
-    var byConfidence = (b, a) => (a.confidence - b.confidence)
+    const byConfidence = (b, a) => (a.confidence - b.confidence)
     const cons = this.props.cons.sort(byConfidence)
     const num_arguments = cons.length
     for(var i = 0; i < num_arguments; i++) {
@@ -92,7 +92,7 @@ export default class Statement extends Component {
     return rows
   }
 
-  renderProgress = () => {
+  renderProgress() {
     return this.state.editing ? (
       <Slider value={ 0.5 } onChange={this.setConfidence}/>
     ) : (
