@@ -8,7 +8,7 @@ module.exports = [
   {
     name: 'JS',
     devtool: 'source-map',
-    entry: ['whatwg-fetch', path.join(__dirname, 'src', 'index.js')],
+    entry: [path.join(__dirname, 'src', 'index.js')],
     output: {
       filename: path.join('public', 'build', 'bundle.js')
     },
@@ -35,10 +35,6 @@ module.exports = [
         {
           test: /\.css$/,
           use: [ 'style-loader', 'css-loader' ]
-        },
-        {
-          test: /\.svg$/,
-          loader: 'babel-loader?presets[]=es2015,presets[]=react!svg-react-loader'
         }
       ]
     }

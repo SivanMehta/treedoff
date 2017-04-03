@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Label from '../front-logo-leaf.svg'
 
 // Material UI
 import TextField from 'material-ui/TextField'
@@ -30,24 +29,24 @@ class AddArg extends Component {
     return (
       <Grid>
         <Row style={{marginTop: "35px"}}>
-          <Col sm={4}/>
-          <Col sm={4} xs={12}>
-            <img src={Label} className="App-logo center" alt="logo" />
+          <Col sm={4} xs={2}/>
+          <Col sm={4} xs={8}>
+            <img src='front-logo-leaf.svg' className="App-logo center" alt="logo" />
           </Col>
-          <Col sm={4} />
+          <Col sm={4} xs={2}/>
         </Row>
-        <Row style={{"text-align": "center"}}>
-          <Col sm={5} xs={0}/>
-          <Col sm={2} xs={12}>
+        <Row style={{textAlign: "center"}}>
+          <Col sm={4} xs={2}/>
+          <Col sm={4} xs={2}>
             <TextField
               onChange={ (e, v) => this.setState({arg: v}) }
               hintText="Search for Arguments"
               underlineFocusStyle={styles.underlineStyle}
               />
           </Col>
-          <Col sm={5} />
+          <Col sm={4} xs={2}/>
         </Row>
-        <Row style={{"text-align": "center"}}>
+        <Row style={{textAlign: "center"}}>
           <Col sm={5} xs={0}/>
           <Col sm={2} xs={12}>
             <Link to={'/trav/' + this.state.arg}>
