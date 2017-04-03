@@ -29,7 +29,7 @@ class AddArg extends Component {
   render() {
     return (
       <Grid>
-        <Row style={{"margin-top": "35px"}}>
+        <Row style={{marginTop: "35px"}}>
           <Col sm={4}/>
           <Col sm={4} xs={12}>
             <img src={Label} className="App-logo center" alt="logo" />

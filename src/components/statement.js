@@ -29,6 +29,12 @@ export default class Statement extends Component {
       confidence: this.props.confidence,
       editing: false
     }
+
+    this.setConfidence = this.setConfidence.bind(this)
+    this.addStatement = this.addStatement.bind(this)
+    this.renderPros = this.renderPros.bind(this)
+    this.renderCons = this.renderCons.bind(this)
+    this.renderProgress = this.renderProgress.bind(this)
   }
 
   setConfidence(event, value) {
