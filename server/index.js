@@ -16,6 +16,15 @@ app.use(bodyParser.json())
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
+// check for react files
+const fs = require('fs')
+fs.access(path.resolve(__dirname, '..', 'public', 'build'), (err) => {
+  if(err) {
+    const suggestion = " --> The React.js application was probably not built"
+    throw err + suggestion
+  }
+});
+
 // api definitions
 const api = require('./api');
 app.get('/api', api.getTree);
