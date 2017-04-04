@@ -44,6 +44,9 @@ class Tree extends Component {
       loading: false
     }
 
+    this.getCurrentStatement = this.getCurrentStatement.bind(this);
+    // this.changeCurrentStatement = thiss.changeCurrentStatement.bind(this);
+
     this.saveTree = this.saveTree.bind(this);
     this.setConfidence = this.setConfidence.bind(this);
     this.setDescription = this.setDescription.bind(this);
@@ -52,6 +55,8 @@ class Tree extends Component {
     this.addStatement = this.addStatement.bind(this);
     this.removeStatement = this.removeStatement.bind(this);
     this.handleData = this.handleData.bind(this);
+
+    
   }
 
   handleData(data){
@@ -76,68 +81,63 @@ class Tree extends Component {
     }).then(res => console.log(res.status))
   }
 
+  // refactor so you just get the statements to display
+  // get current statement
+
+  // use a sort of map thingy
+  getCurrentStatement(property, val){
+    const copiedTree = Object.assign({}, this.props.tree);
+
+    var currentStatement = copiedTree;
+    // do this in parallel
+    for(var i = 0; i < this.props.path.length; i++) {
+
+      // change way state is managed so we don't need to use substr...
+      const prop = this.props.path[i].substr(0, 4);
+      const index = this.props.path[i].substr(4);
+
+      currentStatement = currentStatement[prop][index];
+    }
+
+    // const toRet = [copiedTree, currentStatement];
+
+    switch (property) {
+      case 'confidence':
+        currentStatement.confidence = val;
+        return copiedTree;
+      case 'description':
+        currentStatement.description = val;
+        return copiedTree;
+      case 'source':
+        currentStatement.source = val;
+        return copiedTree;
+      case 'title':
+        currentStatement.title = val;
+        return copiedTree;
+      default:
+        console.log('invalid property to change')
+        return copiedTree;
+    }
+
+    
+  }
+
   
 
   setConfidence(confidence) {
-    console.log(this.props.path);
-    let copiedTree = Object.assign({}, this.props.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.props.path.length; i++) {
-
-      const prop = this.props.path[i].substr(0, 4)
-      const index = this.props.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement.confidence = confidence
-    
-    this.props.actions.updateTree(copiedTree);
+    this.props.actions.updateTree(this.getCurrentStatement('confidence', confidence));
   }
 
   setDescription(data) {
-    let copiedTree = Object.assign({}, this.props.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.props.path.length; i++) {
-
-      const prop = this.props.path[i].substr(0, 4)
-      const index = this.props.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement.description = data.description
-    
-    this.props.actions.updateTree(copiedTree);
+    this.props.actions.updateTree(this.getCurrentStatement('description', data.description));
   }
 
   setSource(data) {
-    let copiedTree = Object.assign({}, this.props.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.props.path.length; i++) {
-
-      const prop = this.props.path[i].substr(0, 4)
-      const index = this.props.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement.source = data.source
-    
-    this.props.actions.updateTree(copiedTree);
+    this.props.actions.updateTree(this.getCurrentStatement('source', data.source));
   }
 
   setTitle(data) {
-    let copiedTree = Object.assign({}, this.props.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.props.path.length; i++) {
-
-      const prop = this.props.path[i].substr(0, 4)
-      const index = this.props.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-
-    currentStatement.title = data.title
-    
-    this.props.actions.updateTree(copiedTree);
+    this.props.actions.updateTree(this.getCurrentStatement('title', data.title));
   }
 
   addStatement(pro, statement) {
