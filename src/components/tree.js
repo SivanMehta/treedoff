@@ -44,7 +44,7 @@ class Tree extends Component {
       loading: false
     }
 
-    this.getCurrentStatement = this.getCurrentStatement.bind(this);
+    this.setCurrentStatement = this.setCurrentStatement.bind(this);
     // this.changeCurrentStatement = thiss.changeCurrentStatement.bind(this);
 
     this.saveTree = this.saveTree.bind(this);
@@ -85,7 +85,7 @@ class Tree extends Component {
   // get current statement
 
   // use a sort of map thingy
-  getCurrentStatement(property, val){
+  setCurrentStatement(property, val){
     const copiedTree = Object.assign({}, this.props.tree);
 
     var currentStatement = copiedTree;
@@ -114,6 +114,13 @@ class Tree extends Component {
       case 'title':
         currentStatement.title = val;
         return copiedTree;
+      case 'add':
+        currentStatement[val[0] ? "pros" : "cons"] = currentStatement[val[0] ? "pros" : "cons"]
+      .concat(generate_fake_argument(val[1], .01))
+        return copiedTree;
+      case 'remove':
+        currentStatement.title = val;
+        return copiedTree;
       default:
         console.log('invalid property to change')
         return copiedTree;
@@ -125,35 +132,23 @@ class Tree extends Component {
   
 
   setConfidence(confidence) {
-    this.props.actions.updateTree(this.getCurrentStatement('confidence', confidence));
+    this.props.actions.updateTree(this.setCurrentStatement('confidence', confidence));
   }
 
   setDescription(data) {
-    this.props.actions.updateTree(this.getCurrentStatement('description', data.description));
+    this.props.actions.updateTree(this.setCurrentStatement('description', data.description));
   }
 
   setSource(data) {
-    this.props.actions.updateTree(this.getCurrentStatement('source', data.source));
+    this.props.actions.updateTree(this.setCurrentStatement('source', data.source));
   }
 
   setTitle(data) {
-    this.props.actions.updateTree(this.getCurrentStatement('title', data.title));
+    this.props.actions.updateTree(this.setCurrentStatement('title', data.title));
   }
 
   addStatement(pro, statement) {
-    let copiedTree = Object.assign({}, this.props.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.props.path.length; i++) {
-
-      const prop = this.props.path[i].substr(0, 4)
-      const index = this.props.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement[pro ? "pros" : "cons"] = currentStatement[pro ? "pros" : "cons"]
-      .concat(generate_fake_argument(statement, .01))
-    
-    this.props.actions.updateTree(copiedTree);
+    this.props.actions.updateTree(this.setCurrentStatement('add', [pro, statement]));
   }
 
   removeStatement(pro, index) {
