@@ -1,8 +1,10 @@
-import tree from './tree-reducer.js';
+// import tree from './tree-reducer.js';
+import path from './path-reducer.js';
+
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
-  tree
+  path
 });
 
 export default rootReducer;

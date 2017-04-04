@@ -9,6 +9,11 @@ import FlatButton from 'material-ui/FlatButton'
 import Statement from './statement'
 import History from './history'
 
+// redux actions
+import * as treeActions from '../actions/tree-actions'
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 function generate_fake_argument(title, amt) {
   return {
     title: title ? title : faker.company.catchPhrase() ,
@@ -20,7 +25,7 @@ function generate_fake_argument(title, amt) {
   }
 }
 
-export default class Tree extends Component {
+class Tree extends Component {
   constructor(props) {
     super(props)
 
@@ -174,6 +179,8 @@ export default class Tree extends Component {
     this.setState({tree: copiedTree})
   }
 
+  
+
   render() {
     // parse path and traverse tree accordingly
     var currentStatement = this.state.tree
@@ -195,7 +202,7 @@ export default class Tree extends Component {
                     style={{margin: 12}}>
                   </FlatButton>
             }/>
-        <History data={ this.state } regress={ this.regressPath }/>
+        <History data={ this.state } regress={ this.regressPath } test={this.props.actions.regressPath}/>
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
           source={ currentStatement.source }
@@ -208,9 +215,26 @@ export default class Tree extends Component {
           setDescription={ this.setDescription }
           setSource={ this.setSource }
           setTitle={ this.setTitle }
-          removeStatement={ this.removeStatement }/>
+          removeStatement={ this.removeStatement } />
       </div>
 
     )
   }
+
 }
+
+// Redux connector functions
+
+function mapStateToProps(state, props) {
+  return {
+    pathTest: state.path
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(treeActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tree);

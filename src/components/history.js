@@ -7,15 +7,24 @@ import UndoIcon from 'material-ui/svg-icons/content/undo.js'
 export default class History extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.regress = this.regress.bind(this)
-    this.generateHistory = this.generateHistory.bind(this)
+    this.regress = this.regress.bind(this);
+    // test
+    // this.test = this.test.bind(this);
+    this.generateHistory = this.generateHistory.bind(this);
   }
 
   regress(amt) {
+    console.log('here')
+    this.props.test()
     this.props.regress(amt)
+
   }
+
+  // test() {
+  //   this.props.test()
+  // }
 
   generateHistory() {
     var events = []

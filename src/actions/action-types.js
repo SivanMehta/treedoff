@@ -1,1 +1,16 @@
 export const UPDATE_TREE = 'UPDATE_TREE';
+export const REGRESS_PATH = 'REGRESS_PATH';
+export const ADVANCE_PATH = 'ADVANCE_PATH';
+export const SET_CONFIDENCE = 'SET_CONFIDENCE';
+export const SET_TITLE = 'SET_TITLE';
+export const SET_DESCRIPTION = 'SET_DESCRIPTION';
+export const SET_SOURCE = 'SET_SOURCE';
+export const ADD_STATEMENT = 'ADD_STATEMENT';
+export const REMOVE_STATEMENT = 'REMOVE_STATEMENT';
+
+
+
+
+
+
+

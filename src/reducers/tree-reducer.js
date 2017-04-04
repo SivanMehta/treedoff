@@ -7,8 +7,12 @@
 //   cons: []
 // }
 
+
+
 import * as types from '../actions/action-types';
 
+
+// DEFAULT STATE IS []
 export default (state = [], action) => {
   switch (action.type) {
     case types.UPDATE_TREE:
