@@ -40,9 +40,6 @@ class Tree extends Component {
     }
 
     this.state = {
-      // the argument that we're representing
-      tree: defaultArgument,
-
       // loading icon indication
       loading: false
     }
@@ -58,7 +55,6 @@ class Tree extends Component {
   }
 
   handleData(data){
-    this.setState({tree: data});
     this.props.actions.updateTree(data);
   }
 
@@ -72,7 +68,7 @@ class Tree extends Component {
   saveTree() {
     fetch('/api/tree', {
       credentials: 'same-origin',
-      body: JSON.stringify(this.state.tree),
+      body: JSON.stringify(this.props.tree),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -84,7 +80,7 @@ class Tree extends Component {
 
   setConfidence(confidence) {
     console.log(this.props.path);
-    let copiedTree = Object.assign({}, this.state.tree)
+    let copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
     for(var i = 0; i < this.props.path.length; i++) {
@@ -94,12 +90,12 @@ class Tree extends Component {
       currentStatement = currentStatement[prop][index]
     }
     currentStatement.confidence = confidence
-    this.setState({tree: copiedTree})
+    
     this.props.actions.updateTree(copiedTree);
   }
 
   setDescription(data) {
-    let copiedTree = Object.assign({}, this.state.tree)
+    let copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
     for(var i = 0; i < this.props.path.length; i++) {
@@ -109,12 +105,12 @@ class Tree extends Component {
       currentStatement = currentStatement[prop][index]
     }
     currentStatement.description = data.description
-    this.setState({tree: copiedTree})
+    
     this.props.actions.updateTree(copiedTree);
   }
 
   setSource(data) {
-    let copiedTree = Object.assign({}, this.state.tree)
+    let copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
     for(var i = 0; i < this.props.path.length; i++) {
@@ -124,12 +120,12 @@ class Tree extends Component {
       currentStatement = currentStatement[prop][index]
     }
     currentStatement.source = data.source
-    this.setState({tree: copiedTree})
+    
     this.props.actions.updateTree(copiedTree);
   }
 
   setTitle(data) {
-    let copiedTree = Object.assign({}, this.state.tree)
+    let copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
     for(var i = 0; i < this.props.path.length; i++) {
@@ -140,12 +136,12 @@ class Tree extends Component {
     }
 
     currentStatement.title = data.title
-    this.setState({tree: copiedTree})
+    
     this.props.actions.updateTree(copiedTree);
   }
 
   addStatement(pro, statement) {
-    let copiedTree = Object.assign({}, this.state.tree)
+    let copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
     for(var i = 0; i < this.props.path.length; i++) {
@@ -156,12 +152,12 @@ class Tree extends Component {
     }
     currentStatement[pro ? "pros" : "cons"] = currentStatement[pro ? "pros" : "cons"]
       .concat(generate_fake_argument(statement, .01))
-    this.setState({tree: copiedTree})
+    
     this.props.actions.updateTree(copiedTree);
   }
 
   removeStatement(pro, index) {
-    let copiedTree = Object.assign({}, this.state.tree)
+    let copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
     for(var i = 0; i < this.props.path.length; i++) {
@@ -175,7 +171,7 @@ class Tree extends Component {
 
     currentStatement[cat] = currentStatement[cat].slice(0, index)
       .concat(currentStatement[cat].slice(index + 1, currentStatement[cat].length))
-    this.setState({tree: copiedTree})
+    
     this.props.actions.updateTree(copiedTree);
   }
 
@@ -183,7 +179,7 @@ class Tree extends Component {
 
   render() {
     // parse path and traverse tree accordingly
-    var currentStatement = this.state.tree
+    var currentStatement = this.props.tree
     for(var i = 0; i < this.props.path.length; i++) {
 
       const prop = this.props.path[i].substr(0, 4)
@@ -202,7 +198,7 @@ class Tree extends Component {
                     style={{margin: 12}}>
                   </FlatButton>
             }/>
-        <History tree={ this.state.tree } path={ this.props.path } regress={ this.props.actions.regressPath } />
+        <History tree={ this.props.tree } path={ this.props.path } regress={ this.props.actions.regressPath } />
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
           source={ currentStatement.source }
