@@ -11,6 +11,10 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+import configureStore from './store/configure-store';
+import {Provider} from 'react-redux';
+const store = configureStore();
+
 // Material UI
 injectTapEventPlugin();
 
@@ -34,14 +38,16 @@ const muiTheme = getMuiTheme({
 });
 
 ReactDOM.render(
-  <Router>
-    <MuiThemeProvider muiTheme={muiTheme}>
-      <div>
-        <Route exact path='/' component={AddArg}/>
-        <Route exact path='/trav/:arg_name' component={App}/>
-        <Route exact path='/trav'component={App}/>
-      </div>
-    </MuiThemeProvider>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+          <Route exact path='/' component={AddArg}/>
+          <Route exact path='/trav/:arg_name' component={App}/>
+          <Route exact path='/trav'component={App}/>
+        </div>
+      </MuiThemeProvider>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
