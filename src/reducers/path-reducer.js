@@ -23,7 +23,6 @@ export default (path = [], action) => {
       path = path.slice(0, action.amt);
       path = [...path]
       return path;
-      // return path
     default:
       return path;
   }

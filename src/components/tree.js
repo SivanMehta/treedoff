@@ -212,7 +212,7 @@ class Tree extends Component {
           modifyPath={ this.advancePath }
           // test
           test={ this.props.actions.advancePath }
-          
+
           setConfidence={ this.setConfidence }
           addStatement={ this.addStatement }
           setDescription={ this.setDescription }
@@ -230,7 +230,7 @@ class Tree extends Component {
 
 function mapStateToProps(state, props) {
   return {
-    pathTest: state.path
+    path: state.path
   };
 }
 
