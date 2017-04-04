@@ -1,4 +1,4 @@
-import * as types from '../actions/action-types';
+import * as types from '../actions/action-types'
 import faker from 'faker'
 
 const defaultArgument = {
@@ -15,7 +15,7 @@ const defaultArgument = {
 export default (tree = defaultArgument, action) => {
   switch (action.type) {
     case types.UPDATE_TREE:
-      return Object.assign({}, action.tree);
+      return Object.assign({}, action.tree)
     default:
       return tree;
   }

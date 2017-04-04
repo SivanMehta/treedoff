@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 // Material UI
 import Slider from 'material-ui/Slider'
-import {List, ListItem} from 'material-ui/List';
+import {List, ListItem} from 'material-ui/List'
 import LinearProgress from 'material-ui/LinearProgress'
 import Toggle from 'material-ui/Toggle'
 import TextField from 'material-ui/TextField'
@@ -11,7 +11,7 @@ import RemoveCircle from 'material-ui/svg-icons/content/remove-circle'
 import Divider from 'material-ui/Divider'
 
 // grid
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid'
 
 // Inline Editing
 import InlineEdit from 'react-edit-inline'

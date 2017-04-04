@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 
 // Material UI
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton'
 import UndoIcon from 'material-ui/svg-icons/content/undo.js'
 
 export default class History extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.regress = this.regress.bind(this);
-    this.generateHistory = this.generateHistory.bind(this);
+    this.regress = this.regress.bind(this)
+    this.generateHistory = this.generateHistory.bind(this)
   }
 
   regress(amt) {
@@ -19,7 +19,7 @@ export default class History extends Component {
   }
 
   // Give history colors based off of pro or con
-  generateHistory() {
+  renderHistory() {
     var events = []
     var currentStatement = this.props.tree
     for(var i = 0; i < this.props.path.length; i++) {
@@ -32,7 +32,7 @@ export default class History extends Component {
             icon={<UndoIcon />}
             onTouchTap={ (e) => this.regress(k) }
             key={"history-" + i}
-      />
+          />
       )
 
       const prop = this.props.path[i].substr(0, 4)
@@ -46,7 +46,7 @@ export default class History extends Component {
   render() {
     return(
       <div>
-          { this.generateHistory() }
+          { this.renderHistory() }
       </div>
     )
   }

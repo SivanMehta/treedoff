@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-
-
+import React, { Component } from 'react'
 
 // custom components
 import Tree from './components/tree.js'
