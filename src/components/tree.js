@@ -90,13 +90,14 @@ class Tree extends Component {
   }
 
   setConfidence(confidence) {
+    console.log(this.props.path);
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
     currentStatement.confidence = confidence
@@ -107,10 +108,10 @@ class Tree extends Component {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
     currentStatement.description = data.description
@@ -121,10 +122,10 @@ class Tree extends Component {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
     currentStatement.source = data.source
@@ -135,10 +136,10 @@ class Tree extends Component {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 
@@ -150,10 +151,10 @@ class Tree extends Component {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
     currentStatement[pro ? "pros" : "cons"] = currentStatement[pro ? "pros" : "cons"]
@@ -165,10 +166,10 @@ class Tree extends Component {
     let copiedTree = Object.assign({}, this.state.tree)
 
     var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 
@@ -184,10 +185,10 @@ class Tree extends Component {
   render() {
     // parse path and traverse tree accordingly
     var currentStatement = this.state.tree
-    for(var i = 0; i < this.state.path.length; i++) {
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 
