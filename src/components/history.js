@@ -10,8 +10,6 @@ export default class History extends Component {
     super(props);
 
     this.regress = this.regress.bind(this);
-    // test
-    // this.test = this.test.bind(this);
     this.generateHistory = this.generateHistory.bind(this);
   }
 
@@ -20,10 +18,7 @@ export default class History extends Component {
 
   }
 
-  // test() {
-  //   this.props.test()
-  // }
-
+  // Give history colors based off of pro or con
   generateHistory() {
     var events = []
     var currentStatement = this.props.tree

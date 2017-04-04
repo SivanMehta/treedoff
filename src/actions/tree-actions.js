@@ -22,50 +22,50 @@ export const advancePath = (pro, index) => {
   };
 };
 
-export const setConfidence = (statement, confidence) => {
-  return {
-    type: types.SET_CONFIDENCE,
-    statement,
-    confidence
-  };
-};
+// export const setConfidence = (statement, confidence) => {
+//   return {
+//     type: types.SET_CONFIDENCE,
+//     statement,
+//     confidence
+//   };
+// };
 
-export const setDescription = (statement, text) => {
-  return {
-    type: types.SET_DESCRIPTION,
-    statement,
-    text
-  };
-};
+// export const setDescription = (statement, text) => {
+//   return {
+//     type: types.SET_DESCRIPTION,
+//     statement,
+//     text
+//   };
+// };
 
-export const setSource = (statement, source) => {
-  return {
-    type: types.SET_SOURCE,
-    statement,
-    source
-  };
-};
+// export const setSource = (statement, source) => {
+//   return {
+//     type: types.SET_SOURCE,
+//     statement,
+//     source
+//   };
+// };
 
-export const setTitle = (statement, title) => {
-  return {
-    type: types.SET_TITLE,
-    statement,
-    title
-  };
-};
+// export const setTitle = (statement, title) => {
+//   return {
+//     type: types.SET_TITLE,
+//     statement,
+//     title
+//   };
+// };
 
-export const addStatement = (statement) => {
-  return {
-    type: types.ADD_STATEMENT,
-    statement
-  };
-};
+// export const addStatement = (statement) => {
+//   return {
+//     type: types.ADD_STATEMENT,
+//     statement
+//   };
+// };
 
-export const removeStatement = (statement) => {
-  return {
-    type: types.REMOVE_STATEMENT,
-    statement
-  };
-};
+// export const removeStatement = (statement) => {
+//   return {
+//     type: types.REMOVE_STATEMENT,
+//     statement
+//   };
+// };
 
 
