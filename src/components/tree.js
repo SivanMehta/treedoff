@@ -95,6 +95,7 @@ class Tree extends Component {
     }
     currentStatement.confidence = confidence
     this.setState({tree: copiedTree})
+    this.props.actions.updateTree(copiedTree);
   }
 
   setDescription(data) {
@@ -109,6 +110,7 @@ class Tree extends Component {
     }
     currentStatement.description = data.description
     this.setState({tree: copiedTree})
+    this.props.actions.updateTree(copiedTree);
   }
 
   setSource(data) {
@@ -123,6 +125,7 @@ class Tree extends Component {
     }
     currentStatement.source = data.source
     this.setState({tree: copiedTree})
+    this.props.actions.updateTree(copiedTree);
   }
 
   setTitle(data) {
@@ -138,6 +141,7 @@ class Tree extends Component {
 
     currentStatement.title = data.title
     this.setState({tree: copiedTree})
+    this.props.actions.updateTree(copiedTree);
   }
 
   addStatement(pro, statement) {
@@ -153,6 +157,7 @@ class Tree extends Component {
     currentStatement[pro ? "pros" : "cons"] = currentStatement[pro ? "pros" : "cons"]
       .concat(generate_fake_argument(statement, .01))
     this.setState({tree: copiedTree})
+    this.props.actions.updateTree(copiedTree);
   }
 
   removeStatement(pro, index) {
@@ -171,6 +176,7 @@ class Tree extends Component {
     currentStatement[cat] = currentStatement[cat].slice(0, index)
       .concat(currentStatement[cat].slice(index + 1, currentStatement[cat].length))
     this.setState({tree: copiedTree})
+    this.props.actions.updateTree(copiedTree);
   }
 
   
