@@ -67,6 +67,7 @@ export default class Statement extends Component {
                    title={ pros[i] ? pros[i].title : "" }
                    confidence={ pros[i] ? pros[i].confidence : 0 }
                    modifyPath={ this.props.modifyPath }
+                   test={ this.props.test }
                    index={ i }/>
         </ListItem>
       )
@@ -90,6 +91,7 @@ export default class Statement extends Component {
                    title={ cons[i] ? cons[i].title : "" }
                    confidence={ cons[i] ? cons[i].confidence : 0 }
                    modifyPath={ this.props.modifyPath }
+                   test={ this.props.test }
                    index={ i }/>
         </ListItem>
       )

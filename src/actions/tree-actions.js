@@ -7,13 +7,14 @@ export const updateTree = (tree) => {
   };
 };
 
-export const regressPath = () => {
+export const regressPath = (amt) => {
   return {
     type: types.REGRESS_PATH,
+    amt
   };
 };
 
-export const advancePath = (statement, pro) => {
+export const advancePath = (pro, index) => {
   return {
     type: types.ADVANCE_PATH,
     pro,

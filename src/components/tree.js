@@ -210,6 +210,9 @@ class Tree extends Component {
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
           modifyPath={ this.advancePath }
+          // test
+          test={ this.props.actions.advancePath }
+          
           setConfidence={ this.setConfidence }
           addStatement={ this.addStatement }
           setDescription={ this.setDescription }

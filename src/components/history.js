@@ -16,8 +16,8 @@ export default class History extends Component {
   }
 
   regress(amt) {
-    console.log('here')
-    this.props.test()
+    console.log('amt', amt)
+    this.props.test(amt)
     this.props.regress(amt)
 
   }

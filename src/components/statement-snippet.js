@@ -3,6 +3,18 @@ import LinearProgress from 'material-ui/LinearProgress'
 
 export default class Snippet extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.advance = this.advance.bind(this);
+  }
+
+  advance(pro, index) {
+    this.props.test(pro, index);
+    this.props.modifyPath(pro, index);
+
+  }
+
   render() {
     const color = "rgb(" +
     (this.props.pro ? 0 : parseInt(this.props.confidence * 255, 10)) + ",0," +
@@ -10,7 +22,7 @@ export default class Snippet extends Component {
 
     return(
       <span>
-        <span onClick={ (e) => this.props.modifyPath(this.props.pro, this.props.index) } >
+        <span onClick={ (e) => this.advance(this.props.pro, this.props.index) } >
           { this.props.title }
         </span>
         <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color={ color }/>

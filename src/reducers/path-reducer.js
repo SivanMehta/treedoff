@@ -17,15 +17,13 @@ export default (path = [], action) => {
 	// change this to use statement not pro and index
   switch (action.type) {
     case types.ADVANCE_PATH:
-    	layer = path.concat((action.pro ? "pros" : "cons") + action.index);
-      return path;
+      return [...path, ((action.pro ? "pros" : "cons") + action.index)]
     case types.REGRESS_PATH:
       // delete last element
-      // path.splice(-1);
-      // deep copy to make sure change gets picked up
-      // return path.map(a => Object.assign({}, a));
-      console.log('here')
-      return path
+      path = path.slice(0, action.amt);
+      path = [...path]
+      return path;
+      // return path
     default:
       return path;
   }
