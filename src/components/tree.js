@@ -47,19 +47,25 @@ class Tree extends Component {
       loading: false
     }
 
-    this.saveTree = this.saveTree.bind(this)
-    this.setConfidence = this.setConfidence.bind(this)
-    this.setDescription = this.setDescription.bind(this)
-    this.setSource = this.setSource.bind(this)
-    this.setTitle = this.setTitle.bind(this)
-    this.addStatement = this.addStatement.bind(this)
-    this.removeStatement = this.removeStatement.bind(this)
+    this.saveTree = this.saveTree.bind(this);
+    this.setConfidence = this.setConfidence.bind(this);
+    this.setDescription = this.setDescription.bind(this);
+    this.setSource = this.setSource.bind(this);
+    this.setTitle = this.setTitle.bind(this);
+    this.addStatement = this.addStatement.bind(this);
+    this.removeStatement = this.removeStatement.bind(this);
+    this.handleData = this.handleData.bind(this);
+  }
+
+  handleData(data){
+    this.setState({tree: data});
+    this.props.actions.updateTree(data);
   }
 
   componentDidMount() {
     fetch("/api")
       .then(res => res.json())
-      .then(data => this.setState({tree: data}))
+      .then(data => this.handleData(data))
       .catch(() => console.log("Could not fetch data =("))
   }
 

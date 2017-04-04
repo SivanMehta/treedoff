@@ -1,4 +1,5 @@
 import * as types from '../actions/action-types';
+import faker from 'faker'
 
 const defaultArgument = {
   title: "Waiting for server response...",
@@ -9,11 +10,12 @@ const defaultArgument = {
   cons: []
 }
 
+
 // DEFAULT STATE IS []
 export default (tree = defaultArgument, action) => {
   switch (action.type) {
     case types.UPDATE_TREE:
-      return [...tree, Object.assign({}, action.tree)];
+      return Object.assign({}, action.tree);
     default:
       return tree;
   }
