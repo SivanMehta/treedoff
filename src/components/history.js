@@ -16,8 +16,6 @@ export default class History extends Component {
   }
 
   regress(amt) {
-    console.log('amt', amt)
-    this.props.test(amt)
     this.props.regress(amt)
 
   }
@@ -28,8 +26,8 @@ export default class History extends Component {
 
   generateHistory() {
     var events = []
-    var currentStatement = this.props.data.tree
-    for(var i = 0; i < this.props.data.path.length; i++) {
+    var currentStatement = this.props.tree
+    for(var i = 0; i < this.props.path.length; i++) {
       const k = i
       events.push(
           <RaisedButton
@@ -42,8 +40,8 @@ export default class History extends Component {
       />
       )
 
-      const prop = this.props.data.path[i].substr(0, 4)
-      const index = this.props.data.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 

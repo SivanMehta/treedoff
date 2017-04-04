@@ -10,7 +10,6 @@ export default class Snippet extends Component {
   }
 
   advance(pro, index) {
-    this.props.test(pro, index);
     this.props.modifyPath(pro, index);
 
   }

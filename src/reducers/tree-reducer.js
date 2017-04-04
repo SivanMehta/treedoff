@@ -1,23 +1,20 @@
-// const defaultArgument = {
-//   title: "Waiting for server response...",
-//   description: "Patience, young padawan",
-//   confidence: .999,
-//   source: "lol.not",
-//   pros: [],
-//   cons: []
-// }
-
-
-
 import * as types from '../actions/action-types';
 
+const defaultArgument = {
+  title: "Waiting for server response...",
+  description: "Patience, young padawan",
+  confidence: .999,
+  source: "lol.not",
+  pros: [],
+  cons: []
+}
 
 // DEFAULT STATE IS []
-export default (state = [], action) => {
+export default (tree = defaultArgument, action) => {
   switch (action.type) {
     case types.UPDATE_TREE:
-      return [...state, Object.assign({}, action.tree)];
+      return [...tree, Object.assign({}, action.tree)];
     default:
-      return state;
+      return tree;
   }
 };

@@ -42,15 +42,12 @@ class Tree extends Component {
     this.state = {
       // the argument that we're representing
       tree: defaultArgument,
-      // list of types (pro/con, index)
-      path: [],
+
       // loading icon indication
       loading: false
     }
 
     this.saveTree = this.saveTree.bind(this)
-    this.advancePath = this.advancePath.bind(this)
-    this.regressPath = this.regressPath.bind(this)
     this.setConfidence = this.setConfidence.bind(this)
     this.setDescription = this.setDescription.bind(this)
     this.setSource = this.setSource.bind(this)
@@ -77,17 +74,7 @@ class Tree extends Component {
     }).then(res => console.log(res.status))
   }
 
-  advancePath(pro, index) {
-    this.setState({
-      path: this.state.path.concat((pro ? "pros" : "cons") + index)
-    })
-  }
-
-  regressPath(amt) {
-    this.setState({
-      path: this.state.path.slice(0, amt)
-    })
-  }
+  
 
   setConfidence(confidence) {
     console.log(this.props.path);
@@ -203,17 +190,14 @@ class Tree extends Component {
                     style={{margin: 12}}>
                   </FlatButton>
             }/>
-        <History data={ this.state } regress={ this.regressPath } test={this.props.actions.regressPath}/>
+        <History tree={ this.state.tree } path={ this.props.path } regress={ this.props.actions.regressPath } />
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
           source={ currentStatement.source }
           confidence={ currentStatement.confidence }
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
-          modifyPath={ this.advancePath }
-          // test
-          test={ this.props.actions.advancePath }
-
+          modifyPath={ this.props.actions.advancePath }
           setConfidence={ this.setConfidence }
           addStatement={ this.addStatement }
           setDescription={ this.setDescription }
@@ -231,7 +215,8 @@ class Tree extends Component {
 
 function mapStateToProps(state, props) {
   return {
-    path: state.path
+    path: state.path,
+    tree: state.tree
   };
 }
 
@@ -241,4 +226,5 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+// Giving yourself props with connect
 export default connect(mapStateToProps, mapDispatchToProps)(Tree);
