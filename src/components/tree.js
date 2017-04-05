@@ -9,6 +9,11 @@ import FlatButton from 'material-ui/FlatButton'
 import Statement from './statement'
 import History from './history'
 
+// redux actions
+import * as treeActions from '../actions/tree-actions'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+
 function generate_fake_argument(title, amt) {
   return {
     title: title ? title : faker.company.catchPhrase() ,
@@ -20,7 +25,7 @@ function generate_fake_argument(title, amt) {
   }
 }
 
-export default class Tree extends Component {
+class Tree extends Component {
   constructor(props) {
     super(props)
 
@@ -35,36 +40,31 @@ export default class Tree extends Component {
     }
 
     this.state = {
-      // the argument that we're representing
-      tree: defaultArgument,
-      // list of types (pro/con, index)
-      path: [],
       // loading icon indication
       loading: false
     }
 
+    this.setCurrentStatement = this.setCurrentStatement.bind(this)
     this.saveTree = this.saveTree.bind(this)
-    this.advancePath = this.advancePath.bind(this)
-    this.regressPath = this.regressPath.bind(this)
-    this.setConfidence = this.setConfidence.bind(this)
-    this.setDescription = this.setDescription.bind(this)
-    this.setSource = this.setSource.bind(this)
-    this.setTitle = this.setTitle.bind(this)
-    this.addStatement = this.addStatement.bind(this)
-    this.removeStatement = this.removeStatement.bind(this)
+    this.setAttribute = this.setAttribute.bind(this)
+    this.handleData = this.handleData.bind(this)
+  }
+
+  handleData(data){
+    this.props.actions.updateTree(data)
   }
 
   componentDidMount() {
     fetch("/api")
       .then(res => res.json())
-      .then(data => this.setState({tree: data}))
+      .then(data => this.handleData(data))
       .catch(() => console.log("Could not fetch data =("))
   }
 
   saveTree() {
     fetch('/api/tree', {
       credentials: 'same-origin',
-      body: JSON.stringify(this.state.tree),
+      body: JSON.stringify(this.props.tree),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -72,115 +72,65 @@ export default class Tree extends Component {
     }).then(res => console.log(res.status))
   }
 
-  advancePath(pro, index) {
-    this.setState({
-      path: this.state.path.concat((pro ? "pros" : "cons") + index)
-    })
-  }
-
-  regressPath(amt) {
-    this.setState({
-      path: this.state.path.slice(0, amt)
-    })
-  }
-
-  setConfidence(confidence) {
-    let copiedTree = Object.assign({}, this.state.tree)
+  // refactor so you just get the statements to display
+  // get current statement
+  setCurrentStatement(property, val) {
+    const copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
+    // do this in parallel
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement.confidence = confidence
-    this.setState({tree: copiedTree})
-  }
+      // change way state is managed so we don't need to use substr...
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
 
-  setDescription(data) {
-    let copiedTree = Object.assign({}, this.state.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
-
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement.description = data.description
-    this.setState({tree: copiedTree})
-  }
-
-  setSource(data) {
-    let copiedTree = Object.assign({}, this.state.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
-
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement.source = data.source
-    this.setState({tree: copiedTree})
-  }
-
-  setTitle(data) {
-    let copiedTree = Object.assign({}, this.state.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
-
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 
-    currentStatement.title = data.title
-    this.setState({tree: copiedTree})
+    switch (property) {
+      case 'confidence':
+        currentStatement.confidence = val
+        return copiedTree
+      case 'description':
+        currentStatement.description = val
+        return copiedTree
+      case 'source':
+        currentStatement.source = val
+        return copiedTree
+      case 'title':
+        currentStatement.title = val
+        return copiedTree
+      case 'add':
+        currentStatement[val[0] ? "pros" : "cons"] = currentStatement[val[0] ? "pros" : "cons"]
+          .concat(generate_fake_argument(val[1], .01))
+        return copiedTree
+      case 'remove':
+        const pro = val[0]
+        const index = val[1]
+        const cat = pro ? "pros" : "cons"
+        currentStatement[cat] = currentStatement[cat].slice(0, index)
+          .concat(currentStatement[cat].slice(index + 1, currentStatement[cat].length))
+        return copiedTree
+      default:
+        console.error('invalid property to change')
+        return copiedTree
+    }
   }
 
-  addStatement(pro, statement) {
-    let copiedTree = Object.assign({}, this.state.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
-
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-    currentStatement[pro ? "pros" : "cons"] = currentStatement[pro ? "pros" : "cons"]
-      .concat(generate_fake_argument(statement, .01))
-    this.setState({tree: copiedTree})
-  }
-
-  removeStatement(pro, index) {
-    let copiedTree = Object.assign({}, this.state.tree)
-
-    var currentStatement = copiedTree
-    for(var i = 0; i < this.state.path.length; i++) {
-
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
-      currentStatement = currentStatement[prop][index]
-    }
-
-    const cat = pro ? "pros" : "cons"
-
-    currentStatement[cat] = currentStatement[cat].slice(0, index)
-      .concat(currentStatement[cat].slice(index + 1, currentStatement[cat].length))
-    this.setState({tree: copiedTree})
+  setAttribute(attribute, data) {
+    this.props.actions.updateTree(
+      this.setCurrentStatement(attribute, data)
+    )
   }
 
   render() {
     // parse path and traverse tree accordingly
-    var currentStatement = this.state.tree
-    for(var i = 0; i < this.state.path.length; i++) {
+    var currentStatement = this.props.tree
+    for(var i = 0; i < this.props.path.length; i++) {
 
-      const prop = this.state.path[i].substr(0, 4)
-      const index = this.state.path[i].substr(4)
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 
@@ -195,22 +145,34 @@ export default class Tree extends Component {
                     style={{margin: 12}}>
                   </FlatButton>
             }/>
-        <History data={ this.state } regress={ this.regressPath }/>
+        <History tree={ this.props.tree } path={ this.props.path } regress={ this.props.actions.regressPath } />
         <Statement title={ currentStatement.title }
           description={ currentStatement.description }
           source={ currentStatement.source }
           confidence={ currentStatement.confidence }
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
-          modifyPath={ this.advancePath }
-          setConfidence={ this.setConfidence }
-          addStatement={ this.addStatement }
-          setDescription={ this.setDescription }
-          setSource={ this.setSource }
-          setTitle={ this.setTitle }
-          removeStatement={ this.removeStatement }/>
+          modifyPath={ this.props.actions.advancePath }
+          setAttribute={ this.setAttribute } />
       </div>
-
     )
   }
 }
+
+// Redux connector functions
+
+function mapStateToProps(state, props) {
+  return {
+    path: state.path,
+    tree: state.tree
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(treeActions, dispatch)
+  }
+}
+
+// Giving yourself props with connect
+export default connect(mapStateToProps, mapDispatchToProps)(Tree)

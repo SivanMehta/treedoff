@@ -1,0 +1,3 @@
+export const UPDATE_TREE = 'UPDATE_TREE'
+export const REGRESS_PATH = 'REGRESS_PATH'
+export const ADVANCE_PATH = 'ADVANCE_PATH'

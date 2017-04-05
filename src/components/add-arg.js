@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Logo from '../front-logo-leaf.svg'
 
 // Material UI
