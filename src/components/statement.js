@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 // Material UI
 import Slider from 'material-ui/Slider'
-import {List, ListItem} from 'material-ui/List';
+import {List, ListItem} from 'material-ui/List'
 import LinearProgress from 'material-ui/LinearProgress'
 import Toggle from 'material-ui/Toggle'
 import TextField from 'material-ui/TextField'
@@ -11,7 +11,7 @@ import RemoveCircle from 'material-ui/svg-icons/content/remove-circle'
 import Divider from 'material-ui/Divider'
 
 // grid
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid'
 
 // Inline Editing
 import InlineEdit from 'react-edit-inline'
@@ -30,26 +30,9 @@ export default class Statement extends Component {
       editing: false
     }
 
-    this.setConfidence = this.setConfidence.bind(this)
-    this.addStatement = this.addStatement.bind(this)
     this.renderPros = this.renderPros.bind(this)
     this.renderCons = this.renderCons.bind(this)
     this.renderProgress = this.renderProgress.bind(this)
-  }
-
-  setConfidence(event, value) {
-    this.props.setConfidence(value)
-  }
-
-  addStatement(pro) {
-    if(this.refs[(pro ? "addPro" : "addCon")].input.value.length !== 0) {
-      this.props.addStatement(
-        pro,
-        this.refs[(pro ? "addPro" : "addCon")].input.value
-      )
-    }
-    this.refs[(pro ? "addPro" : "addCon")].input.value = ""
-    return false
   }
 
   renderPros() {
@@ -61,7 +44,7 @@ export default class Statement extends Component {
       const k = i
       rows.push(
         <ListItem key={i} leftIcon={
-            <RemoveCircle onTouchTap={ () => this.props.removeStatement(true, k) }/>
+            <RemoveCircle onTouchTap={ () => this.props.setAttribute('remove', [true, k]) }/>
           }>
           <Snippet pro={ true }
                    title={ pros[i] ? pros[i].title : "" }
@@ -84,7 +67,7 @@ export default class Statement extends Component {
       const k = i
       rows.push(
         <ListItem key={i} leftIcon={
-            <RemoveCircle onTouchTap={ () => this.props.removeStatement(false, k) }/>
+            <RemoveCircle onTouchTap={ () => this.props.setAttribute('remove', [false, k])}/>
           }>
           <Snippet pro={ false }
                    title={ cons[i] ? cons[i].title : "" }
@@ -100,7 +83,7 @@ export default class Statement extends Component {
 
   renderProgress() {
     return this.state.editing ? (
-      <Slider value={ 0.5 } onChange={this.setConfidence}/>
+      <Slider value={ 0.5 } onChange={(data) => this.props.setAttribute('confidence', data.confidence)}/>
     ) : (
       <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color='#00c04A'/>
     )
@@ -115,7 +98,7 @@ export default class Statement extends Component {
               className="input-title"
               activeClassName="input-title"
               text={ this.props.title }
-              change={ this.props.setTitle } />
+              change={ (data) => this.props.setAttribute('title', data.title) } />
           </h1>
         </Row>
         <Row>
@@ -124,7 +107,7 @@ export default class Statement extends Component {
             className="input-description"
             activeClassName="input-description"
             text={ this.props.description }
-            change={ this.props.setDescription }
+            change={ (data) => this.props.setAttribute('description', data.description) }
             />
         </Row>
         <Row>
@@ -133,7 +116,7 @@ export default class Statement extends Component {
             className="input-source"
             activeClassName="input-source"
             text={ this.props.source ? this.props.source : "Please enter a source" }
-            change={ this.props.setSource }
+            change={ (data) => this.props.setAttribute('source', data.source) }
             />
         </Row>
         <Row>
@@ -161,7 +144,7 @@ export default class Statement extends Component {
               { this.renderPros() }
               <ListItem disabled={true}
                 leftIcon={
-                  <AddCircle onTouchTap={ () => this.addStatement(true) }
+                  <AddCircle onTouchTap={ () => this.props.setAttribute('add', [true, this.refs['addPro'].input.value]) }
                              hoverColor="green"/>}>
                 <TextField ref="addPro" floatingLabelText="Add a Pro"/>
               </ListItem>
@@ -173,7 +156,7 @@ export default class Statement extends Component {
               <Divider />
               { this.renderCons() }
               <ListItem disabled={true}
-                leftIcon={<AddCircle onTouchTap={ () => this.addStatement(false) }
+                leftIcon={<AddCircle onTouchTap={ () => this.props.setAttribute('add', [false, this.refs['addCon'].input.value]) }
                                         hoverColor="red"/>}>
                 <TextField ref="addCon" floatingLabelText="Add a Con"/>
               </ListItem>
@@ -191,11 +174,7 @@ Statement.propTypes = {
   source: React.PropTypes.string,
   confidence: React.PropTypes.number,
   modifyPath: React.PropTypes.func,
-  setConfidence: React.PropTypes.func,
-  setDescription: React.PropTypes.func,
-  setSource: React.PropTypes.func,
-  setTitle: React.PropTypes.func,
-  addStatement: React.PropTypes.func,
+  setAttribute: React.PropTypes.func,
   pros: React.PropTypes.array,
   cons: React.PropTypes.array
 }
