@@ -50,13 +50,12 @@ class Tree extends Component {
     this.saveTree = this.saveTree.bind(this)
     this.setConfidence = this.setConfidence.bind(this)
     this.setDescription = this.setDescription.bind(this)
+    this.setAttribute = this.setAttribute.bind(this)
     this.setSource = this.setSource.bind(this)
     this.setTitle = this.setTitle.bind(this)
     this.addStatement = this.addStatement.bind(this)
     this.removeStatement = this.removeStatement.bind(this)
     this.handleData = this.handleData.bind(this)
-
-
   }
 
   handleData(data){
@@ -124,7 +123,6 @@ class Tree extends Component {
         const cat = pro ? "pros" : "cons"
         currentStatement[cat] = currentStatement[cat].slice(0, index)
           .concat(currentStatement[cat].slice(index + 1, currentStatement[cat].length))
-
         return copiedTree
       default:
         console.log('invalid property to change')
@@ -134,6 +132,11 @@ class Tree extends Component {
 
   }
 
+  setAttribute(attribute, data) {
+    this.props.actions.updateTree(
+      this.setCurrentStatement(attribute, data)
+    )
+  }
 
   // only update confidence when it is placed
   setConfidence(confidence) {
@@ -191,11 +194,10 @@ class Tree extends Component {
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
           modifyPath={ this.props.actions.advancePath }
-          setConfidence={ this.setConfidence }
-          addStatement={ this.addStatement }
+          setTitle={ this.setTitle }
           setDescription={ this.setDescription }
           setSource={ this.setSource }
-          setTitle={ this.setTitle }
+          setAttribute={ this.setAttribute }
           removeStatement={ this.removeStatement } />
       </div>
 

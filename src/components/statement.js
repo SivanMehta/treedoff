@@ -100,7 +100,7 @@ export default class Statement extends Component {
 
   renderProgress() {
     return this.state.editing ? (
-      <Slider value={ 0.5 } onChange={this.setConfidence}/>
+      <Slider value={ 0.5 } onChange={(data) => this.props.setAttribute('confidence', data.confidence)}/>
     ) : (
       <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color='#00c04A'/>
     )
@@ -115,7 +115,7 @@ export default class Statement extends Component {
               className="input-title"
               activeClassName="input-title"
               text={ this.props.title }
-              change={ this.props.setTitle } />
+              change={ (data) => this.props.setAttribute('title', data.title) } />
           </h1>
         </Row>
         <Row>
@@ -124,7 +124,7 @@ export default class Statement extends Component {
             className="input-description"
             activeClassName="input-description"
             text={ this.props.description }
-            change={ this.props.setDescription }
+            change={ (data) => this.props.setAttribute('description', data.description) }
             />
         </Row>
         <Row>
@@ -133,7 +133,7 @@ export default class Statement extends Component {
             className="input-source"
             activeClassName="input-source"
             text={ this.props.source ? this.props.source : "Please enter a source" }
-            change={ this.props.setSource }
+            change={ (data) => this.props.setAttribute('source', data.source) }
             />
         </Row>
         <Row>
@@ -161,7 +161,7 @@ export default class Statement extends Component {
               { this.renderPros() }
               <ListItem disabled={true}
                 leftIcon={
-                  <AddCircle onTouchTap={ () => this.addStatement(true) }
+                  <AddCircle onTouchTap={ () => this.props.setAttribute('add', [true, this.refs['addPro'].input.value]) }
                              hoverColor="green"/>}>
                 <TextField ref="addPro" floatingLabelText="Add a Pro"/>
               </ListItem>
@@ -173,7 +173,7 @@ export default class Statement extends Component {
               <Divider />
               { this.renderCons() }
               <ListItem disabled={true}
-                leftIcon={<AddCircle onTouchTap={ () => this.addStatement(false) }
+                leftIcon={<AddCircle onTouchTap={ () => this.props.setAttribute('add', [true, this.refs['addCon'].input.value]) }
                                         hoverColor="red"/>}>
                 <TextField ref="addCon" floatingLabelText="Add a Con"/>
               </ListItem>
@@ -195,6 +195,7 @@ Statement.propTypes = {
   setDescription: React.PropTypes.func,
   setSource: React.PropTypes.func,
   setTitle: React.PropTypes.func,
+  setAttribute: React.PropTypes.func,
   addStatement: React.PropTypes.func,
   pros: React.PropTypes.array,
   cons: React.PropTypes.array

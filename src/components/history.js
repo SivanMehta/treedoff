@@ -10,7 +10,7 @@ export default class History extends Component {
     super(props)
 
     this.regress = this.regress.bind(this)
-    this.generateHistory = this.generateHistory.bind(this)
+    this.renderHistory = this.renderHistory.bind(this)
   }
 
   regress(amt) {
