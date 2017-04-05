@@ -15,7 +15,6 @@ export default class History extends Component {
 
   regress(amt) {
     this.props.regress(amt)
-
   }
 
   // Give history colors based off of pro or con

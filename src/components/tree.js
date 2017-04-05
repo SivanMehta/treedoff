@@ -45,8 +45,6 @@ class Tree extends Component {
     }
 
     this.setCurrentStatement = this.setCurrentStatement.bind(this)
-    // this.changeCurrentStatement = thiss.changeCurrentStatement.bind(this)
-
     this.saveTree = this.saveTree.bind(this)
     this.setAttribute = this.setAttribute.bind(this)
     this.handleData = this.handleData.bind(this)
@@ -90,8 +88,6 @@ class Tree extends Component {
       currentStatement = currentStatement[prop][index]
     }
 
-    // const toRet = [copiedTree, currentStatement]
-
     switch (property) {
       case 'confidence':
         currentStatement.confidence = val
@@ -117,11 +113,9 @@ class Tree extends Component {
           .concat(currentStatement[cat].slice(index + 1, currentStatement[cat].length))
         return copiedTree
       default:
-        console.log('invalid property to change')
+        console.error('invalid property to change')
         return copiedTree
     }
-
-
   }
 
   setAttribute(attribute, data) {
@@ -161,10 +155,8 @@ class Tree extends Component {
           modifyPath={ this.props.actions.advancePath }
           setAttribute={ this.setAttribute } />
       </div>
-
     )
   }
-
 }
 
 // Redux connector functions
