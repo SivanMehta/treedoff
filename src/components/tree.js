@@ -48,13 +48,7 @@ class Tree extends Component {
     // this.changeCurrentStatement = thiss.changeCurrentStatement.bind(this)
 
     this.saveTree = this.saveTree.bind(this)
-    this.setConfidence = this.setConfidence.bind(this)
-    this.setDescription = this.setDescription.bind(this)
     this.setAttribute = this.setAttribute.bind(this)
-    this.setSource = this.setSource.bind(this)
-    this.setTitle = this.setTitle.bind(this)
-    this.addStatement = this.addStatement.bind(this)
-    this.removeStatement = this.removeStatement.bind(this)
     this.handleData = this.handleData.bind(this)
   }
 
@@ -82,9 +76,7 @@ class Tree extends Component {
 
   // refactor so you just get the statements to display
   // get current statement
-
-  // use a sort of map thingy
-  setCurrentStatement(property, val){
+  setCurrentStatement(property, val) {
     const copiedTree = Object.assign({}, this.props.tree)
 
     var currentStatement = copiedTree
@@ -115,7 +107,7 @@ class Tree extends Component {
         return copiedTree
       case 'add':
         currentStatement[val[0] ? "pros" : "cons"] = currentStatement[val[0] ? "pros" : "cons"]
-      .concat(generate_fake_argument(val[1], .01))
+          .concat(generate_fake_argument(val[1], .01))
         return copiedTree
       case 'remove':
         const pro = val[0]
@@ -137,33 +129,6 @@ class Tree extends Component {
       this.setCurrentStatement(attribute, data)
     )
   }
-
-  // only update confidence when it is placed
-  setConfidence(confidence) {
-    this.props.actions.updateTree(this.setCurrentStatement('confidence', confidence))
-  }
-
-  setDescription(data) {
-    this.props.actions.updateTree(this.setCurrentStatement('description', data.description))
-  }
-
-  setSource(data) {
-    this.props.actions.updateTree(this.setCurrentStatement('source', data.source))
-  }
-
-  setTitle(data) {
-    this.props.actions.updateTree(this.setCurrentStatement('title', data.title))
-  }
-
-  addStatement(pro, statement) {
-    this.props.actions.updateTree(this.setCurrentStatement('add', [pro, statement]))
-  }
-
-  removeStatement(pro, index) {
-    this.props.actions.updateTree(this.setCurrentStatement('remove', [pro, index]))
-  }
-
-
 
   render() {
     // parse path and traverse tree accordingly
@@ -194,11 +159,7 @@ class Tree extends Component {
           pros={ currentStatement.pros }
           cons={ currentStatement.cons }
           modifyPath={ this.props.actions.advancePath }
-          setTitle={ this.setTitle }
-          setDescription={ this.setDescription }
-          setSource={ this.setSource }
-          setAttribute={ this.setAttribute }
-          removeStatement={ this.removeStatement } />
+          setAttribute={ this.setAttribute } />
       </div>
 
     )

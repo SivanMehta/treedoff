@@ -30,26 +30,9 @@ export default class Statement extends Component {
       editing: false
     }
 
-    this.setConfidence = this.setConfidence.bind(this)
-    this.addStatement = this.addStatement.bind(this)
     this.renderPros = this.renderPros.bind(this)
     this.renderCons = this.renderCons.bind(this)
     this.renderProgress = this.renderProgress.bind(this)
-  }
-
-  setConfidence(event, value) {
-    this.props.setConfidence(value)
-  }
-
-  addStatement(pro) {
-    if(this.refs[(pro ? "addPro" : "addCon")].input.value.length !== 0) {
-      this.props.addStatement(
-        pro,
-        this.refs[(pro ? "addPro" : "addCon")].input.value
-      )
-    }
-    this.refs[(pro ? "addPro" : "addCon")].input.value = ""
-    return false
   }
 
   renderPros() {
@@ -61,7 +44,7 @@ export default class Statement extends Component {
       const k = i
       rows.push(
         <ListItem key={i} leftIcon={
-            <RemoveCircle onTouchTap={ () => this.props.removeStatement(true, k) }/>
+            <RemoveCircle onTouchTap={ () => this.props.setAttribute('remove', [true, k]) }/>
           }>
           <Snippet pro={ true }
                    title={ pros[i] ? pros[i].title : "" }
@@ -84,7 +67,7 @@ export default class Statement extends Component {
       const k = i
       rows.push(
         <ListItem key={i} leftIcon={
-            <RemoveCircle onTouchTap={ () => this.props.removeStatement(false, k) }/>
+            <RemoveCircle onTouchTap={ () => this.props.setAttribute('remove', [false, k])}/>
           }>
           <Snippet pro={ false }
                    title={ cons[i] ? cons[i].title : "" }
@@ -173,7 +156,7 @@ export default class Statement extends Component {
               <Divider />
               { this.renderCons() }
               <ListItem disabled={true}
-                leftIcon={<AddCircle onTouchTap={ () => this.props.setAttribute('add', [true, this.refs['addCon'].input.value]) }
+                leftIcon={<AddCircle onTouchTap={ () => this.props.setAttribute('add', [false, this.refs['addCon'].input.value]) }
                                         hoverColor="red"/>}>
                 <TextField ref="addCon" floatingLabelText="Add a Con"/>
               </ListItem>
@@ -191,12 +174,7 @@ Statement.propTypes = {
   source: React.PropTypes.string,
   confidence: React.PropTypes.number,
   modifyPath: React.PropTypes.func,
-  setConfidence: React.PropTypes.func,
-  setDescription: React.PropTypes.func,
-  setSource: React.PropTypes.func,
-  setTitle: React.PropTypes.func,
   setAttribute: React.PropTypes.func,
-  addStatement: React.PropTypes.func,
   pros: React.PropTypes.array,
   cons: React.PropTypes.array
 }

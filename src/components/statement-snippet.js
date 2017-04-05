@@ -11,7 +11,6 @@ export default class Snippet extends Component {
 
   advance(pro, index) {
     this.props.modifyPath(pro, index);
-
   }
 
   render() {
