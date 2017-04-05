@@ -36,7 +36,7 @@ app.get('/d3', (req, res) => {
 })
 
 // Login Routes
-const authRoutes = require('./server/routes/auth');
+const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
 // Always return the main index.html, so react-router render the route in the client
