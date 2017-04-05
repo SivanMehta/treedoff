@@ -29,9 +29,15 @@ fs.access(path.resolve(__dirname, '..', 'public', 'build'), fs.constants.F_OK | 
 const api = require('./api')
 app.get('/api', api.getTree)
 app.post('/api/tree', api.persist)
+
+// D3 vis routes
 app.get('/d3', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'd3.html'))
 })
+
+// Login Routes
+const authRoutes = require('./server/routes/auth');
+app.use('/auth', authRoutes);
 
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {
