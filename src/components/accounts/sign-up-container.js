@@ -25,21 +25,6 @@ class SignUpPage extends React.Component {
   }
 
   /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
-    });
-  }
-
-  /**
    * Process the form.
    *
    * @param {object} event - the JavaScript event object
@@ -70,8 +55,18 @@ class SignUpPage extends React.Component {
           errors: {}
         });
 
-        console.log('The form is valid');
-      } else {
+        // set a message
+        localStorage.setItem('successMessage', xhr.response.message);
+
+        // make a redirect 
+
+
+        // not working
+
+        // this.context.router.replace('/login');
+      } 
+
+      else {
         // failure
 
         const errors = xhr.response.errors ? xhr.response.errors : {};
@@ -83,6 +78,21 @@ class SignUpPage extends React.Component {
       }
     });
     xhr.send(formData);
+  }
+
+  /**
+   * Change the user object.
+   *
+   * @param {object} event - the JavaScript event object
+   */
+  changeUser(event) {
+    const field = event.target.name;
+    const user = this.state.user;
+    user[field] = event.target.value;
+
+    this.setState({
+      user
+    });
   }
 
   /**

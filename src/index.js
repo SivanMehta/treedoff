@@ -18,6 +18,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import configureStore from './store/configure-store'
 import {Provider} from 'react-redux'
+
+import Auth from './modules/Auth';
+
 const store = configureStore()
 
 // Material UI
@@ -47,14 +50,21 @@ ReactDOM.render(
     <Router>
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          <Route exact path='/' component={AddArg}/>
+          {Auth.isUserAuthenticated() ? (
+            <Route exact path='/' component={AddArg}/> 
+          ) : (
+            <Route exact path='/' component={Login}/>
+          )}
           <Route exact path='/trav/:arg_name' component={App}/>
-          <Route exact path='/trav'component={App}/>
-          <Route exact path='/login'component={Login}/>
-          <Route exact path='/signup'component={Signup}/>
+          <Route exact path='/trav' component={App}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/signup' component={Signup}/>
+          
         </div>
       </MuiThemeProvider>
     </Router>
   </Provider>,
   document.getElementById('root')
 )
+
+// make logout route
