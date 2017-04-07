@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 import LoginForm from './login-form';
 import Auth from '../../modules/Auth';
+import {
+  Redirect
+} from 'react-router-dom';
+
 
 
 class LoginPage extends React.Component {
@@ -26,7 +30,8 @@ class LoginPage extends React.Component {
       user: {
         email: '',
         password: ''
-      }
+      },
+      redirect:false
     };
 
     this.processForm = this.processForm.bind(this);
@@ -67,7 +72,10 @@ class LoginPage extends React.Component {
 
 
         // change the current URL to /
-        this.context.router.replace('/');
+        this.setState({
+          redirect: true
+        });
+        
       } else {
         // failure
 
@@ -103,14 +111,21 @@ class LoginPage extends React.Component {
    */
   render() {
     return (
-      <LoginForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
-        errors={this.state.errors}
-        // add this later
-        // successMessage={this.state.successMessage}
-        user={this.state.user}
-      />
+      // or if already logged in
+      <div>
+
+        { this.state.redirect || Auth.isUserAuthenticated() ? <Redirect to='/trav' /> : (
+            
+          <LoginForm
+            onSubmit={this.processForm}
+            onChange={this.changeUser}
+            errors={this.state.errors}
+            // add this later
+            // successMessage={this.state.successMessage}
+            user={this.state.user}
+          />
+        )}
+      </div>
     );
   }
 

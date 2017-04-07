@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react';
 import SignUpForm from './sign-up-form';
+import Auth from '../../modules/Auth';
+import {
+  Redirect
+} from 'react-router-dom';
 
 
 class SignUpPage extends React.Component {
@@ -17,7 +21,8 @@ class SignUpPage extends React.Component {
         email: '',
         name: '',
         password: ''
-      }
+      },
+      redirect:false
     };
 
     this.processForm = this.processForm.bind(this);
@@ -59,7 +64,9 @@ class SignUpPage extends React.Component {
         localStorage.setItem('successMessage', xhr.response.message);
 
         // make a redirect 
-
+        this.setState({
+          redirect: true
+        });
 
         // not working
 
@@ -100,12 +107,19 @@ class SignUpPage extends React.Component {
    */
   render() {
     return (
-      <SignUpForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
-        errors={this.state.errors}
-        user={this.state.user}
-      />
+      
+
+      <div>
+
+        { this.state.redirect || Auth.isUserAuthenticated() ? <Redirect to='/trav' /> : (
+          <SignUpForm
+            onSubmit={this.processForm}
+            onChange={this.changeUser}
+            errors={this.state.errors}
+            user={this.state.user}
+          />
+        )}
+      </div>
     );
   }
 

@@ -12,7 +12,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid'
 
 import { Link } from 'react-router-dom'
 
-
+import Auth from '../modules/Auth';
 
 const styles = {
   underlineStyle: {
@@ -44,6 +44,9 @@ class AddArg extends Component {
                     <Link to={'/signup'}>
                       <FlatButton label="Signup"/>
                     </Link>
+
+                    <FlatButton label="Logout" onTouchTap={ (e,v) => Auth.deauthenticateUser() }/>
+
                   </div>
                   } />
 
