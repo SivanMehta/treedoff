@@ -83,7 +83,9 @@ export default class Statement extends Component {
 
   renderProgress() {
     return this.state.editing ? (
-      <Slider value={ 0.5 } onChange={(data) => this.props.setAttribute('confidence', data.confidence)}/>
+      <Slider value={ this.state.confidence }
+        onDragStop={ _ => this.props.setAttribute('confidence', this.state.confidence)}
+        onChange={ (e, confidence) => this.setState({confidence: confidence}) }/>
     ) : (
       <LinearProgress mode="determinate" value={ this.props.confidence * 100 } color='#00c04A'/>
     )
