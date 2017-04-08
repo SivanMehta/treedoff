@@ -37,6 +37,7 @@
   "scripts": {
     "start": "node server/",
     "watch": "rm -rf public/dist/ && webpack --progress --watch",
-    "build": "rm -rf public/dist/ && webpack --progress"
+    "build": "rm -rf public/dist/ && webpack --progress",
+    "start-mongo": "mongod --dbpath data/db"
   }
 }
