@@ -50,16 +50,12 @@ ReactDOM.render(
     <Router>
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          {Auth.isUserAuthenticated() ? (
-            <Route exact path='/' component={AddArg}/> 
-          ) : (
-            <Route exact path='/' component={Login}/>
-          )}
+          
+          <Route exact path='/' component={AddArg}/> 
           <Route exact path='/trav/:arg_name' component={App}/>
           <Route exact path='/trav' component={App}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/signup' component={Signup}/>
-
           
         </div>
       </MuiThemeProvider>

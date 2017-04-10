@@ -14,6 +14,10 @@ import { Link } from 'react-router-dom'
 
 import Auth from '../modules/Auth';
 
+import {
+  Redirect
+} from 'react-router-dom';
+
 const styles = {
   underlineStyle: {
     borderColor: '#00c04A',
@@ -26,30 +30,56 @@ class AddArg extends Component {
     super(props)
 
     this.state = {
-      arg: ""
+      arg: "",
+      active_user: Auth.isUserAuthenticated()
+
     }
+
+    this.handleLogout = this.handleLogout.bind(this);
+
+  }
+
+  handleLogout(){
+
+    console.log(this.state.active_user);
+    Auth.deauthenticateUser();
+    this.state.active_user = false;
+    console.log(this.state.active_user);
+    // for some reason state isnt updating automatically with new app bar...
   }
 
   render() {
     return (
       <div>
-        <AppBar title="Treedoff"
-                  showMenuIconButton={ false }
-                  iconElementRight={
-                  <div>
-                    <Link to={'/login'}>
-                      <FlatButton label="Login"/>
-                    </Link>
 
-                    <Link to={'/signup'}>
-                      <FlatButton label="Signup"/>
-                    </Link>
+        { this.state.active_user ?
+          <div>
+            <AppBar title="Treedoff"
+                    showMenuIconButton={ false }
+                    iconElementRight={
+                      <div>
+                        <FlatButton label="Logout" onTouchTap={ (e,v) => this.handleLogout() }/>
+                      </div>
+                    } />
+          </div>
+                  
+        : 
+          <div>
+            <AppBar title="Treedoff"
+                    showMenuIconButton={ false }
+                    iconElementRight={
+                      <div>
+                        <Link to={'/login'}>
+                          <FlatButton label="Login"/>
+                        </Link>
 
-                    <FlatButton label="Logout" onTouchTap={ (e,v) => Auth.deauthenticateUser() }/>
-
-                  </div>
-                  } />
-
+                        <Link to={'/signup'}>
+                          <FlatButton label="Signup"/>
+                        </Link>
+                      </div>
+                    } />
+          </div>
+        }
       
         <Grid fluid>
 
