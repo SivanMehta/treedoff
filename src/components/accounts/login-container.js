@@ -36,6 +36,27 @@ class LoginPage extends React.Component {
 
     this.processForm = this.processForm.bind(this);
     this.changeUser = this.changeUser.bind(this);
+    this.onResponse = this.onResponse.bind(this);
+  }
+
+  onResponse(res) {
+    if(!res.success) {
+      const errors = res.errors ? res.errors : {};
+      errors.summary = res.message
+
+      this.setState({
+        errors
+      })
+
+    } else {
+      // save the token
+      Auth.authenticateUser(res.token);
+
+      // change the current URL to /
+      this.setState({
+        redirect: true
+      })
+    }
   }
 
   /**
@@ -45,50 +66,24 @@ class LoginPage extends React.Component {
    */
   processForm(event) {
     // prevent default action. in this case, action is the form submission event
-    event.preventDefault();
-    
+    event.preventDefault()
+
     // create a string for an HTTP body message
-    const email = encodeURIComponent(this.state.user.email);
-    const password = encodeURIComponent(this.state.user.password);
-    const formData = `email=${email}&password=${password}`;
+    const email = this.state.user.email
+    const password = this.state.user.password
 
-    // create an AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/login');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
-        this.setState({
-          errors: {}
-        });
-
-        console.log('The form is valid');
-        // save the token
-        Auth.authenticateUser(xhr.response.token);
-
-
-        // change the current URL to /
-        this.setState({
-          redirect: true
-        });
-        
-      } else {
-        // failure
-
-        // change the component state
-        const errors = xhr.response.errors ? xhr.response.errors : {};
-        errors.summary = xhr.response.message;
-
-        this.setState({
-          errors
-        });
-      }
-    });
-    xhr.send(formData);
+    fetch('/auth/login', {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({
+        email,
+        password
+      })
+    })
+    .then(res => res.json())
+    .then(this.onResponse)
   }
 
   /**
@@ -115,7 +110,7 @@ class LoginPage extends React.Component {
       <div>
 
         { this.state.redirect || Auth.isUserAuthenticated() ? <Redirect to='/trav' /> : (
-            
+
           <LoginForm
             onSubmit={this.processForm}
             onChange={this.changeUser}
