@@ -4,8 +4,8 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const path = require('path')
-const passport = require('passport');
-const config = require('./config');
+const passport = require('passport')
+const config = require('./config')
 
 // Setup logger
 app.use(morgan('dev'))
@@ -28,23 +28,23 @@ fs.access(path.resolve(__dirname, '..', 'public', 'build'), fs.constants.F_OK | 
 })
 
 // connect to the database and load models
-require('./models').connect(config.dbUri);
+require('./models').connect(config.dbUri)
 
 // pass the passport middleware
-app.use(passport.initialize());
+app.use(passport.initialize())
 
 // load passport strategies
-const localSignupStrategy = require('./passport/local-signup');
-const localLoginStrategy = require('./passport/local-login');
-passport.use('local-signup', localSignupStrategy);
-passport.use('local-login', localLoginStrategy);
+const localSignupStrategy = require('./passport/local-signup')
+const localLoginStrategy = require('./passport/local-login')
+passport.use('local-signup', localSignupStrategy)
+passport.use('local-login', localLoginStrategy)
 
 // pass the authenticaion checker middleware to ensure token is valid
-const authCheckMiddleware = require('./middleware/auth-check');
+const authCheckMiddleware = require('./middleware/auth-check')
 
 // Login and Signup Routes
-const authRoutes = require('./routes/auth');
-app.use('/auth', authRoutes);
+const authRoutes = require('./routes/auth')
+app.use('/auth', authRoutes)
 
 // api definitions
 const api = require('./api')

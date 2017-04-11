@@ -8,4 +8,4 @@ const rootReducer = combineReducers({
   tree
 })
 
-export default rootReducer;
+export default rootReducer

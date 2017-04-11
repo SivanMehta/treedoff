@@ -30,14 +30,18 @@
     "webpack": "^2.3.3"
   },
   "devDependencies": {
+    "eslint-config-standard-react": "^4.3.0",
     "react-scripts": "0.9.5",
     "redux-devtools": "^3.3.2",
-    "redux-devtools-extension": "^2.13.0"
+    "redux-devtools-extension": "^2.13.0",
+    "standard": "^10.0.1"
   },
   "scripts": {
     "start": "node server/",
     "watch": "rm -rf public/dist/ && webpack --progress --watch",
     "build": "rm -rf public/dist/ && webpack --progress",
-    "start-mongo": "mongod --dbpath data/db"
+    "start-mongo": "mongod --dbpath data/db",
+    "lint": "standard server/**/*.js src/**/*.js",
+    "test": "npm run lint && echo 'no tests' && exit 0"
   }
 }

@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - '6.10.1'
+notifications:
+  email: false
+env:
+  NODE_ENV: 'test'
+cache:
+  yarn: true
+  directories:
+    - node_modules/
+    - $HOME/.yarn-cache
