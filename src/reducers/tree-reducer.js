@@ -1,11 +1,10 @@
 import * as types from '../actions/action-types'
-import faker from 'faker'
 
 const defaultArgument = {
-  title: "Waiting for server response...",
-  description: "Patience, young padawan",
-  confidence: .999,
-  source: "lol.not",
+  title: 'Waiting for server response...',
+  description: 'Patience, young padawan',
+  confidence: 0.999,
+  source: 'lol.not',
   pros: [],
   cons: []
 }
@@ -15,6 +14,6 @@ export default (tree = defaultArgument, action) => {
     case types.UPDATE_TREE:
       return Object.assign({}, action.tree)
     default:
-      return tree;
+      return tree
   }
-};
+}

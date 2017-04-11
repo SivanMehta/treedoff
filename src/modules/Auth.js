@@ -1,12 +1,13 @@
-class Auth {
+/* global localStorage */
 
+class Auth {
   /**
    * Authenticate a user. Save a token string in Local Storage
    *
    * @param {string} token
    */
-  static authenticateUser(token) {
-    localStorage.setItem('token', token);
+  static authenticateUser (token) {
+    localStorage.setItem('token', token)
   }
 
   /**
@@ -14,16 +15,16 @@ class Auth {
    *
    * @returns {boolean}
    */
-  static isUserAuthenticated() {
-    return localStorage.getItem('token') !== null;
+  static isUserAuthenticated () {
+    return localStorage.getItem('token') !== null
   }
 
   /**
    * Deauthenticate a user. Remove a token from Local Storage.
    *
    */
-  static deauthenticateUser() {
-    localStorage.removeItem('token');
+  static deauthenticateUser () {
+    localStorage.removeItem('token')
   }
 
   /**
@@ -32,10 +33,9 @@ class Auth {
    * @returns {string}
    */
 
-  static getToken() {
-    return localStorage.getItem('token');
+  static getToken () {
+    return localStorage.getItem('token')
   }
-
 }
 
-export default Auth;
+export default Auth

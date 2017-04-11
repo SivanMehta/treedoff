@@ -10,68 +10,61 @@ import FlatButton from 'material-ui/FlatButton'
 // grid
 import { Grid, Row, Col } from 'react-flexbox-grid'
 
+import Auth from '../modules/Auth'
+
 import { Link } from 'react-router-dom'
-
-import Auth from '../modules/Auth';
-
-import {
-  Redirect
-} from 'react-router-dom';
 
 const styles = {
   underlineStyle: {
-    borderColor: '#00c04A',
+    borderColor: '#00c04A'
   }
 }
 
 class AddArg extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
-      arg: "",
+      arg: '',
       active: Auth.isUserAuthenticated()
 
     }
 
-    this.handleLogout = this.handleLogout.bind(this);
-
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
-  handleLogout() {
+  handleLogout () {
     Auth.deauthenticateUser()
     this.setState({
       active: false
     })
   }
 
-  render() {
+  render () {
     return (
       <div>
 
-        { this.state.active ?
-            <AppBar title="Treedoff"
-                    showMenuIconButton={ false }
-                    iconElementRight={
-                      <div>
-                        <FlatButton label="Logout" onTouchTap={ (e,v) => this.handleLogout() }/>
-                      </div>
-                    } />
-        :
-            <AppBar title="Treedoff"
-                    showMenuIconButton={ false }
-                    iconElementRight={
-                      <div>
-                        <Link to={'/login'}>
-                          <FlatButton label="Login"/>
-                        </Link>
+        { this.state.active
+          ? <AppBar title='Treedoff'
+            showMenuIconButton={false}
+            iconElementRight={
+              <div>
+                <FlatButton label='Logout' onTouchTap={(e, v) => this.handleLogout()} />
+              </div>
+            } />
+          : <AppBar title='Treedoff'
+            showMenuIconButton={false}
+            iconElementRight={
+              <div>
+                <Link to={'/login'}>
+                  <FlatButton label='Login'/>
+                </Link>
 
-                        <Link to={'/signup'}>
-                          <FlatButton label="Signup"/>
-                        </Link>
-                      </div>
-                    } />
+                <Link to={'/signup'}>
+                  <FlatButton label='Signup'/>
+                </Link>
+              </div>
+            } />
         }
 
         <Grid fluid>
@@ -79,17 +72,17 @@ class AddArg extends Component {
           <br/>
           <br/>
 
-          <Row center="xs">
+          <Row center='xs'>
             <Col xs={4}>
               <Logo/>
             </Col>
           </Row>
 
-          <Row center="xs">
+          <Row center='xs'>
             <Col xs={4}>
               <TextField
                 onChange={ (e, v) => this.setState({arg: v}) }
-                hintText="What do you want to argue?"
+                hintText='What do you want to argue?'
                 underlineFocusStyle={styles.underlineStyle}
                 />
               <Link to={'/trav/' + this.state.arg}>
