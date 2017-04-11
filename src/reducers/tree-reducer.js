@@ -10,8 +10,6 @@ const defaultArgument = {
   cons: []
 }
 
-
-// DEFAULT STATE IS []
 export default (tree = defaultArgument, action) => {
   switch (action.type) {
     case types.UPDATE_TREE:

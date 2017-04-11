@@ -28,8 +28,6 @@ function persist(req, res) {
   // literally just replace it for know
   database = Object.assign({}, req.body)
   res.sendStatus(200)
-
-  // console.log(JSON.stringify(database))
 }
 
 function getTree(req, res) {

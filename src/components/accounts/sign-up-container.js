@@ -5,7 +5,6 @@ import {
   Redirect
 } from 'react-router-dom';
 
-
 class SignUpPage extends React.Component {
 
   /**
@@ -37,7 +36,7 @@ class SignUpPage extends React.Component {
   processForm(event) {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
-    
+
     // Can we use fetch or some sort of promise thing here?
 
     // create a string for an HTTP body message
@@ -53,9 +52,6 @@ class SignUpPage extends React.Component {
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
         this.setState({
           errors: {}
         });
@@ -63,19 +59,13 @@ class SignUpPage extends React.Component {
         // set a message
         localStorage.setItem('successMessage', xhr.response.message);
 
-        // make a redirect 
+        // make a redirect
         this.setState({
           redirect: true
         });
-
-        // not working
-
-        // this.context.router.replace('/login');
-      } 
+      }
 
       else {
-        // failure
-
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
 
@@ -107,10 +97,8 @@ class SignUpPage extends React.Component {
    */
   render() {
     return (
-      
 
       <div>
-
         { this.state.redirect || Auth.isUserAuthenticated() ? <Redirect to='/trav' /> : (
           <SignUpForm
             onSubmit={this.processForm}

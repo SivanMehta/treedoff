@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 
 
-
 class LoginPage extends React.Component {
 
   /**
@@ -123,7 +122,6 @@ class LoginPage extends React.Component {
       </div>
     );
   }
-
 }
 
 export default LoginPage;
