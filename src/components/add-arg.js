@@ -4,11 +4,19 @@ import Logo from '../front-logo-leaf.svg'
 // Material UI
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import AppBar from 'material-ui/AppBar'
+import FlatButton from 'material-ui/FlatButton'
 
 // grid
 import { Grid, Row, Col } from 'react-flexbox-grid'
 
 import { Link } from 'react-router-dom'
+
+import Auth from '../modules/Auth';
+
+import {
+  Redirect
+} from 'react-router-dom';
 
 const styles = {
   underlineStyle: {
@@ -22,41 +30,77 @@ class AddArg extends Component {
     super(props)
 
     this.state = {
-      arg: ""
+      arg: "",
+      active: Auth.isUserAuthenticated()
+
     }
+
+    this.handleLogout = this.handleLogout.bind(this);
+
+  }
+
+  handleLogout() {
+    Auth.deauthenticateUser()
+    this.setState({
+      active: false
+    })
   }
 
   render() {
     return (
-      <Grid>
-        <Row style={{marginTop: "35px"}}>
-          <Col sm={4}/>
-          <Col sm={4} xs={12}>
-            <Logo/>
-          </Col>
-          <Col sm={4} />
-        </Row>
-        <Row style={{"text-align": "center"}}>
-          <Col sm={5} xs={0}/>
-          <Col sm={2} xs={12}>
-            <TextField
-              onChange={ (e, v) => this.setState({arg: v}) }
-              hintText="Search for Arguments"
-              underlineFocusStyle={styles.underlineStyle}
-              />
-          </Col>
-          <Col sm={5} />
-        </Row>
-        <Row style={{"text-align": "center"}}>
-          <Col sm={5} xs={0}/>
-          <Col sm={2} xs={12}>
-            <Link to={'/trav/' + this.state.arg}>
-              <RaisedButton>Treedoff</RaisedButton>
-            </Link>
-          </Col>
-          <Col sm={5} />
-        </Row>
-      </Grid>
+      <div>
+
+        { this.state.active ?
+            <AppBar title="Treedoff"
+                    showMenuIconButton={ false }
+                    iconElementRight={
+                      <div>
+                        <FlatButton label="Logout" onTouchTap={ (e,v) => this.handleLogout() }/>
+                      </div>
+                    } />
+        :
+            <AppBar title="Treedoff"
+                    showMenuIconButton={ false }
+                    iconElementRight={
+                      <div>
+                        <Link to={'/login'}>
+                          <FlatButton label="Login"/>
+                        </Link>
+
+                        <Link to={'/signup'}>
+                          <FlatButton label="Signup"/>
+                        </Link>
+                      </div>
+                    } />
+        }
+
+        <Grid fluid>
+
+          <br/>
+          <br/>
+
+          <Row center="xs">
+            <Col xs={4}>
+              <Logo/>
+            </Col>
+          </Row>
+
+          <Row center="xs">
+            <Col xs={4}>
+              <TextField
+                onChange={ (e, v) => this.setState({arg: v}) }
+                hintText="What do you want to argue?"
+                underlineFocusStyle={styles.underlineStyle}
+                />
+              <Link to={'/trav/' + this.state.arg}>
+                <RaisedButton>Treedoff</RaisedButton>
+              </Link>
+            </Col>
+          </Row>
+
+        </Grid>
+
+      </div>
     )
   }
 }
