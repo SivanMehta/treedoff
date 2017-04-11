@@ -62,30 +62,15 @@ class Tree extends Component {
     this.props.actions.updateTree(data)
   }
 
-  componentWillMount()  {
-    const xhr = new XMLHttpRequest();
-    xhr.open('get', '/user-auth');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    // set the authorization HTTP header
-    xhr.setRequestHeader('Authorization', `bearer ${Auth.getToken()}`);
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 401) {
-        this.setState({
-
-          redirect: true
-        });
-      }
-    });
-    xhr.send();
-
-  }
-
   componentDidMount() {
-    fetch("/api")
-      .then(res => res.json())
-      .then(data => this.handleData(data))
-      .catch(() => console.log("Could not fetch data =("))
+    fetch("/api", {
+      headers: {
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => this.handleData(data))
+    .catch((ex) => console.log(ex))
   }
 
   saveTree() {
@@ -167,7 +152,7 @@ class Tree extends Component {
     { this.state.redirect || !Auth.isUserAuthenticated() ? <Redirect to='/' /> : (
       <div>
 
-        
+
 
         <AppBar title="Treedoff"
                 showMenuIconButton={ false }
@@ -190,8 +175,8 @@ class Tree extends Component {
 
       </div>
     )}
-    </div>  
-    
+    </div>
+
     )
   }
 }

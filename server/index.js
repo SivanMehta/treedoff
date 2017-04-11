@@ -45,19 +45,14 @@ passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware to ensure token is valid
 const authCheckMiddleware = require('./middleware/auth-check');
-app.use('/user-auth', authCheckMiddleware);
 
 // Login Routes
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
-
-
-
-
 // api definitions
 const api = require('./api')
-app.get('/api', api.getTree)
+app.get('/api', authCheckMiddleware, api.getTree)
 app.post('/api/tree', api.persist)
 
 // D3 vis routes
