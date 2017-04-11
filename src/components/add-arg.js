@@ -57,11 +57,11 @@ class AddArg extends Component {
             iconElementRight={
               <div>
                 <Link to={'/login'}>
-                  <FlatButton label='Login'/>
+                  <FlatButton label='Login' />
                 </Link>
 
                 <Link to={'/signup'}>
-                  <FlatButton label='Signup'/>
+                  <FlatButton label='Signup' />
                 </Link>
               </div>
             } />
@@ -69,19 +69,19 @@ class AddArg extends Component {
 
         <Grid fluid>
 
-          <br/>
-          <br/>
+          <br />
+          <br />
 
           <Row center='xs'>
             <Col xs={4}>
-              <Logo/>
+              <Logo />
             </Col>
           </Row>
 
           <Row center='xs'>
             <Col xs={4}>
               <TextField
-                onChange={ (e, v) => this.setState({arg: v}) }
+                onChange={(e, v) => this.setState({arg: v})}
                 hintText='What do you want to argue?'
                 underlineFocusStyle={styles.underlineStyle}
                 />
