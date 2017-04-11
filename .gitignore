@@ -20,4 +20,4 @@ yarn-error.log*
 yarn.lock
 
 # MongoDB store
-data/db/*.*
+data/db/
