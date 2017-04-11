@@ -5,3 +5,8 @@ notifications:
   email: false
 env:
   NODE_ENV: 'test'
+cache:
+  yarn: true
+  directories:
+    - node_modules/
+    - $HOME/.yarn-cache
