@@ -22,18 +22,18 @@ export default class History extends Component {
     var currentStatement = this.props.tree
     for (var i = 0; i < this.props.path.length; i++) {
       const k = i
+      const prop = this.props.path[i].substr(0, 4)
+      const index = this.props.path[i].substr(4)
       events.push(
         <RaisedButton
           label={currentStatement.title}
           labelPosition='before'
-          primary
+          backgroundColor={prop === 'pros' ? 'green' : 'red'}
           icon={<UndoIcon />}
           onTouchTap={(e) => this.regress(k)}
           key={'history-' + i} />
       )
 
-      const prop = this.props.path[i].substr(0, 4)
-      const index = this.props.path[i].substr(4)
       currentStatement = currentStatement[prop][index]
     }
 
