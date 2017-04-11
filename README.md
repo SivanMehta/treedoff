@@ -1,3 +1,6 @@
+[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
+
 # Getting Started
 
 Right now the only external downloads you need to do get is [MongoDB](https://docs.mongodb.com/manual/installation/). After downloading the binary and getting the `mongod` command available to you, make a `data/db` folder in the root of this directory. To run the server, simply run `npm run start-mongo` to initialize the server. Otherwise the application server will not run.
