@@ -30,10 +30,6 @@ fs.access(path.resolve(__dirname, '..', 'public', 'build'), fs.constants.F_OK | 
 // connect to the database and load models
 require('./models').connect(config.dbUri);
 
-
-
-
-
 // pass the passport middleware
 app.use(passport.initialize());
 
@@ -53,7 +49,7 @@ app.use('/auth', authRoutes);
 // api definitions
 const api = require('./api')
 app.get('/api', authCheckMiddleware, api.getTree)
-app.post('/api/tree', api.persist)
+app.post('/api/tree', authCheckMiddleware, api.persist)
 
 // D3 vis routes
 app.get('/d3', (req, res) => {

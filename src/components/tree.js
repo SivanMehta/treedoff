@@ -75,11 +75,11 @@ class Tree extends Component {
 
   saveTree() {
     fetch('/api/tree', {
-      credentials: 'same-origin',
       body: JSON.stringify(this.props.tree),
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${Auth.getToken()}`
       }
     }).then(res => console.log(res.status))
   }
