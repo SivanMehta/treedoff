@@ -14,6 +14,12 @@ import * as treeActions from '../actions/tree-actions'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import Auth from '../modules/Auth';
+
+import {
+  Redirect
+} from 'react-router-dom';
+
 function generate_fake_argument(title, amt) {
   return {
     title: title ? title : faker.company.catchPhrase() ,
@@ -41,17 +47,38 @@ class Tree extends Component {
 
     this.state = {
       // loading icon indication
-      loading: false
+      loading: false,
+      redirect: false
     }
 
     this.setCurrentStatement = this.setCurrentStatement.bind(this)
     this.saveTree = this.saveTree.bind(this)
     this.setAttribute = this.setAttribute.bind(this)
     this.handleData = this.handleData.bind(this)
+
   }
 
   handleData(data){
     this.props.actions.updateTree(data)
+  }
+
+  componentWillMount()  {
+    const xhr = new XMLHttpRequest();
+    xhr.open('get', '/user-auth');
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    // set the authorization HTTP header
+    xhr.setRequestHeader('Authorization', `bearer ${Auth.getToken()}`);
+    xhr.responseType = 'json';
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 401) {
+        this.setState({
+
+          redirect: true
+        });
+      }
+    });
+    xhr.send();
+
   }
 
   componentDidMount() {
@@ -134,8 +161,14 @@ class Tree extends Component {
       currentStatement = currentStatement[prop][index]
     }
 
+
     return (
+    <div>
+    { this.state.redirect || !Auth.isUserAuthenticated() ? <Redirect to='/' /> : (
       <div>
+
+        
+
         <AppBar title="Treedoff"
                 showMenuIconButton={ false }
                 iconElementRight={
@@ -154,7 +187,11 @@ class Tree extends Component {
           cons={ currentStatement.cons }
           modifyPath={ this.props.actions.advancePath }
           setAttribute={ this.setAttribute } />
+
       </div>
+    )}
+    </div>  
+    
     )
   }
 }

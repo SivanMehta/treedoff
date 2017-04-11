@@ -45,7 +45,7 @@ passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware to ensure token is valid
 const authCheckMiddleware = require('./middleware/auth-check');
-app.use('/trav', authCheckMiddleware);
+app.use('/user-auth', authCheckMiddleware);
 
 // Login Routes
 const authRoutes = require('./routes/auth');
