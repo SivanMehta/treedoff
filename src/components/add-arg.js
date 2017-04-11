@@ -31,7 +31,7 @@ class AddArg extends Component {
 
     this.state = {
       arg: "",
-      active_user: Auth.isUserAuthenticated()
+      active: Auth.isUserAuthenticated()
 
     }
 
@@ -39,21 +39,18 @@ class AddArg extends Component {
 
   }
 
-  handleLogout(){
-
-    console.log(this.state.active_user);
-    Auth.deauthenticateUser();
-    this.state.active_user = false;
-    console.log(this.state.active_user);
-    // for some reason state isnt updating automatically with new app bar...
+  handleLogout() {
+    Auth.deauthenticateUser()
+    this.setState({
+      active: false
+    })
   }
 
   render() {
     return (
       <div>
 
-        { this.state.active_user ?
-          <div>
+        { this.state.active ?
             <AppBar title="Treedoff"
                     showMenuIconButton={ false }
                     iconElementRight={
@@ -61,10 +58,7 @@ class AddArg extends Component {
                         <FlatButton label="Logout" onTouchTap={ (e,v) => this.handleLogout() }/>
                       </div>
                     } />
-          </div>
-                  
-        : 
-          <div>
+        :
             <AppBar title="Treedoff"
                     showMenuIconButton={ false }
                     iconElementRight={
@@ -78,14 +72,13 @@ class AddArg extends Component {
                         </Link>
                       </div>
                     } />
-          </div>
         }
-      
+
         <Grid fluid>
 
           <br/>
           <br/>
-       
+
           <Row center="xs">
             <Col xs={4}>
               <Logo/>
@@ -104,9 +97,9 @@ class AddArg extends Component {
               </Link>
             </Col>
           </Row>
-       
+
         </Grid>
-      
+
       </div>
     )
   }
