@@ -78,7 +78,7 @@ export default class Statement extends Component {
           leftIcon={
             <RemoveCircle onTouchTap={() => this.props.setAttribute('remove', [false, k])} />
           }
-          onTouchTap={(e) => this.advance(true, k)} >
+          onTouchTap={(e) => this.advance(false, k)} >
           <Snippet
             pro={false}
             title={cons[i] ? cons[i].title : ''}
