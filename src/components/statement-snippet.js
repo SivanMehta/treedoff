@@ -19,9 +19,7 @@ export default class Snippet extends Component {
 
     return (
       <span>
-        <span onClick={(e) => this.advance(this.props.pro, this.props.index)} >
-          {this.props.title}
-        </span>
+        {this.props.title}
         <LinearProgress mode='determinate' value={this.props.confidence * 100} color={color} />
       </span>
     )

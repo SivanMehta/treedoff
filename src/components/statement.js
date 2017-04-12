@@ -32,6 +32,11 @@ export default class Statement extends Component {
     this.renderPros = this.renderPros.bind(this)
     this.renderCons = this.renderCons.bind(this)
     this.renderProgress = this.renderProgress.bind(this)
+    this.advance = this.advance.bind(this)
+  }
+
+  advance (pro, index) {
+    this.props.modifyPath(pro, index)
   }
 
   renderPros () {
@@ -42,14 +47,16 @@ export default class Statement extends Component {
     for (var i = 0; i < numArguments; i++) {
       const k = i
       rows.push(
-        <ListItem key={i} leftIcon={
-          <RemoveCircle onTouchTap={() => this.props.setAttribute('remove', [true, k])} />
-          }>
+        <ListItem
+          key={i}
+          leftIcon={
+            <RemoveCircle onTouchTap={() => this.props.setAttribute('remove', [true, k])} />
+          }
+          onTouchTap={(e) => this.advance(true, k)} >
           <Snippet
             pro
             title={pros[i] ? pros[i].title : ''}
             confidence={pros[i] ? pros[i].confidence : 0}
-            modifyPath={this.props.modifyPath}
             index={i} />
         </ListItem>
       )
@@ -66,15 +73,17 @@ export default class Statement extends Component {
     for (var i = 0; i < numArguments; i++) {
       const k = i
       rows.push(
-        <ListItem key={i} leftIcon={
-          <RemoveCircle onTouchTap={() => this.props.setAttribute('remove', [false, k])} />
-          }>
+        <ListItem
+          key={i}
+          leftIcon={
+            <RemoveCircle onTouchTap={() => this.props.setAttribute('remove', [false, k])} />
+          }
+          onTouchTap={(e) => this.advance(false, k)} >
           <Snippet
             pro={false}
             title={cons[i] ? cons[i].title : ''}
             confidence={cons[i] ? cons[i].confidence : 0}
-            modifyPath={this.props.modifyPath}
-            index={i} />
+            modifyPath={this.props.modifyPath} />
         </ListItem>
       )
     }
