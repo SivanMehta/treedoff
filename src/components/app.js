@@ -32,7 +32,7 @@ function generateFakeArgument (title, amt) {
   }
 }
 
-class Tree extends Component {
+class App extends Component {
   constructor (props) {
     super(props)
 
@@ -178,4 +178,4 @@ function mapDispatchToProps (dispatch) {
 }
 
 // Giving yourself props with connect
-export default connect(mapStateToProps, mapDispatchToProps)(Tree)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
