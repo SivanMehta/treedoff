@@ -135,29 +135,29 @@ class App extends Component {
 
     return this.state.redirect || !Auth.isUserAuthenticated() ? <Redirect to='/' /> : (
       <Tabs>
-          <Tab label='Pros and Cons'>
+        <Tab label='Pros and Cons'>
 
-            <AppBar title='Treedoff'
-              showMenuIconButton={false}
-              iconElementRight={
-                <FlatButton
-                  label='Save'
-                  onTouchTap={this.saveTree}
-                  style={{margin: 12}} />} />
-            <History tree={this.props.tree} path={this.props.path} regress={this.props.actions.regressPath} />
-            <Statement title={currentStatement.title}
-              description={currentStatement.description}
-              source={currentStatement.source}
-              confidence={currentStatement.confidence}
-              pros={currentStatement.pros}
-              cons={currentStatement.cons}
-              modifyPath={this.props.actions.advancePath}
-              setAttribute={this.setAttribute} />
+          <AppBar title='Treedoff'
+            showMenuIconButton={false}
+            iconElementRight={
+              <FlatButton
+                label='Save'
+                onTouchTap={this.saveTree}
+                style={{margin: 12}} />} />
+          <History tree={this.props.tree} path={this.props.path} regress={this.props.actions.regressPath} />
+          <Statement title={currentStatement.title}
+            description={currentStatement.description}
+            source={currentStatement.source}
+            confidence={currentStatement.confidence}
+            pros={currentStatement.pros}
+            cons={currentStatement.cons}
+            modifyPath={this.props.actions.advancePath}
+            setAttribute={this.setAttribute} />
 
-          </Tab>
-          <Tab label='Tree'>
-            <Tree tree={this.props.tree}/>
-          </Tab>
+        </Tab>
+        <Tab label='Tree' >
+          <Tree tree={this.props.tree} />
+        </Tab>
       </Tabs>
     )
   }
