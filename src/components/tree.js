@@ -4,6 +4,7 @@ import faker from 'faker'
 // Material UI
 import AppBar from 'material-ui/AppBar'
 import FlatButton from 'material-ui/FlatButton'
+import {Tabs, Tab} from 'material-ui/Tabs'
 
 // custom components
 import Statement from './statement'
@@ -131,10 +132,9 @@ class Tree extends Component {
       currentStatement = currentStatement[prop][index]
     }
 
-    return (
-      <div>
-        { this.state.redirect || !Auth.isUserAuthenticated() ? <Redirect to='/' /> : (
-          <div>
+    return this.state.redirect || !Auth.isUserAuthenticated() ? <Redirect to='/' /> : (
+      <Tabs>
+          <Tab label='Pros and Cons'>
 
             <AppBar title='Treedoff'
               showMenuIconButton={false}
@@ -153,9 +153,11 @@ class Tree extends Component {
               modifyPath={this.props.actions.advancePath}
               setAttribute={this.setAttribute} />
 
-          </div>
-      )}
-      </div>
+          </Tab>
+          <Tab label='Tree'>
+            I am a beautiful tree
+          </Tab>
+      </Tabs>
     )
   }
 }
