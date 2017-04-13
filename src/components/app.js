@@ -9,6 +9,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 // custom components
 import Statement from './statement'
 import History from './history'
+import Tree from './tree'
 
 // redux actions
 import * as treeActions from '../actions/tree-actions'
@@ -155,7 +156,7 @@ class App extends Component {
 
           </Tab>
           <Tab label='Tree'>
-            I am a beautiful tree
+            <Tree />
           </Tab>
       </Tabs>
     )
