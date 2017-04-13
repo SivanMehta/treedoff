@@ -156,7 +156,7 @@ class App extends Component {
 
           </Tab>
           <Tab label='Tree'>
-            <Tree />
+            <Tree tree={this.props.tree}/>
           </Tab>
       </Tabs>
     )
