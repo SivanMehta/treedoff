@@ -16,7 +16,10 @@ const initializers = [
   './models',
 
   // passport
-  './passport'
+  './passport',
+
+  // authorization middleware and routes
+  './auth'
 
 ].map(filename => done => require(filename).init(app, done))
 
@@ -33,18 +36,11 @@ async.waterfall(initializers, (err, _) => {
       throw err + suggestion
     }
   })
-  
-  // pass the authenticaion checker middleware to ensure token is valid
-  const authCheckMiddleware = require('./middleware/auth-check')
-  //
-  // Login and Signup Routes
-  const authRoutes = require('./routes/auth')
-  app.use('/auth', authRoutes)
 
   // api definitions
   const api = require('./api')
-  app.get('/api', authCheckMiddleware, api.getTree)
-  app.post('/api/tree', authCheckMiddleware, api.persist)
+  app.get('/api', app.authCheckMiddleware, api.getTree)
+  app.post('/api/tree', app.authCheckMiddleware, api.persist)
 
   // D3 vis routes
   app.get('/d3', (req, res) => {

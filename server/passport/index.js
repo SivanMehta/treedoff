@@ -11,4 +11,6 @@ exports.init = (app, done) => {
   passport.use('local-login', localLoginStrategy)
 
   app.log.info('Initialized Passport')
+
+  done()
 }
