@@ -5,7 +5,7 @@ import {
   Route
 } from 'react-router-dom'
 
-import App from './App'
+import App from './components/App'
 import AddArg from './components/add-arg.js'
 import Signup from './components/accounts/sign-up-container.js'
 import Login from './components/accounts/login-container.js'
@@ -50,13 +50,13 @@ ReactDOM.render(
     <Router>
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          
-          <Route exact path='/' component={AddArg}/> 
+
+          <Route exact path='/' component={AddArg}/>
           <Route exact path='/trav/:arg_name' component={App}/>
           <Route exact path='/trav' component={App}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/signup' component={Signup}/>
-          
+
         </div>
       </MuiThemeProvider>
     </Router>
