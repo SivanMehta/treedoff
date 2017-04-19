@@ -8,9 +8,9 @@ exports.init = (app, done) => {
 
   // check for react files
   fs.access(path.resolve(__dirname, '..', '..', 'public', 'build'), fs.constants.F_OK | fs.constants.R_OK, (err) => {
-    if(err) {
-      const suggestion = " --> The React.js application was probably not built"
-      throw err + suggestion
+    if (err) {
+      app.log.error('The React application was not built')
+      process.exit(1)
     }
   })
 
@@ -21,7 +21,7 @@ exports.init = (app, done) => {
 
   // Always return the main index.html, so react-router render the route in the client
   app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, '..', '..', 'public', 'index.html'))
+    res.sendFile(path.resolve(__dirname, '..', '..', 'public', 'index.html'))
   })
 
   app.log.info('Static assets, including the React app, are available')

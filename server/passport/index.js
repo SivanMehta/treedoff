@@ -1,5 +1,4 @@
 const passport = require('passport')
-const path = require('path')
 
 exports.init = (app, done) => {
   app.use(passport.initialize())

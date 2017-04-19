@@ -8,9 +8,9 @@ var logger = new (winston.Logger)({
 })
 
 logger.stream = {
-    write: (message, encoding) => {
-        logger.info(message.split('\n')[0])
-    }
+  write: (message, encoding) => {
+    logger.info(message.split('\n')[0])
+  }
 }
 
 exports.init = (app, done) => {
