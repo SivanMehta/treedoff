@@ -8,10 +8,15 @@ const async = require('async')
 const initializers = [
   // logger
   './initializers/logger',
+
   // parsing HTTP request
   './initializers/body-parser',
+
   // connect to database and load models
-  './models'
+  './models',
+
+  // passport
+  './passport'
 
 ].map(filename => done => require(filename).init(app, done))
 
@@ -28,19 +33,10 @@ async.waterfall(initializers, (err, _) => {
       throw err + suggestion
     }
   })
-
-  // pass the passport middleware
-  app.use(passport.initialize())
-
-  // load passport strategies
-  const localSignupStrategy = require('./passport/local-signup')
-  const localLoginStrategy = require('./passport/local-login')
-  passport.use('local-signup', localSignupStrategy)
-  passport.use('local-login', localLoginStrategy)
-
+  
   // pass the authenticaion checker middleware to ensure token is valid
   const authCheckMiddleware = require('./middleware/auth-check')
-
+  //
   // Login and Signup Routes
   const authRoutes = require('./routes/auth')
   app.use('/auth', authRoutes)
