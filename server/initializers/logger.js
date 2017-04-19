@@ -14,12 +14,12 @@ logger.stream = {
 }
 
 exports.init = (app, done) => {
-  app.logger = logger
+  app.log = logger
   app.env = process.env.NODE_ENV || 'development'
   logger.level = app.env === 'development' ? 'debug' : 'info'
   app.use(morgan('dev', { stream: logger.stream }))
 
-  app.logger.info('Initialized logger')
+  app.log.info('Initialized logger')
 
   done(null)
 }

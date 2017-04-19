@@ -9,16 +9,14 @@ const async = require('async')
 
 // setup initializers
 const initializers = [
-  //setup logger
-  './logger'
+  // logger
+  './initializers/logger',
+  // parsing HTTP request
+  './initializers/body-parser'
+
 ].map(filename => done => require(filename).init(app, done))
 
 async.waterfall(initializers, (err, _) => {
-
-  // parsing
-  const bodyParser = require('body-parser')
-  app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(bodyParser.json())
 
   // Serve static assets
   app.use(express.static(path.resolve(__dirname, '..', 'public')))
@@ -72,7 +70,7 @@ async.waterfall(initializers, (err, _) => {
   const PORT = process.env.PORT || 9000
 
   app.listen(PORT, () => {
-    app.logger.info(`App listening on port ${PORT}!`)
+    app.log.info(`App listening on port ${PORT}!`)
   })
 
 })
