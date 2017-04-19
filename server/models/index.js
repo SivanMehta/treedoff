@@ -1,15 +1,19 @@
 const mongoose = require('mongoose')
+const config = require('../config')
 
-module.exports.connect = (uri) => {
-  mongoose.connect(uri)
+module.exports.init = (app, done) => {
+  mongoose.connect(config.dbUri)
 
   mongoose.Promise = global.Promise
 
   mongoose.connection.on('error', (err) => {
-    console.error(`Mongoose connection error: ${err}`)
+    app.log.error(`Mongoose connection error: ${err}`)
     process.exit(1)
   })
 
-  // load models
+  app.log.info(`Connected to MongoDB at ${config.dbUri}`)
+
+  // load User model
   require('./users')
+  done()
 }

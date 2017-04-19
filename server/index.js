@@ -1,10 +1,7 @@
-// server/index.js
-'use strict'
 const express = require('express')
 const app = express()
 const path = require('path')
 const passport = require('passport')
-const config = require('./config')
 const async = require('async')
 
 // setup initializers
@@ -12,7 +9,9 @@ const initializers = [
   // logger
   './initializers/logger',
   // parsing HTTP request
-  './initializers/body-parser'
+  './initializers/body-parser',
+  // connect to database and load models
+  './models'
 
 ].map(filename => done => require(filename).init(app, done))
 
@@ -29,9 +28,6 @@ async.waterfall(initializers, (err, _) => {
       throw err + suggestion
     }
   })
-
-  // connect to the database and load models
-  require('./models').connect(config.dbUri)
 
   // pass the passport middleware
   app.use(passport.initialize())
