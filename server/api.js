@@ -34,7 +34,10 @@ function getTree(req, res) {
   res.send(database)
 }
 
-module.exports = {
-  getTree,
-  persist
+exports.init = (app, done) => {
+  app.get('/api', app.authCheckMiddleware, getTree)
+  app.post('/api/tree', app.authCheckMiddleware, persist)
+
+  app.log.info('Defined API routes')
+  done(null)
 }
