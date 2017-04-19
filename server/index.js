@@ -19,7 +19,10 @@ const initializers = [
   './passport',
 
   // authorization middleware and routes
-  './auth'
+  './auth',
+
+  // api definitions
+  './api'
 
 ].map(filename => done => require(filename).init(app, done))
 
@@ -36,11 +39,6 @@ async.waterfall(initializers, (err, _) => {
       throw err + suggestion
     }
   })
-
-  // api definitions
-  const api = require('./api')
-  app.get('/api', app.authCheckMiddleware, api.getTree)
-  app.post('/api/tree', app.authCheckMiddleware, api.persist)
 
   // D3 vis routes
   app.get('/d3', (req, res) => {
