@@ -2,70 +2,77 @@
 'use strict'
 const express = require('express')
 const app = express()
-const morgan = require('morgan')
 const path = require('path')
 const passport = require('passport')
 const config = require('./config')
+const async = require('async')
 
-// Setup logger
-app.use(morgan('dev'))
+// setup initializers
+const initializers = [
+  //setup logger
+  './logger'
+].map(filename => done => require(filename).init(app, done))
 
-// parsing
-const bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+async.waterfall(initializers, (err, _) => {
 
-// Serve static assets
-app.use(express.static(path.resolve(__dirname, '..', 'public')))
+  // parsing
+  const bodyParser = require('body-parser')
+  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json())
 
-// check for react files
-const fs = require('fs')
-fs.access(path.resolve(__dirname, '..', 'public', 'build'), fs.constants.F_OK | fs.constants.R_OK, (err) => {
-  if(err) {
-    const suggestion = " --> The React.js application was probably not built"
-    throw err + suggestion
-  }
-})
+  // Serve static assets
+  app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
-// connect to the database and load models
-require('./models').connect(config.dbUri)
+  // check for react files
+  const fs = require('fs')
+  fs.access(path.resolve(__dirname, '..', 'public', 'build'), fs.constants.F_OK | fs.constants.R_OK, (err) => {
+    if(err) {
+      const suggestion = " --> The React.js application was probably not built"
+      throw err + suggestion
+    }
+  })
 
-// pass the passport middleware
-app.use(passport.initialize())
+  // connect to the database and load models
+  require('./models').connect(config.dbUri)
 
-// load passport strategies
-const localSignupStrategy = require('./passport/local-signup')
-const localLoginStrategy = require('./passport/local-login')
-passport.use('local-signup', localSignupStrategy)
-passport.use('local-login', localLoginStrategy)
+  // pass the passport middleware
+  app.use(passport.initialize())
 
-// pass the authenticaion checker middleware to ensure token is valid
-const authCheckMiddleware = require('./middleware/auth-check')
+  // load passport strategies
+  const localSignupStrategy = require('./passport/local-signup')
+  const localLoginStrategy = require('./passport/local-login')
+  passport.use('local-signup', localSignupStrategy)
+  passport.use('local-login', localLoginStrategy)
 
-// Login and Signup Routes
-const authRoutes = require('./routes/auth')
-app.use('/auth', authRoutes)
+  // pass the authenticaion checker middleware to ensure token is valid
+  const authCheckMiddleware = require('./middleware/auth-check')
 
-// api definitions
-const api = require('./api')
-app.get('/api', authCheckMiddleware, api.getTree)
-app.post('/api/tree', authCheckMiddleware, api.persist)
+  // Login and Signup Routes
+  const authRoutes = require('./routes/auth')
+  app.use('/auth', authRoutes)
 
-// D3 vis routes
-app.get('/d3', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'd3.html'))
-})
+  // api definitions
+  const api = require('./api')
+  app.get('/api', authCheckMiddleware, api.getTree)
+  app.post('/api/tree', authCheckMiddleware, api.persist)
 
-// Always return the main index.html, so react-router render the route in the client
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
-})
+  // D3 vis routes
+  app.get('/d3', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'd3.html'))
+  })
 
-module.exports = app
+  // Always return the main index.html, so react-router render the route in the client
+  app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
+  })
+
+  module.exports = app
 
 
-const PORT = process.env.PORT || 9000
+  const PORT = process.env.PORT || 9000
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}!`)
+  app.listen(PORT, () => {
+    app.logger.info(`App listening on port ${PORT}!`)
+  })
+
 })
