@@ -11,5 +11,5 @@ exports.init = (app, done) => {
 
   app.log.info('Initialized Passport')
 
-  done()
+  done(null)
 }

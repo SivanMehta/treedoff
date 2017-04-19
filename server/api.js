@@ -39,5 +39,5 @@ exports.init = (app, done) => {
   app.post('/api/tree', app.authCheckMiddleware, persist)
 
   app.log.info('Defined API routes')
-  done()
+  done(null)
 }

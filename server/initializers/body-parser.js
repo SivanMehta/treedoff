@@ -5,5 +5,5 @@ exports.init = (app, done) => {
 
   app.log.info('Now parsing body of incoming HTTP into JSON')
 
-  done()
+  done(null)
 }
